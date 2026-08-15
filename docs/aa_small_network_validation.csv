@@ -1,0 +1,6 @@
+test,status,evidence
+first_batch_updates_second_prediction,pass,"first chooses A; after integer event, second chooses B"
+future_arrival_changes_route,pass,"current-queue search chooses A; predictive search chooses B"
+spatial_blocking_changes_route,pass,"predicted receiving wait diverts route from A to B"
+no_fixed_k_or_dynamic_path_cache,pass,"formal search source contains neither fixed-K candidates nor dynamic full-path cache"
+shared_physics_regression_suite,pass,"47/47 unittest cases passed on 2026-07-21"

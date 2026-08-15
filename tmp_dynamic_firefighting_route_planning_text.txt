@@ -1,0 +1,1730 @@
+
+
+--- PAGE 1 ---
+Simulation Modelling Practice and Theory 146 (2026) 103223
+Contents lists available at ScienceDirect
+SimulationModellingPracticeandTheory
+journal homepage: www.elsevier.com/locate/simpat
+Dynamicfirefightingrouteplanningforefficientevacuationin
+complexsubwaystations:Adeeplearning-enhancedrobust
+(cid:73)
+optimizationapproach
+Jinli Weia, Chunyue Cuia, Xiaoxia Yangb ,∗
+aSchool of Civil Engineering, Qingdao University of Technology,266520,Qingdao,China
+bSchool of Information and Control Engineering, Qingdao University of Technology,266520,Qingdao,China
+A R T I C L E I N F O A B S T R A C T
+Keywords: The enclosed spaces and high-density population in subway stations significantly complicate
+Subway station evacuation during fires, thus increasing the difficulty of emergency response. To enhance fire
+Firefighting route optimization rescue capabilities, this study conducts robust optimization modeling for firefighting routes
+Robust optimization from costs of station facility layout, passenger flow distribution, smoke propagation patterns,
+F
+D
+i
+e
+r
+e
+e
+p learning
+and human resource expenditure. Firstly, the BKA-GRU deep learning method is designed to
+calculate passenger passage time at critical nodes such as gates, improving the rationality of
+firefighting route design. Secondly, a firefighting value function based on the importance of
+fire nodes is constructed, making the firefighting routes more conducive to efficient and safe
+passenger evacuation. Thirdly, a box-based intersection polyhedron uncertainty set is employed
+to model the uncertainties in firefighting travel time and firefighting time, enhancing the
+adaptability and robustness of the routes. Fourthly, the advanced Ivy algorithm combined
+with Gurobi is adopted to solve the developed robust optimization model, enabling rapid
+identification of efficient and stable firefighting routes in complex environments. Finally,
+both quantitative and qualitative analyses are used to comprehensively evaluate firefighting
+effectiveness. The results indicate that: (i) The BKA-GRU prediction model exhibits high
+accuracy and reliability in predicting node passage time. (ii) The robust optimization model for
+firefighting routes significantly reduces fire by-products, shortens passenger evacuation time,
+and mitigates congestion. (iii) The firefighting route design achieves significant improvements
+in temperature control and visibility enhancement, effectively improving the fire environment
+and enhancing rescue efficiency and safety. This study provides an innovative solution for fire
+rescue in complex environments.
+1. Introduction
+With the acceleration of urbanization and the continuous expansion of urban rail transit networks, subway systems, as a core
+component of urban public transportation, have become an essential means of daily commuting for residents. However, the enclosed
+underground spaces and high passenger density of subway stations pose significant safety threats to passengers in the event of a
+fire [1]. Statistical data shows that the number of casualties in subway fire incidents has been on the rise, with the period from
+(cid:73)
+This article is part of a Special issue entitled: ‘SIMPAT_ Pedestrian Simulation’ published in Simulation Modelling Practice and Theory.
+∗ Corresponding author.
+E-mail address: yangxiaoxia@qut.edu.cn (X. Yang).
+https://doi.org/10.1016/j.simpat.2025.103223
+Available online 7 November 2025
+1569-190X/© 2025 Elsevier B.V. All rights are reserved, including those for text and data mining, AI training, and similar technologies.
+
+--- PAGE 2 ---
+J. Wei et al. Simulation Modelling Practice and Theory 146 (2026) 103223
+2000 to 2020 being particularly frequent, resulting in a total of 2563 casualties [2]. Large subway hubs, in particular, face greater
+challenges due to limited passageways and complex structures. Factors such as smoke dispersion and temperature variations during
+fires significantly increase the difficulty of firefighting and evacuation, often leading to secondary disasters such as congestion and
+stampedes, which further exacerbate the risk of casualties.
+Timely and effective firefighting strategies are crucial for minimizing losses in the event of a fire. Subway station staff should
+quickly and efficiently select firefighting routes while adapting to changing environmental conditions. However, fire sources may
+simultaneously ignite at multiple locations, and the paths of smoke dispersion may vary due to the influence of ventilation systems
+and the layout of station facilities. These factors can disrupt preplanned firefighting routes. Additionally, congestion in evacuation
+passageways and crowd movement within the station may further impede the mobility of firefighting personnel, affecting the overall
+effectiveness of firefighting operations. Traditional firefighting strategies may struggle to address the complexities of fire propagation
+and suppression in subway station environments, with poorly planned rescue efforts potentially exacerbating the difficulty and
+severity of incidents. Therefore, developing a firefighting route that can effectively respond to fire propagation while efficiently
+extinguishing fire sources has become a critical issue in fire emergency response. This study focuses on the development of a
+firefighting route for subway station staff in the context of multi-source fires.
+The development of firefighting routes for subway station staff faces numerous challenges, including complex station structures,
+narrow passageways, smoke dispersion, and temperature variations under uncertain conditions. Traditional firefighting strategies
+often fail to address the uncertainties of sudden fires, rendering them ineffective when the environment changes. To address this
+issue, this study fully considers the impact of uncertainties such as fire propagation, smoke dispersion, and temporal changes, and
+proposes a robust optimization model for the firefighting route. This model ensures that the developed firefighting strategies remain
+feasible and effective under various possible scenarios, thereby reducing the risk of failure caused by environmental changes.
+The main contributions of this study are summarized as follows: (1) A core objective function is constructed, incorporating
+firefighting value, travel distance, and human resource expenditure, with uncertainty modeling applied to travel time and firefighting
+time. This enhances the applicability and robustness of firefighting route solutions in complex real-world scenarios. (2) A BKA-GRU
+prediction model is designed to accurately estimate the time required for personnel to pass through gates and stairs, providing
+reliable data support for solving firefighting routes. (3) The feasibility and safety of the robust optimization model for the firefighting
+route are validated through the integration of the PyroSim fire simulator and PathFinder pedestrian dynamics simulator. (4) By
+quantitatively analyzing route distance, evacuation risks, and congestion factors, the reliability and practical value of the firefighting
+optimization strategy are further verified.
+2. Related research
+2.1. Fire numerical simulation
+Numerical simulation of fires is an important tool in fire prevention research, enabling comprehensive analysis of fire scenario
+evolution by simulating dynamic processes such as smoke dispersion, heat transfer, combustion, and personnel evacuation. In densely
+populated subway stations, fires not only threaten the normal functions of station facilities but also significantly impact the safety
+and efficiency of passenger evacuation. Fire numerical simulation technology allows for the virtual simulation of fire evolution,
+providing insights into how various fire conditions and firefighting strategies influence passenger evacuation behavior, thereby
+offering scientific guidance for fire prevention. Currently, mainstream software tools for fire numerical simulations include fire
+dynamics simulator (FDS) [3], PyroSim [4], and Fluent [5], each with its unique features and applications. These tools provide
+reliable and scientific solutions for fire modeling.
+FDS, based on computational fluid dynamics (CFD) theory, enables precise simulation of smoke dispersion, temperature fields,
+and combustion reactions during fires. It has been widely used for modeling fire evolution in large structures such as subway
+stations [6]. For example, Tsukahara et al. [7] utilized FDS to simulate the distribution of smoke, temperature, and toxic gases,
+analyzing the effectiveness of large-scale evacuation in subway fire scenarios, with a particular focus on the advantages of downward
+evacuation. PyroSim, a graphical user interface software built on FDS, simplifies the creation, editing, and analysis of FDS models.
+Its visual interface makes fire scenario evolution more intuitive and has been widely adopted [8]. For instance, Yu et al. [9] used
+PyroSim to assess fire evolution risks at a subway station and optimize the design of its smoke extraction system. Fluent, a general-
+purpose CFD software, is applicable to a broad range of simulations, including fluid flow, heat transfer, chemical reactions, and
+multiphase flows, extending beyond fire simulation applications [10].
+FDS is a software specifically developed for fire dynamics simulation, and PyroSim inherits its professional capabilities. PyroSim’s
+graphical interface simplifies the creation of complex geometric models and parameter settings for subway stations, thereby
+significantly improving modeling efficiency. Additionally, PyroSim seamlessly integrates with PathFinder, a pedestrian dynamics
+simulation tool, allowing for simultaneous analysis of fire dynamics and evacuation behaviors. This integration is critical for fire
+prevention and control research in densely populated spaces such as subway stations. Therefore, this study adopts PyroSim as the
+numerical simulation tool for fire scenarios.
+2
+
+--- PAGE 3 ---
+J. Wei et al. Simulation Modelling Practice and Theory 146 (2026) 103223
+2.2. Pedestrian evacuation simulation
+In the context of subway station fires, passenger evacuation efficiency not only affects post-disaster response speed but also
+directly relates to the safety of lives. Pedestrian evacuation simulation is a critical method for analyzing crowd dynamics and
+assessing evacuation efficiency, widely applied in building design, safety management, and emergency evacuation planning [11].
+Currently, pedestrian evacuation models can be categorized into two main types, namely macroscopic models and microscopic
+models [12]. The predominant macroscopic models are primarily based on fluid dynamics [13], while microscopic models mainly
+include social force models, rule-based cellular automata models, and agent-based models [14–16].
+Fluid dynamics models primarily treat crowds as continuous media, focusing on the relationships between crowd density,
+speed, and flow. These models excel at providing an overall analysis of large-scale crowd movement. However, they cannot
+capture the nuanced differences in individual behaviors, which presents limitations in addressing complex interactions in dynamic
+environments. Given the need for firefighting route optimization during subway station fires as studied in this paper, the applicability
+of macroscopic models is constrained.
+Microscopic models focus on simulating the behavioral characteristics of individual pedestrians, allowing them to capture
+dynamic changes in individuals’ behaviors under different scenarios. The social force model, one of the most commonly used
+microscopic models, simulates interactions between pedestrians and demonstrates individual behavioral variations under different
+environmental factors. It has been applied to simulate passenger boarding and alighting behaviors [17], evacuation behaviors [18–
+20], and group travel behaviors [21]. Cellular automata models discretize space and simulate pedestrian movement through simple
+rules, making them widely used for flow optimization [22] and pedestrian flow analysis [23]. However, the spatial discretization
+of cellular automata models limits movement directions, making it challenging to simulate the complex decision-making behaviors
+of passengers. Agent-based models adopt continuous spatial modeling, treating each pedestrian as an independent agent capable of
+making personalized decisions based on attributes such as age, gender, walking speed, and environmental conditions. This model has
+been applied to analyze evacuation behaviors [24], predict passenger flow distribution [25], and simulate emergency responses [26].
+Subway stations often feature complex geometrical structures, including platforms, stairs, gates, and corridors. The continuous spatial
+modeling capabilities of agent-based models can accurately describe how these structures influence passenger evacuation.
+With the increasing complexity of research scenarios and the heightened demand for simulation accuracy, pedestrian dynamics
+simulation software has emerged. By integrating pedestrian evacuation models with computer simulation techniques, these tools
+enable efficient and precise simulation of pedestrian groups in complex environments. Currently, widely used pedestrian dynamics
+simulation software includes PathFinder [27–29], MassMotion [30], and Legion [31], which incorporate agent-based models, social
+force models, and cellular automata models, respectively to simulate pedestrian movements. Considering the characteristics of the
+pedestrian evacuation model utilized by PathFinder, as well as its capability to directly import dynamic data such as smoke and
+temperature from PyroSim into the evacuation model, this study employs PathFinder to simulate passenger evacuation behaviors
+during a fire, thereby enhancing the realism and reliability of the simulation [32].
+2.3. Firefighting route optimization
+As densely populated public spaces, subway stations present complex challenges during fires, including rapid smoke dispersion,
+reduced visibility, and passenger panic. These factors can significantly impact the efficiency of firefighting personnel’s response.
+Optimizing firefighting routes ensures that firefighters can reach the fire scene in the shortest time and safest manner, effectively
+controlling the spread of the fire and providing valuable time for passenger evacuation. For instance, the selection of firefighting
+routes can influence the speed and direction of smoke dispersion, thereby affecting evacuation time and passenger safety. Therefore,
+firefighting route optimization is not only a key aspect of enhancing emergency response capabilities but also a crucial measure to
+ensure the operational safety of subway stations.
+Existing research primarily focuses on the phased analysis of fire development and the optimization of passenger evacuation
+routes following a fire incident. For example, Zhang and Han [33] employed a CFD simulator to assess the effectiveness of a subway
+platform smoke isolation system that combines air curtains with mechanical smoke extraction systems, demonstrating its capability
+to control smoke spread and reduce temperatures under various fire conditions. Similarly, Liu and Zou [34] proposed an improved
+ant colony algorithm for dynamically adjusting passenger evacuation routes within subway stations during fires, aiming to extend the
+available safe evacuation time and enhance emergency evacuation outcomes. However, existing studies often overlook the potential
+impact of firefighting strategies on passenger evacuation processes, which may lead to reduced evacuation efficiency and increased
+safety risks. The lack of consideration for the coordinated optimization of firefighting strategies and evacuation procedures can result
+in delayed fire control and incomplete emergency response strategies, thereby diminishing the effectiveness of emergency rescue
+operations. Therefore, it is crucial to comprehensively consider the coordinated optimization of firefighting actions and evacuation
+processes.
+Firefighters’ route planning faces various uncertainties, particularly in travel time and firefighting duration, which may render the
+planned optimal routes ineffective or suboptimal. Robust optimization theory [35] is a crucial method to address these challenges.
+Uncertainty optimization methods mainly include stochastic programming, fuzzy programming, and robust optimization [36], each
+offering diverse solutions based on the nature of the uncertainties and application scenarios. Stochastic programming treats uncertain
+parameters as random variables with known probability distributions [37]. However, accurately obtaining these distributions during
+emergencies is often impractical, limiting the applicability of this approach. Fuzzy programming represents uncertainty using fuzzy
+sets but relies on prior knowledge of membership functions [38], introducing subjectivity and uncertainty in practical applications.
+3
+
+--- PAGE 4 ---
+J. Wei et al. Simulation Modelling Practice and Theory 146 (2026) 103223
+Fig. 1. The pipeline of the proposed method.
+Robust optimization seeks solutions that remain feasible under all possible realizations of uncertain parameters within specified
+bounds [39], emphasizing solution robustness. Yang et al. [40] proposed a robust evacuation path optimization model for subway
+flood scenarios based on a box-intersection budget uncertainty set to enhance evacuation efficiency and decision robustness. Li et al.
+[41] developed a two-stage robust optimization model based on a generalized budget uncertainty set for the location–allocation of
+emergency service facilities, improving decision robustness and sustainability. In fire scenarios, uncertainties such as fire spread
+rate, firefighting time, and passenger distribution are prevalent. Robust optimization can ensure that firefighting routes maintain
+high reliability and adaptability across various fire situations.
+3. The proposed model
+This section proposes a robust optimization method for firefighting routes in subway station fire scenarios, as illustrated in Fig.
+1. Initially, a fire evolution simulation system for the station is constructed using PyroSim software, while a corresponding passenger
+evacuation system is developed with PathFinder software to obtain evacuation data during a fire incident. Subsequently, the black-
+winged kite algorithm (BKA) is employed to optimize a gated recurrent unit (GRU) model for predicting passenger passage times at
+nodes such as gates, providing data support for calculating firefighting travel time. Next, the uncertainties in travel and firefighting
+time are incorporated into the construction of a robust optimization model for firefighting routes. To enhance solution convergence
+speed, the model is solved by integrating Gurobi with the Ivy Algorithm (IVYA). Finally, the effectiveness of the firefighting routes
+is analyzed using a comprehensive evaluation method for firefighting outcomes.
+Assuming multiple fire outbreaks occur within a subway station, firefighting teams composed of staff members are deployed for
+initial fire suppression. An upper-layer fire network is established, consisting of fire source points, while a lower-layer passenger
+evacuation network is formed, incorporating critical evacuation nodes such as gates, stairs/escalators, and exits, as illustrated in
+Fig. 2. The variables utilized in constructing the robust optimization model for firefighting routes are defined in Table 1.
+3.1. Robust optimization model for firefighting route
+In subway station fire emergency responses, formulating effective firefighting routes is an important task. Given the sudden and
+complex nature of fire incidents, which often lack clear precursors, on-site information is highly uncertain and dynamically changes
+over time. Therefore, pre-designed firefighting route plans should comprehensively account for fluctuations in various influence
+factors to enhance decision-making flexibility and safety. Firefighting and evacuation represent two critical objectives, often with
+differing optimization requirements. Firefighting routes need to quickly and effectively control fire sources, while evacuation routes
+must address factors such as crowd density, urgency, and escape efficiency. By establishing an evaluation function for passenger
+evacuation effectiveness, it becomes possible to balance multiple objectives, ensuring that the final firefighting route not only
+4
+
+--- PAGE 5 ---
+J. Wei et al. Simulation Modelling Practice and Theory 146 (2026) 103223
+Table 1
+Input parameters.
+Notation Definition Type Notation Definition Type
+𝑓 1 Cost value of firefighting path, Variable 𝑡 𝑖𝑗 Time for personnel to travel from fire point 𝑖 to fire Variable
+normalized to 𝑓̄ point 𝑗
+1
+𝑓
+𝑓
+2
+3
+C
+Pe
+o
+n
+st
+a l
+v
+ty
+a lu
+v
+e
+a lu
+o
+e
+f f
+f
+i
+o
+r
+r
+e f
+f
+i
+i
+g
+r
+h
+e
+t
+f
+i
+i
+n
+g
+g
+h ti
+p
+n
+e
+g
+r s
+e
+o
+f
+n
+fe
+n
+c
+e
+t
+l
+i
+,
+v
+n
+en
+or
+e
+m
+ss
+a
+,
+l
+n
+iz
+o
+e
+r
+d
+m
+t
+a
+o
+li z
+𝑓
+e
+̄ 2
+d
+V
+V
+a
+a
+r
+r
+i
+i
+a
+a
+b
+b
+l
+l
+e
+e
+𝑡
+𝑡
+𝑓
+𝑖𝑟
+𝑖 F
+T
+i
+i
+r
+m
+ef
+e
+i g
+f
+h
+o
+t
+r
+i n
+fi
+g
+r e
+t
+f
+i
+i
+m
+gh
+e
+t i
+a
+n
+t
+g
+f i
+t
+r
+e
+e
+a m
+po i
+𝑟
+n
+t
+t
+o
+𝑖
+reach fire point 𝑗
+V
+V
+a
+a
+r
+r
+i
+i
+a
+a
+b
+b
+l
+l
+e
+e
+to 𝑓̄
+3
+𝑛 Total number of fire sources Constant 𝑎 𝑗 Left time window of fire point 𝑗, i.e., the earliest time Constant
+to reach 𝑗
+𝑚 Total number of firefighting teams Variable 𝑏 𝑗 Right time window of fire point 𝑗, i.e., the latest time Constant
+to reach 𝑗
+𝑐 Total number of ticket gates and escalators in the Constant 𝑈𝑟 Uncertain travel time set for firefighting personnel Variable
+𝑡
+station
+𝑜 Total number of passengers Constant 𝑈𝑟 Uncertain firefighting time set for firefighting Variable
+𝑓
+personnel
+𝑡 Total number of time steps Variable 𝑎 Maximum heat radiation of the fire source Constant
+max
+controllable by the staff, set at 500 kW
+𝑁 Fire network node, 𝑁={0,1,…,𝑖,…,𝑗,…,𝑛} Constant 𝐽∙ Total evaluation index value Variable
+𝑁𝑓 Fire point, 𝑁={1,…,𝑖,…,𝑗,…,𝑛} Constant 𝐿∙ Firefighting distance factor Variable
+𝑅 Firefighting team, 𝑅={1,2,…,𝑟,…,𝑚} Constant 𝑅∙ Passenger safety risk factor Variable
+𝐶 Evacuation node, 𝐶={1,2,…,𝑔,…,𝑐} Constant 𝐶∙ Passenger congestion factor Variable
+𝑂 Passenger, 𝑂={1,2,…,𝑢,…,𝑜} Constant 𝐴 Firefighting distance coefficient Constant
+1
+𝐷 Path set between firefighting network nodes Constant 𝐵 Passenger safety risk coefficient Constant
+1
+𝑇 Time step, 𝑇={1,2,…,𝜒,…,𝑡} Constant 𝐶 Passenger congestion coefficient Constant
+1
+𝑥 𝑖𝑗𝑟 If the firefighting team 𝑟 goes from the fire point 𝑖 to Variable 𝐿 min Minimum distance of the firefighting route, set at Constant
+the fire point 𝑗, it is equal to 1; otherwise, it is 0. 700 m
+𝑥 𝑖𝑟 If the fire point 𝑖 is extinguished by fire firefighting Variable 𝐿 max Maximum distance of the firefighting route, set at Constant
+team 𝑟, it is equal to 1; otherwise, it is 0. 800 m
+R Cost weight value of firefighting routes Constant 𝑅∙ Quantified value of passenger safety risk within a Variable
+1 𝜒
+time step
+R Weight value of firefighting labor cost Constant 𝜏 Air temperature factor coefficient Constant
+2 1
+R Weight value of firefighting value penalty Constant 𝜏 Smoke visibility factor coefficient Constant
+3 2
+𝑑 𝑖𝑗 Distance from fire point 𝑖 to fire point 𝑗 Constant 𝜏 3 CO concentration factor coefficient Constant
+𝑚 𝑗 Firefighting value of fire point 𝑗 Variable 𝑡∙ Quantified value of air temperature at a certain time Variable
+step
+𝑙 𝑗 Decay coefficient of firefighting value at fire point 𝑗 Constant 𝑣∙ Quantified value of smoke visibility at a certain time Variable
+step
+𝑡 𝑗𝑟 Arrival time of firefighting team 𝑟 at fire point 𝑗 Variable 𝑐∙ Quantified value of CO concentration visibility at a Variable
+certain time step
+𝜉 Discount coefficient for the distance between Constant 𝑡̇ The highest temperature that the human body can Constant
+max
+evacuation nodes on different floors and fire points withstand is 120 ◦C [42]
+𝑞 𝑔 The number of people passing through evacuation Constant 𝑡̇ min The ambient temperature is 24 ◦C [42]. Constant
+node 𝑔
+𝑎 0 Initial thermal radiation of the fire point Constant 𝑡̇ 𝑔 The temperature of the evacuation node Variable
+𝑇 𝑖𝑗𝑟 Auxiliary variable variable 𝑣̇ max The maximum visibility of the fire environment is Constant
+30 m [42].
+𝑇
+𝑏 𝑔
+𝑓
+𝑗
+𝑖𝑟 A
+D
+u
+is
+x
+ta
+il
+n
+ia
+c
+r
+e
+y
+f
+v
+ro
+a
+m
+ria
+e
+b
+v
+le
+acuation node 𝑔 to fire point 𝑗
+V
+Co
+a
+n
+ri
+s
+a
+t
+b
+a
+l
+n
+e
+t
+𝑣
+𝑐̇
+̇
+m
+𝑔
+ax
+T
+T
+h
+h
+e
+e
+v
+m
+is
+a
+i
+x
+b
+i
+i
+m
+lit
+u
+y
+m
+o f
+C O
+th e
+c o
+e
+n
+v
+c
+a
+e
+c
+n
+u
+t
+a
+r
+t
+a
+i
+t
+o
+io
+n
+n
+n
+i
+o
+n
+d
+h
+e
+aled by the
+V
+Co
+a
+n
+ri
+s
+a
+t
+b
+a
+l
+n
+e
+t
+human body is 0.25 mol/mol [42].
+𝛾̇ Fire growth coefficient Constant 𝑐̇ 𝑔 CO concentration at the evacuation node Variable
+𝜀̇ Firefighting coefficient of staff Constant 𝐶′ Maximum congestion time for passenger evacuations, Constant
+max
+set as 401 s
+𝑒 The number of personnel in the firefighting team Constant 𝐶′′ Total congestion time during individual evacuation Variable
+𝑢
+extinguishes the fire efficiently but also minimizes potential casualties during evacuation. Against this backdrop, considering factors
+such as firefighting route costs, labor costs, and firefighting value, this study proposes a robust optimization model for firefighting
+routes. This model enhances firefighting effectiveness and emergency response capabilities by accommodating new changes and
+fluctuations in information.
+In the complex internal environment of a subway station, different firefighting routes directly affect the firefighting speed and
+the severity of the negative impacts caused by the fire. Therefore, this study defines the firefighting route cost as the total walking
+distance of all firefighting teams, as shown in Eq. (1). Considering the firefighting route cost helps to control the fire within a shorter
+time frame and minimize fire-related losses.
+𝑚 𝑛 𝑛
+∑∑ ∑
+𝑓 = 𝑑 𝑥 (1)
+1 𝑖𝑗 𝑖𝑗𝑟
+𝑟=1𝑖=0𝑗=0,𝑗≠𝑖
+In the objective function 𝑓 , the distance between nodes 𝑖 and 𝑗 is defined as the Euclidean distance. This definition is based on
+1
+the fact that the constructed node network accurately represents the actual spatial layout of subway stations. Under these conditions,
+5
+
+--- PAGE 6 ---
+J. Wei et al. Simulation Modelling Practice and Theory 146 (2026) 103223
+Fig. 2. Coupling diagram of upper-level firefighting network and lower-level passenger evacuation network.
+the Euclidean distance can effectively approximate the actual path distance while avoiding the computational complexity and
+uncertainty associated with detailed path modeling. Moreover, since the optimization model focuses on overall path planning and
+the relative spatial relationships among nodes rather than precise physical distances, this definition ensures computational efficiency
+and maintains the spatial rationality and feasibility of the results.
+The narrow spaces and complex passageways within subway stations make the reasonable allocation of firefighting personnel and
+ensuring their safety critical. The labor cost, influenced by the number of personnel involved in firefighting actions, their allocation,
+and safety assurance, is defined by Eq. (2). Considering labor costs helps optimize human resource allocation and avoid unnecessary
+casualties.
+𝑚 𝑛
+∑∑
+𝑓 = 𝑥 (2)
+2 𝑖𝑟
+𝑟=1𝑖=0
+When considering the firefighting route cost and labor cost to obtain theoretically optimal firefighting routes, neglecting the
+impact of the fire on passenger evacuation may result in inefficient evacuation, congestion, or increased safety risks. By incorporating
+the firefighting value influenced by passenger evacuation effects into the firefighting optimization process, it is possible to ensure
+the effective protection of individuals during a fire. Therefore, this study includes firefighting value in the objective function
+for optimizing firefighting routes, as defined in Eqs. (3)–(5). Eq. (3) dynamically quantifies the firefighting value of fire points
+and their decay characteristics. Eq. (4) defines the initial firefighting value 𝑚 based on evacuation safety requirements, which is
+𝑗
+inversely proportional to the distance from the fire point to evacuation nodes and directly proportional to the passenger flow at
+the corresponding nodes, highlighting the priority of protecting critical evacuation nodes. Eq. (5) introduces the decay coefficient
+𝑙 , associated with the intensity of thermal radiation. The objective function adopts a dynamic value decay mechanism, prioritizing
+𝑗
+fire points with high initial value and rapid decay, thereby reducing value loss, improving firefighting efficiency, and maximizing
+the safety of evacuated individuals [43].
+𝑛 𝑚 𝑛
+𝑓
+3
+= ∑ 𝑚
+𝑗
+− ∑∑ 𝑚
+𝑗
+⋅𝑒−𝑙𝑗𝑡𝑗𝑟 (3)
+𝑗=1 𝑟=1𝑗=1
+𝑐
+∑ 𝜉
+𝑚 = 𝑞 (4)
+𝑗 𝑏 𝑔
+𝑔=1 𝑔𝑗
+1
+𝑙 = (5)
+𝑗 𝑎
+0𝑗
+Here, 𝜉 represents the discount coefficient for the influence of a fire point on an evacuation node when they are located on
+different floors.
+The objective function 𝑓 in this study is designed to capture the intrinsic decay characteristics of the importance of individual fire
+3
+points over time. This decay is primarily determined by each fire point’s properties, such as thermal radiation intensity and distance
+6
+
+--- PAGE 7 ---
+J. Wei et al. Simulation Modelling Practice and Theory 146 (2026) 103223
+from evacuation nodes. Consequently, the decay process of each fire point is independent and is not dynamically affected by the
+extinguishing of other fire points. This design aligns with the operational logic of multiple fire brigades working collaboratively,
+where each team operates independently according to task allocation, without directly altering the intrinsic decay rate of other fire
+points. Nevertheless, the initial value and decay rate of each fire point are dynamically weighted through the objective function
+within the overall optimization process, enabling a coordinated allocation of resources across different fire points and thereby
+enhancing firefighting efficiency and personnel safety at the system level.
+The arrival time 𝑡 of firefighting personnel 𝑟 at fire point 𝑗 is defined by Eq. (6) and consists of three components. The first
+𝑗𝑟
+component is the time 𝑡 when the firefighting personnel 𝑟 arrive at the previous fire point 𝑖. The second component is the firefighting
+𝑖𝑟
+time required to extinguish fire point 𝑖, as defined by Eq. (12) [44]. The third component is the time required to travel from fire
+point 𝑖 to fire point 𝑗.
+𝑡 =𝑡 +𝑇 (𝑓,𝑡)+𝑇 (𝑓,𝑡) (6)
+𝑗𝑟 𝑖𝑟 𝑓𝑖𝑟 𝑖𝑗𝑟
+When a fire occurs in a subway station, the complexity of the station’s structure, the dynamic spread of fire and smoke, and
+the randomness of passenger flow in evacuations all contribute to significant uncertainties in the cost of route selection, firefighting
+time, and firefighting effectiveness. Additionally, the high-temperature environment, low visibility, and potentially obstructed routes
+at the fire scene further increase the difficulty of firefighting route planning. Decision-makers often struggle to accurately obtain
+data on these dynamic changes, resulting in uncertainties in the travel time of firefighting teams and the firefighting duration. To
+address these challenges, this study defines uncertain travel time sets 𝑈𝑟 and uncertain firefighting time sets 𝑈𝑟, and introduces
+𝑡 𝑓
+auxiliary decision variables 𝑇 and 𝑇 . By transforming uncertain objectives into deterministic objectives, a robust optimization
+𝑓𝑖𝑟 𝑖𝑗𝑟
+model for the firefighting routes of personnel under fire scenarios is established, as shown in Eq. (7). This approach enhances the
+flexibility and safety of firefighting route planning, ensuring the reliability and efficiency of emergency response efforts.
+𝑍=min ( R 𝑓̄ +R 𝑓̄ +R 𝑓̄) (7)
+1 1 2 2 3 3
+∑∑
+s.t. 𝑥 ≥1, ∀𝑖∈𝑁𝑓 (8)
+𝑖𝑗𝑟
+𝑟∈𝑅𝑗∈𝑁
+∑
+𝑥 =1, ∀𝑟∈𝑅 (9)
+0𝑗𝑟
+𝑗∈𝑁𝑓
+∑
+𝑥 =1, ∀𝑟∈𝑅 (10)
+𝑖0𝑟
+𝑖∈𝑁𝑓
+∑ ∑
+𝑥 − 𝑥 =0, ∀𝑟∈𝑅 ∀𝑖∈𝑁 (11)
+𝑖𝑗𝑟 𝑗𝑖𝑟
+𝑗∈𝑁 𝑗∈𝑁
+𝑎 +𝛾̇ ×𝑡2
+𝑡 = 0𝑖 𝑖𝑟 (12)
+𝑓𝑖 𝜀̇×𝑒
+𝑡 𝑥 (𝑓,𝑡)≤𝑇 , 𝑡 ∈ext(𝑈𝑟) (13)
+𝑖𝑗 𝑖𝑗𝑟 𝑖𝑗𝑟 𝑖𝑗 𝑡
+𝑡 𝑥 (𝑓,𝑡)≤𝑇 , 𝑡 ∈ext(𝑈𝑟) (14)
+𝑓𝑖 𝑖𝑟 𝑓𝑖𝑟 𝑓𝑖 𝑓
+𝑎 ≤𝑡 ≤𝑏 , 𝑗∈𝑁𝑓 𝑟∈𝑅 (15)
+𝑗 𝑗𝑟 𝑗
+√
+𝑎 −𝑎
+𝑏 =
+max 0𝑗
+(16)
+𝑗 𝛾̇
+In this study, the min–max normalization method shown in Eq. (17) is used to perform a linear transformation on the raw
+data, mapping it to a specific range [0,1] to ensure comparability among different objective values. Eq. (8) ensures that each fire
+point is assigned to firefighting personnel. Eq. (9) indicates that firefighting personnel in the subway station start from the initial
+point. Eq. (10) specifies that firefighting personnel return to the initial point after completing firefighting tasks. Eq. (11) ensures the
+continuity of routes by requiring firefighting teams to leave from the point where the fire has been extinguished [45]. Eqs. (13)–(14)
+represent auxiliary inequalities introduced in the robust model to account for uncertainties in the travel time and firefighting time
+of firefighting teams.
+𝑦0−𝑦
+𝑦 = 𝑖 min (17)
+𝑖 𝑦 −𝑦
+max min
+Here, 𝑦 represents the normalized data, 𝑦0 is the raw data, 𝑦 is the maximum value in the data set, and 𝑦 is the minimum
+𝑖 𝑖 max min
+value in the data set. In this study, the objective function values under different optimization strategies exhibit minor variations with
+limited overall fluctuations. Therefore, adopting a one-time normalization approach ensures computational stability while reducing
+unnecessary computational overhead. Moreover, using a fixed normalization baseline allows the results obtained under different
+strategies to be compared on a consistent scale, thereby maintaining the comparability of model outputs and the consistency of the
+analysis.
+Aiming at the initial fire emergency response scenario in subway stations, a fire point handling method is proposed to reasonably
+reflect the timeliness of fire handling based on hard time window constraints. The establishment of this constraint arises from
+7
+
+--- PAGE 8 ---
+J. Wei et al. Simulation Modelling Practice and Theory 146 (2026) 103223
+two critical practical needs. On the one hand, fire development has an irreversible critical point during the fire containment
+phase by station personnel before professional firefighting forces arrive. When the heat release rate reaches the structural failure
+threshold, initial firefighting measures will become entirely ineffective. On the other hand, strict response timeliness standards must
+be established, due to the safety demands of high-density populations in the enclosed spaces of subway stations. Therefore, this study
+[ ]
+defines a binary time window parameter 𝑎 ,𝑏 for each fire point, where 𝑎 represents the time of fire occurrence and 𝑏 represents
+𝑗 𝑗 𝑗 𝑗
+the critical time at which the fire becomes uncontrollable. The disposal effectiveness judgment functions shown in Eqs. (15)–(16)
+are established to ensure that all emergency handling operations are completed before the irreversible critical time for each fire
+point.
+The uncertainties in travel time and firefighting time stem from multiple factors, such as station structures, smoke diffusion, and
+equipment operations, and also include dynamic fluctuations caused by the intersections of multiple firefighters, changes in passage
+priorities, and the decay of firefighters’ combat effectiveness. This paper adopts box-intersection polyhedral uncertainty sets to
+represent the uncertainties in the travel time and firefighting time of working firefighters [45]. The core idea is to mathematically
+characterize the upper and lower bounds of individual parameters as well as the possible interaction constraints among these
+parameters. These uncertainties are multidimensional and subject to upper and lower bounds. By adopting the form of box-
+intersection polyhedral uncertainty sets, these uncertainties can be flexibly characterized, while the intersection form captures the
+correlations between variables. This ensures robustness without being overly conservative.
+The box-shaped uncertainty set shown in Eq. (18) is used to characterize the independent upper and lower bounds of each
+parameter, directly representing the acceptable range of uncertain parameters under various fire conditions. Meanwhile, the
+polyhedral uncertainty set shown in Eq. (19) captures the linear constraints and mutual correlations among parameters. By taking
+the intersection of multiple box-shaped and polyhedral sets, the resulting box intersection polytope, as shown in Eq. (20), is
+obtained. Compared with traditional interval or ellipsoidal uncertainty sets, this form can flexibly describe multi-dimensional
+uncertain parameters with well-defined upper and lower bounds, while partially reflecting parameter correlations through its
+intersection structure, thereby avoiding over-conservatism or excessive relaxation. Moreover, its linear constraint structure can be
+easily embedded into the robust optimization model, allowing the solution to be formulated as a linear or convex optimization
+problem, thus achieving a balance between modeling accuracy and computational efficiency.
+𝑈 ={𝑥∈R𝑛∣𝑥 ≤𝑥 ≤𝑥, 𝑖=1,…,𝑛} (18)
+box 𝑖 𝑖 𝑖
+𝑈 ={𝑥∈R𝑛∣𝐴𝑥≤𝑏} (19)
+poly
+𝑚
+⋂
+𝑈 = 𝑈𝑘 ∩𝑈 (20)
+box-poly box poly
+𝑘=1
+The uncertain travel time set 𝑈𝑟 and the uncertain firefighting time set 𝑈𝑟 are defined in Eqs. (21)–(22), respectively.
+𝑡 𝑓
+{ }
+∑ ∑
+𝑈
+𝑡
+𝑟= 𝑡̃
+𝑖𝑗
+∈R𝐷∣𝑡̃
+𝑖𝑗
+=𝑡
+𝑖𝑗
++ 𝛽𝑙𝑡𝑙
+𝑖𝑗
+,∣𝛽𝑙∣≤1, ∣𝛽𝑙∣≤𝛤
+𝑡
+𝑟,𝛤
+𝑡
+𝑟=⌈𝜃
+𝑡
+∣𝐷∣⌉,(𝑖,𝑗)∈𝐷,𝑙∈𝐿 (21)
+𝑙∈𝐿 𝑙∈𝐿
+Here, 𝑈𝑟 represents the set of travel time between nodes in the firefighting network. 𝑡̃ represents the predicted travel time
+𝑡 𝑖𝑗
+between node 𝑖 and node 𝑗. 𝑡 represents the nominal travel time between node 𝑖 and node 𝑗. 𝑡𝑙 represents the fluctuation in the
+𝑖𝑗 𝑖𝑗
+travel time between node 𝑖 and node 𝑗. R𝐷 denotes the set of real numbers. 𝛽∈{𝛽1,𝛽2,…,𝛽𝑙,…} represents the deviation vector of
+the travel time between node 𝑖 and node 𝑗. 𝛤𝑟 denotes the control parameter of the uncertainty set 𝑈𝑟 for travel time between nodes
+𝑡 𝑡
+in the firefighting network, defined as 𝛤
+𝑡
+𝑟=⌈𝜃
+𝑡
+∣𝐷∣⌉. 𝜃
+𝑡
+represents the uncertainty budget coefficient for travel time, 𝜃
+𝑡
+∈[0,1]. 𝐷
+denotes the set of firefighting network routes. 𝐿={1,2,…,𝑙,…} represents the set of perturbation variables.
+{ }
+𝑈 𝑓 𝑟 = 𝑡̃ 𝑓𝑖 ∈R𝑁𝑓 ∣𝑡̃ 𝑓𝑖 =𝑡 𝑓𝑖 + ∑ 𝛼𝜙𝑡𝜙 𝑓𝑖 ,∣𝛼𝜙∣≤1, ∑ | | | 𝛼𝜙| | | ≤𝛤 𝑓 𝑟,𝛤 𝑓 𝑟 = ⌈ 𝜃 𝑓 ∣𝑁𝑓 ∣ ⌉ ,𝑖∈𝑁𝑓,𝜙∈Q (22)
+𝑙∈𝐿 𝑙∈𝐿
+Here, 𝑈𝑟 represents the set of firefighting times for all fire points. 𝑡̃ represents the predicted firefighting time for fire point
+𝑓 𝑓𝑖
+𝑖. 𝑡 represents the nominal firefighting time for fire point 𝑖. 𝑡𝜙 represents the fluctuation in the firefighting time for fire point 𝑖.
+𝑓𝑖 𝑓𝑖
+R𝑁𝑓 denotes the set of real numbers. 𝛼 ∈ {𝛼1,𝛼2,…,𝛼𝜙,…} represents the deviation vector of the firefighting time for fire point
+𝑖. 𝛤𝑟 denotes the control parameter of the uncertainty set 𝑈𝑟 for firefighting time of fire point 𝑖, defined as 𝛤𝑟 = ⌈ 𝜃 ∣𝑁𝑓 ∣ ⌉ . 𝜃
+𝑓 𝑓 𝑓 𝑓 𝑓
+represents the uncertainty budget coefficient for firefighting time at fire point 𝑖, and 𝜃 ∈[0,1]. 𝑁𝑓 denotes the set of fire points.
+𝑓
+Q={1,2,…,𝜙,…} represents the set of perturbation variables.
+3.2. The BKA-GRU node time prediction model
+In calculating the travel time of firefighting personnel, nodes such as gates and stairs within the station may become bottlenecks,
+affecting the movement speed of firefighters. A more precise understanding of the travel time of firefighting personnel can be
+obtained by accurately calculating the passage time through these nodes [46]. This provides a reliable basis for optimizing
+firefighting routes, ensuring the smooth execution of firefighting tasks while making the evacuation process efficient, ultimately
+maximizing overall safety.
+To meet the demands for calculating the passage time through nodes like gates and stairs, the BKA is introduced to optimize GRU.
+GRU [47] partially addresses the gradient vanishing or exploding problems commonly faced by recurrent neural networks. It has a
+8
+
+--- PAGE 9 ---
+J. Wei et al. Simulation Modelling Practice and Theory 146 (2026) 103223
+simple structure, high computational efficiency, and fast training speed, making GRU well-suited for scenarios with high real-time
+requirements. Additionally, GRU adapts effectively to dynamic changes such as passenger quantities and evacuation types [48].
+Therefore, this paper employs GRU as the foundational model for predicting node passage time.
+GRU primarily includes two gate units, the reset gate 𝑟(𝑡) and the update gate 𝑧(𝑡), which are defined by Eqs. (23)–(24),
+respectively. 𝑟(𝑡) controls the influence of the hidden state from the previous time step ℎ(𝑡−1) on the candidate hidden state ℎ(𝑡).
+𝑧(𝑡) determines the degree of information fusion between the previous hidden state ℎ(𝑡−1) and the candidate hidden state ℎ(𝑡). By
+combining 𝑟(𝑡) and the current input 𝑥(𝑡), a new candidate hidden state ℎ̃(𝑡) is generated, as defined by Eqs. (25)–(26). By dynamically
+combining 𝑧(𝑡) and ℎ̃(𝑡), the final hidden state of this step, which serves as the core output of the model, can be computed [47].
+𝑟(𝑡)=𝜎(𝑊𝑥(𝑡)+𝑈ℎ(𝑡−1)+𝑏) (23)
+𝑟 𝑟 𝑟
+𝑧(𝑡)=𝜎(𝑊 𝑥(𝑡)+𝑈 ℎ(𝑡−1)+𝑏 ) (24)
+𝑧 𝑧 𝑧
+ℎ̃(𝑡)=tanh(𝑊 𝑥(𝑡)+𝑈 (𝑟(𝑡)⊙ℎ(𝑡−1))+𝑏 ) (25)
+ℎ ℎ ℎ
+ℎ(𝑡)=(1−𝑧(𝑡))⊙ℎ(𝑡−1)+𝑧(𝑡)⊙ℎ̃(𝑡) (26)
+Here, 𝑥(𝑡) is the current input. ℎ(𝑡−1) represents the hidden state from the previous time step. 𝜎 is the sigmoid activation function.
+𝑊 , 𝑊, 𝑊 , 𝑈 , 𝑈 and 𝑈 are weight matrices, 𝑏 , 𝑏 and 𝑏 are bias terms, ⊙ denotes the Hadamard product.
+𝑧 𝑟 ℎ 𝑧 𝑟 ℎ 𝑧 𝑟 ℎ
+The key hyperparameters in the GRU model, such as dropout rate, typically require manual tuning. This process is not only
+time-consuming but also overly reliant on experience, making it prone to local optima. Therefore, adjusting the hyperparameters
+of the GRU model is crucial for enhancing its predictive performance. To address this, a novel BKA-GRU method is proposed to
+automatically determine the optimal hyperparameter combination for the GRU model.
+Two critical hyperparameters for the GRU model are the layer size and dropout rate. The layer size determines the learning and
+representational capacities of the model. A larger layer size allows the model to capture more complex patterns but may lead to
+overfitting, especially when the dataset is small. Conversely, a smaller layer size might cause underfitting, preventing the model from
+capturing intricate patterns in the data. Besides, adjusting the dropout rate helps find the optimal level of regularization to reduce
+the model’s reliance on training data. If the dropout rate is too high, the model’s learning capacity may be suppressed; if too low, it
+may lead to overfitting. The optimal values for layer size and dropout rate are often not apparent and may include multiple potential
+solutions. The proposed BKA-GRU model for node passage time prediction incorporates a BKA hyperparameter optimization module
+into the GRU framework. This enables a global search to identify an ideal combination of layer size and dropout rate for the GRU,
+effectively balancing model complexity and generalization capability.
+During the population initialization process of the BKA algorithm [49], the initial positions of population individuals 𝑋 are
+𝑖
+randomly generated using Eq. (27). The fitness value corresponding to each individual’s position is then evaluated based on the
+fitness function defined by Eqs. (28)–(29). The fitness value is used to measure the quality of the solution. Each individual position
+represents a hyperparameter combination in the GRU model, consisting of the hidden layer size and dropout rate. The individual
+with the highest fitness value is selected as the leader 𝑋 , as shown in Eq. (30), and guides the other individuals in exploring the
+𝐿
+solution space to ensure the breadth and effectiveness of the search.
+𝑋 =𝐵𝐾 +𝑟𝑎𝑛𝑑(𝐵𝐾 −𝐵𝐾 ) (27)
+𝑖 𝑙𝑏 𝑢𝑏 𝑙𝑏
+𝑓 =min(𝑓(𝑋)) (28)
+𝑏𝑒𝑠𝑡 𝑖
+√
+𝑓(𝑋)=
+√
+√ √1 ∑
+𝑛′
+(
+𝑦 −𝑦̂
+)2
+(29)
+𝑖 𝑛′ 𝑖 𝑖
+𝑖=1
+𝑋 =𝑋(𝑓𝑖𝑛𝑑(𝑓 ==𝑓(𝑋))) (30)
+L 𝑏𝑒𝑠𝑡 i
+Here, 𝑖 represents an integer ranging from 1 to the total population size 𝑝𝑜𝑝, while 𝐵𝐾 and 𝐵𝐾 denote the lower and upper
+𝑙𝑏 𝑢𝑏
+bounds for the black-winged kite’s position. 𝑟𝑎𝑛𝑑 is a randomly selected value within the range [0,1]. 𝑓(𝑥) is defined as the error
+𝑖
+value calculated by using the BKA-GRU time prediction model. 𝑓 represents the individual with the best fitness value. 𝑛′ denotes
+𝑏𝑒𝑠𝑡
+the total number of samples. 𝑦 the true value, 𝑦̂ the predicted value.
+𝑖 𝑖
+In the BKA optimization algorithm, each dimension 𝑗 corresponds to an individual hyperparameter to be optimized. Therefore,
+each black-winged kite’s position vector 𝑋 = [ℎ ,𝑑 ] consists of two dimensions. In the BKA, the position of an individual
+𝑖 𝑠𝑖𝑧𝑒 𝑟𝑎𝑡𝑒
+is continuously updated through three steps, namely simulating the black-winged kite’s hovering observation, rapid diving, and
+flexible adjustment of its flight posture, as shown in Eqs. (31)–(32). Specifically, the hovering phase enables extensive exploration
+of the solution space to avoid premature convergence, and the diving phase performs fine-grained local searches to rapidly approach
+the optimal solution. Meanwhile, the search strategy is flexibly adjusted based on the quality of the solution, achieving a balance
+between global exploration and local exploitation, thereby efficiently optimizing the solution space.
+{ 𝑋𝑖,𝑗+𝑛(1+sin(𝑟))×𝑋𝑖,𝑗, 𝑝<𝑟
+𝑋𝑖,𝑗 = 𝑡◦ 𝑡◦ (31)
+𝑡◦+1 𝑋𝑖,𝑗+𝑛(2𝑟−1)×𝑋𝑖,𝑗, 𝑒𝑙𝑠𝑒
+𝑡◦ 𝑡◦
+𝑛=0.05×𝑒−2×( 𝑇 𝑡◦ ◦)2 (32)
+9
+
+--- PAGE 10 ---
+J. Wei et al. Simulation Modelling Practice and Theory 146 (2026) 103223
+Here, 𝑋𝑖,𝑗 and 𝑋𝑖,𝑗 represent the position of the 𝑖th black-winged kite in the 𝑗th dimension at the 𝑡◦-th and 𝑡◦+1-th iterations,
+𝑡◦ 𝑡◦+1
+respectively. 𝑟 is a random number in the range [0,1], 𝑝 is a constant, 𝑇◦ denotes the total number of iterations, 𝑡◦ the current
+iteration number.
+The migratory behavior of the black-winged kite further optimizes population migration through dynamic leader strategy
+adjustments. When the population fitness is poor, the leader relinquishes its role and joins the random population, while a new
+leader is determined based on fitness values. Conversely, when fitness is high, the leader continues to guide the population forward.
+This strategy ensures successful migration and adaptability of the population, as described by Eqs. (33)–(34).
+⎧ 𝐗𝑖,𝑗+𝐶(0,1)× ( 𝑋𝑖,𝑗−𝐿𝑗 ) , 𝐹𝑗 <𝐹𝑗
+𝑋𝑖,𝑗 = ⎪ 𝑡◦ ( 𝑡◦ 𝑡◦ ) 𝑖 𝑟𝑖 (33)
+𝑡◦+1 ⎨ 𝑋𝑖,𝑗+𝐶(0,1)× 𝐿𝑗 −𝑚×𝑋𝑖,𝑗 , 𝑒𝑙𝑠𝑒
+⎪ 𝑡◦ 𝑡◦ 𝑡◦
+⎩
+𝑚=2×sin(𝑟+𝜋∕2) (34)
+Here, 𝐿𝑗 indicates the optimal position of the 𝑗th dimension of the black-winged kite in the 𝑡◦-th iteration. 𝑋𝑖,𝑗 and 𝑋𝑖,𝑗
+𝑡◦ 𝑡◦ 𝑡◦+1
+represent the positions of the 𝑖th black-winged kite in the 𝑗th dimension at the 𝑡◦-th and 𝑡◦+1-th iterations, respectively. 𝐹𝑗 represents
+𝑖
+the fitness value of any black-winged kite’s current position in the 𝑗th dimension during the 𝑡◦-th iteration, 𝐹𝑗 indicates the fitness
+𝑟𝑖
+value of any black-winged kite’s any random position of the 𝑗th dimension during the 𝑡◦-th iteration.
+In the BKA, the selection of the optimal solution is achieved by comparing the fitness value of the individual’s new position
+with that of the historical best position. Specifically, if the fitness value of the new position is better than that of the historical best
+position for each individual, the global optimal solution 𝑋 and its corresponding optimal fitness value 𝑓 are updated. Otherwise,
+𝐿 𝑏𝑒𝑠𝑡
+the historical best solution remains unchanged, as shown in Eq. (35). Through this mechanism, the algorithm iteratively optimizes
+in each generation, ensuring that the population moves closer to the global optimal solution and ultimately outputs the globally
+optimal position and its corresponding fitness value.
+{ 𝑋 =𝑋𝑖,𝑗 ,𝑓 =𝑓(𝑋𝑖,𝑗 ), 𝑋𝑖,𝑗 ≤𝐿𝑗
+𝐿 𝑡◦+1 𝑏𝑒𝑠𝑡 𝑡◦+1 𝑡◦+1 𝑡◦ (35)
+𝑋 =𝐿𝑗 ,𝑓 =𝑓(𝐿𝑗 ), 𝑒𝑙𝑠𝑒
+𝐿 𝑡◦ 𝑏𝑒𝑠𝑡 𝑡◦
+The pseudo-code for predicting node passage time using the BKA-GRU model is shown in Algorithm 1.
+Algorithm 1 BKA-GRU time prediction model
+1:Input 𝐵𝑎𝑡𝑐ℎ𝑠𝑖𝑧𝑒, 𝑠𝑒𝑞𝑢𝑒𝑛𝑐𝑒𝑙𝑒𝑛𝑔𝑡ℎ, 𝑖𝑛𝑝𝑢𝑡𝑠𝑖𝑧𝑒, learning rate, window size 𝑇, and the number of epochs 𝐸; population size 𝑝𝑜𝑝, the maximum number of iterations 𝑇𝑚𝑎𝑥,
+and the variable dimension 𝑑𝑖𝑚.
+2:Data processing and using the training set.
+3:Initialization of the position of black-winged kites, and evaluation of the objective function expressed by Eq. (24).
+4:Calculate the fitness value of each black-winged kite through Eqs.(25)-(26).
+5:while 𝑡<𝑇𝑚𝑎𝑥 do
+6: Simulate the attack behavior of black-winged kites to continuously update individual positions by Eqs. (28)-(29).
+7: The migratory behavior of black-winged kites further optimizes population migration by Eqs. (30)-(31).
+8: Update the optimal value by Eq. (32).
+9:end while
+10:Return best solution.
+11:Use the best BKA parameters to build and compile the GRU model.
+12:for epoch = 1 to 𝐸 do
+13: for 𝑡=1∶𝑠𝑒𝑞𝑢𝑒𝑛𝑐𝑒𝑙𝑒𝑛𝑔𝑡ℎ do
+14: GRU for predictive model training through Eqs.(20)-(23).
+15: Compute the predicted output and loss.
+16: Update weights by performing time back propagation.
+17: end for
+18: Calculate validation loss and apply early stopping if necessary.
+19:end for
+20:Evaluate the model on the test set and make predictions.
+21:return BKA-GRU time prediction result.
+The workflow of the BKA-GRU node passage time prediction model is illustrated in Fig. 3. Firstly, passage data collected at
+subway station nodes, such as gates and stairs, is preprocessed and divided into training, validation, and testing sets. Next, the
+BKA is used to optimize two key hyperparameters in the GRU model, namely hidden layer size and dropout rate, by continuously
+searching for the optimal combination of these parameters to minimize the prediction error of the GRU-trained model. Subsequently,
+the optimal hyperparameter combination generated by BKA, along with the training data, is fed into the GRU to train the node
+passage time prediction model. Finally, the BKA-GRU model with accurate time prediction capability is obtained.
+In the process of predicting gate passage time using the BKA-GRU model, factors such as passenger heterogeneity, passenger
+quantity [50], gate width, and the number of gates are primarily used as model inputs [51]. For stair passage time prediction, inputs
+mainly include passenger heterogeneity, passenger quantity, the number of stairs, stair types, stair lengths, and stair widths [52], as
+shown in Fig. 4. The node passage time prediction model enhances the accuracy and speed of passage time calculations, providing
+effective support for optimizing firefighting routes. Besides, the key variable of the number of passengers is introduced to capture the
+congestion and traffic interference that occur when multiple firefighters and passengers traverse the same node, thereby reflecting
+the resource competition between routes.
+10
+
+--- PAGE 11 ---
+J. Wei et al. Simulation Modelling Practice and Theory 146 (2026) 103223
+Fig. 3. Flowchart of the BKA-GRU node passage time prediction model.
+Fig. 4. Inputs of the passage time prediction model for nodes.
+3.3. Comprehensive evaluation method for firefighting effect
+In fire scenarios, optimizing firefighting routes within subway stations is a critical aspect of ensuring passenger safety and
+efficient rescue operations. Passenger safety, as the core evaluation criterion during emergency firefighting and rescue efforts, is
+significantly influenced by various factors. Firstly, exposure to high temperatures may result in severe burns or even fatalities.
+Secondly, the accumulation of toxic gases poses substantial risks of poisoning or asphyxiation. Furthermore, fire-induced poor
+visibility and crowding significantly increase the probability of secondary injuries, such as falls or collisions. These risks are
+particularly severe in narrow subway passages or bottleneck areas like stairs, where large-scale casualties are more likely to occur. In
+addition, crowding not only decreases evacuation efficiency but also extends firefighting routes, thereby compromising firefighting
+effectiveness. It also interacts with factors such as the physical exertion of rescue personnel and the rate of fire spread, creating a
+complex interdependence. To address these challenges, this study incorporates quantitative metrics of firefighter walking distance
+𝐿∙, passenger safety risks 𝑅∙, and congestion density 𝐶∙, as illustrated in Fig. 5. A cost function, as expressed in Eq. (36), is
+developed within a multidimensional evaluation framework to systematically assess the dynamic relationship between firefighting
+route optimization and passenger evacuation effectiveness [53].
+𝐽∙=𝐴 ∗𝐿∙+𝐵 ∗𝑅∙+𝐶 ∗𝐶∙ (36)
+1 1 1
+(1) Firefighting distance factor 𝐿∙
+𝐿∙ comprehensively considers the total walking distance of the firefighting team during the firefighting process, normalized to a
+value between [0,1], as defined in Eq. (37). The shorter the walking distance, the larger the value of 𝐿∙, indicating better performance
+of the firefighting route in terms of path distance.
+𝐿 − ∑𝑚 ∑𝑛 ∑𝑛 𝑑 𝑥 +𝐿
+𝐿∙= max 𝑟=1 𝑖=0 𝑗=0 𝑖𝑗 𝑖𝑗𝑟 min (37)
+𝐿
+max
+11
+
+--- PAGE 12 ---
+J. Wei et al. Simulation Modelling Practice and Theory 146 (2026) 103223
+Fig. 5. Structure diagram of comprehensive evaluation index of firefighting effect.
+(2) Passenger safety risk factor 𝑅∙
+𝑅∙ comprehensively considers the risks to passenger escape safety caused by CO concentration, smoke visibility, and air
+temperature due to the fire, as defined in Eqs. (38)–(42). The lower the CO concentration and air temperature, and the higher
+the smoke visibility, the larger the value of 𝑅∙, indicating the better performance of the firefighting route in terms of passenger
+safety. 𝑅∙ represents the quantified value of passenger safety risk within a single time step [53].
+𝜒
+𝜏 𝑡∙+𝜏 𝜈∙+𝜏 𝑐∙
+𝑅∙ = 1 2 3 (38)
+𝜒 𝜏 +𝜏 +𝜏
+1 2 3
+∑𝑐 𝑡̇ max−𝑡̇ 𝑔+𝑡̇ min
+𝑡∙=
+𝑔=1 𝑡̇
+max (39)
+𝑐
+∑𝑐 𝑣̇𝑔
+𝑣∙= 𝑔=1 𝑣̇max (40)
+𝑐
+∑𝑐 𝑐̇max−𝑐̇𝑔
+𝑐∙= 𝑔=1 𝑐̇max (41)
+𝑐
+∑𝑡 𝑅∙
+𝑅∙= 𝜒=1 𝜒 (42)
+𝑡
+By introducing the importance 𝐼 as shown in Eq. (43), the importance of the temperature factor coefficient 𝜏 , the visibility factor
+𝑘 1
+coefficient 𝜏 , and the CO concentration factor coefficient 𝜏 can be analyzed, and the weighting coefficients can be obtained [53].
+2 3
+𝜃
+𝐼 = 𝑘 (43)
+𝑘 𝜃
+𝑘+1
+Here, 𝑘 takes the values 1 and 2, respectively. The smaller the 𝑘, the greater the importance. The importance levels of three
+factors are compared based on actual conditions, where 𝜃 represents the most important weight, 𝜃 represents a relatively important
+1 2
+weight, and 𝜃 represents a less important weight. The constructed factor importance is shown in Table 2.
+3
+Based on the values in the importance table, 𝜃 is defined by Eqs. (44)–(45).
+3
+∑ 2 ( ∏ 2 𝐼 )= ∑2 𝑘=1 𝜃 𝑘 (44)
+𝑘 𝜃
+𝑘=1 𝑖=𝑘 3
+2 2
+∑∏
+𝜃 =(1+ ( 𝐼 ))−1 (45)
+3 𝑘
+𝑘=1 𝑖=𝑘
+(3) Passenger congestion factor 𝐶∙
+The congestion factor primarily considers the total congestion time of passengers during the evacuation process, defined by
+Eq. (46) [53].
+∑𝑜 𝐶 m ′ ax−𝐶𝑢 ′′
+𝐶∙= 𝑢=1 𝐶m ′ ax (46)
+𝑜
+12
+
+--- PAGE 13 ---
+J. Wei et al. Simulation Modelling Practice and Theory 146 (2026) 103223
+Table 2
+Factor importance degree.
+𝐼 𝑘 Description
+1 The former is as important as the latter.
+1.25 The former is slightly more important than the latter.
+1.5 The former is somewhat more important than the latter.
+2 The former is significantly more important than the latter.
+4. Solving method for robust optimization model
+4.1. Peer model conversion
+To effectively solve the robust optimization model for firefighting routes shown in Eq. (7), it is necessary to transform the
+infinite constraints in the original model into finite constraints, thereby converting the semi-infinite programming problem into
+an optimization problem with explicitly convex constraints. By introducing appropriate variables or approximating uncertainties,
+the problem can be reformulated into a finite number of convex constraints [54], preserving the robustness of the solution while
+avoiding the computational difficulties associated with directly solving a semi-infinite programming problem. In this paper, the
+box-intersection polytope is chosen as the uncertainty set primarily due to its simple mathematical structure and convexity, which
+make the robust optimization problem solvable and easy to handle. This uncertainty set effectively captures the uncertainties in both
+the travel time of firefighting personnel and the firefighting time. The use of the box intersection polytope enables the transformation
+of the original model into an optimization problem with finite constraints, ensuring both solvability and computational efficiency.
+This provides a rational solution for developing optimal firefighting routes that exhibit robust characteristics.
+This section defines the fluctuation sets of travel time and firefighting time in Eqs. (21)–(22) as the intersection of a box and a
+polyhedron, as shown in Eqs. (47)–(48) [54].
+{ }
+∑
+𝑍 𝑡 𝑟= 𝛽∈R𝐿∶| | | 𝛽𝑙| | | ≤1, | | | 𝛽𝑙| | | ≤𝛤 𝑡 𝑟,𝑙∈[𝐿] (47)
+𝑙∈𝐿
+{ }
+∑
+𝑍 𝑓 𝑟 = 𝛼∈R𝜙∶| | | 𝛼𝜙| | | ≤1, 𝜙∈Q | | | 𝛼𝜙| | | ≤𝛤 𝑓 𝑟,𝜙∈[Q] (48)
+Taking the fluctuation set of firefighting travel time shown in Eq. (47) as an example, its cone representation is shown in Eq. (49).
+𝑍𝑟= { 𝛽∈R𝐿∶𝐻 𝛽+ℎ ∈𝐺1,𝐻 𝛽+ℎ ∈𝐺2} (49)
+𝑡 1 1 2 2
+𝐺 ∗ 1= ( ( 1 2 { ) ) [ 𝐻 𝐻 𝑦; 1 2 𝑡 𝛽 𝛽 ] = = ∈ [ [ 𝛽 𝛽 R ; ; 𝐿 0 0 ] ] × , , ℎ ℎ R 1 2 ∶ = = 𝑡 [ [ ≥ 0 0 𝐿 𝐿 ‖ × × 𝑦 1 1 ‖ ; ; 1 1 𝛤 } ] 𝑡 𝑟 , . ] a , n a d n d 𝐺 𝐺 1 2 = = { [ { 𝑦 [ ; 𝑦 𝑡 ; ] 𝑡 ∈ ]∈ R R 𝐿 𝐿 × × R R ∶ ∶ 𝑡≥ 𝑡≥ ‖𝑦 ‖ ‖ 𝑦 ∞ ‖1 } } , , t t h h e e r r e e f f o o r r e e t t h h e e d d u u a a l l c c o o n n e e o o f f 𝐺 𝐺 1 2 is is 𝐺 ∗ 2=𝐺1.
+This infinite constraint defined by Eq. (13) can be represented by a cone constraint system defined by Eq. (50) in terms of the
+variable 𝑥 , 𝑤𝑠, and 𝑠=1,2 [55].
+𝑖𝑗
+⎧∑ 2
+⎪ ℎ 𝑠 𝑧𝑠+𝑡 𝑖𝑗 𝑥 𝑖𝑗𝑟 ≤𝑇 𝑖𝑗𝑟
+⎪𝑠=1
+⎪ ⎨∑ 2
+(𝐻 𝑧𝑠) =𝑇 −𝑡 𝑥
+(50)
+⎪ 𝑠 𝑙 𝑖𝑗𝑟 𝑖𝑗 𝑖𝑗𝑟
+⎪𝑠=1
+⎪𝑧𝑠∈𝐺𝑠, 𝑠=1,2
+⎩ ∗
+Let 𝜑1=[𝜆 ;𝜋 ], 𝜑2=[𝜆 ;𝜋 ], where [𝜆 ;𝜋 ]∈𝐺1, [𝜆 ;𝜋 ]∈𝐺2. Among them, 𝜆 and 𝜆 are L-dimensional vectors, and 𝜋 and
+1 1 2 2 1 1 ∗ 2 2 ∗ 1 2 1
+𝜋 are one-dimensional vectors. Substitute 𝐻 and ℎ into Eq. (50), therefore the semi-infinite constraint defined by Eq. (13) can be
+2 𝑠 𝑠
+represented by the cone quadratic constraint system of 𝜆 , 𝜆 , 𝜋 , 𝜋 and 𝑥 , specifically represented by Eqs. (51)–(53).
+1 2 1 2 𝑖𝑗
+𝜋 +𝛤𝑟𝜋 +𝑡 𝑥 ≤𝑇 , 𝑖∈𝑁 𝑗∈𝑁 (51)
+1 𝑡 2 𝑖𝑗 𝑖𝑗𝑟 𝑖𝑗𝑟
+( 𝜆 +𝜆 ) =𝑇 −𝑡𝑙 𝑥 , 𝑖∈𝑁 𝑗∈𝑁 𝑙∈𝐿 (52)
+1 2 𝑙 𝑖𝑗𝑟 𝑖𝑗 𝑖𝑗𝑟
+‖ ‖ 𝜆 1 ‖ ‖1 ≤𝜋 1 , ‖𝜆 2‖∞ ≤𝜋 2 (53)
+Here, 𝜋 ∈R, 𝜋 ∈R, 𝜆 ∈R𝐿, 𝜆 ∈R𝐿.
+1 2 1 2
+Furthermore, 𝜋 ≥ 𝜋̄ ≡ ‖𝜆 ‖ and 𝜋 ≥ 𝜋̄ ≡ ‖𝜆 ‖ can be obtained by eliminating the variables 𝜋 and 𝜋 for each feasible
+1 1 ‖ 1‖1 2 2 ‖ 2‖∞ 1 2
+solution mentioned above. The resulting solution remains feasible by replacing 𝜋̄ and 𝜋̄ with 𝜋 and 𝜋 . The auxiliary constraints
+1 2 1 2
+defined by Eq. (13) can be transformed into Eqs. (54)–(55) by introducing auxiliary variables 𝜁 =𝜆 and 𝜇=𝜆 [55,56].
+1 2
+𝐿
+∑
+| | | 𝜉𝑙| | | +𝛤 𝑡 𝑟m 𝑙 ax| | | 𝜇𝑙| | | +𝑡 𝑖𝑗 𝑥 𝑖𝑗𝑟 ≤𝑇 𝑖𝑗𝑟 (54)
+𝑙∈𝐿
+13
+
+--- PAGE 14 ---
+J. Wei et al. Simulation Modelling Practice and Theory 146 (2026) 103223
+𝜉𝑙+𝜇𝑙=𝑇 −𝑡𝑙 𝑥 , 𝑖∈𝑁 𝑗∈𝑁 𝑙∈𝐿 (55)
+𝑖𝑗𝑟 𝑖𝑗 𝑖𝑗𝑟
+Similarly, the auxiliary constraint defined by Eq. (14) can be transformed into Eqs. (56)–(57).
+Q
+∑
+𝜙∈Q | | | 𝜓𝜙| | | +𝛤 𝑓 𝑟m 𝜙 ax| | | 𝜔𝜙| | | +𝑡 𝑓𝑖 𝑥 𝑖𝑟 ≤𝑇 𝑓𝑖𝑟 (56)
+𝜓𝜙+𝜔𝜙=𝑇 −𝑡𝜙𝑥 , 𝜙∈Q 𝑖∈𝑁𝑓 (57)
+𝑓𝑖𝑟 𝑓𝑖 𝑖𝑟
+Based on the above, the solvable equivalent model of the robust optimization model for firefighting routes in subway stations
+proposed in Section 3.1 can be defined by Eq. (58), and the constraints can be defined by Eqs. (59)–(67).
+𝑍=min ( R 𝑓̄ +R 𝑓̄ +R 𝑓̄) (58)
+1 1 2 2 3 3
+∑∑
+s.t. 𝑥 ≥1, ∀𝑖∈𝑁𝑓 (59)
+𝑖𝑗𝑟
+𝑟∈𝑅𝑗∈𝑁
+∑
+𝑥 =1, ∀𝑟∈𝑅 (60)
+0𝑗𝑟
+𝑗∈𝑁𝑓
+∑
+𝑥 =1, ∀𝑟∈𝑅 (61)
+𝑖0𝑟
+𝑖∈𝑁𝑓
+∑ ∑
+𝑥 − 𝑥 =0, ∀𝑟∈𝑅 ∀𝑖∈𝑁 (62)
+𝑖𝑗𝑟 𝑗𝑖𝑟
+𝑗∈𝑁 𝑗∈𝑁
+𝑎 +𝛾̇ ×𝑡2
+𝑡 = 0𝑖 𝑖𝑟 (63)
+𝑓𝑖 𝜀̇×𝑒
+𝐿
+∑
+| | | 𝜉𝑙| | | +𝛤 𝑡 𝑟m 𝑙 ax| | | 𝜇𝑙| | | +𝑡 𝑖𝑗 𝑥 𝑖𝑗𝑟 ≤𝑇 𝑖𝑗𝑟 (64)
+𝑙∈𝐿
+Q
+∑
+𝜙∈Q | | | 𝜓𝜙| | | +𝛤 𝑓 𝑟m 𝜙 ax| | | 𝜔𝜙| | | +𝑡 𝑓𝑖 𝑥 𝑖𝑟 ≤𝑇 𝑓𝑖𝑟 (65)
+𝑎 ≤𝑡 ≤𝑏 , 𝑗∈𝑁𝑓 𝑟∈𝑅 (66)
+𝑗 𝑗𝑟 𝑗
+√
+𝑎 −𝑎
+𝑏 =
+max 0𝑗
+(67)
+𝑗 𝛾̇
+4.2. Model solving
+After the equivalent transformation, the robust optimization model for the firefighting routes of subway station staff, as shown in
+Eq. (58), can be solved by invoking the Gurobi [57] solver. However, due to the high complexity of the transformations involving
+the firefighting route decision variables, the computation process may require a significant amount of time. To further improve
+the solution efficiency, this paper leverages the strengths of IVYA [58] both global search and local optimization, integrating it
+with Gurobi to solve the optimization model. This optimized solving strategy enables the model to converge quickly to the global
+optimum, ensuring that the firefighting route plans exhibit greater robustness and effectively adapt to various uncertainties in the
+environment.
+The process of solving the robust optimization model for firefighting routes using Gurobi and IVYA is illustrated in Fig. 6. Firstly,
+Gurobi is employed to solve the robust optimization component, returning adjusted values for travel time 𝑡̃ and firefighting time
+𝑖𝑗
+𝑡̃ , which enhance the adaptability of the firefighting plan to uncertain environments. Next, the updated time values are fed back
+𝑓𝑖
+into the IVYA algorithm for a new round of iterative optimization. Finally, the termination conditions are checked. If the conditions
+are not met, the process continues in a loop; otherwise, the globally optimal firefighting plan is returned.
+IVYA takes the initial population positions as the candidate set for the solution of the firefighting route optimization model
+defined by Eq. (58), and initializes the positions of population individuals in the search space through Eq. (68). IVYA coordinates
+the orderly design of population growth rates through Eqs. (69)–(70) [58].
+𝐼 =𝐼 +𝑟𝑎𝑛𝑑(1,𝐷′)⊙(𝐼 −𝐼 ),𝑖=1,…,𝑁𝑝𝑜𝑝 (68)
+𝑖 min max min
+𝛥𝜈̃(𝑡′+1)=𝑟𝑎𝑛𝑑2⊙(𝑁(1,𝐷′)⊙𝛥𝜈̃(𝑡′)) (69)
+𝑖 𝑖
+𝑑𝜈̃(𝑡′)
+=𝜓′⋅𝜈̃(𝑡′)⋅𝜑′(𝜈̃(𝑡′)) (70)
+𝑑𝑡′
+Here, rand(1,𝐷′) represents a vector of 𝐷′ dimensional uniformly distributed random numbers. 𝐼 and 𝐼 are the upper and
+max min
+lower bounds of the search space, respectively. 𝑣̃ is the growth rate, 𝜓′ is the growth speed, 𝜑′ is the correction coefficient for
+14
+
+--- PAGE 15 ---
+J. Wei et al. Simulation Modelling Practice and Theory 146 (2026) 103223
+Fig. 6. Flow chart for solving the robust optimization model of firefighting route.
+biased growth. The vectors 𝛥𝑣̃(𝑡′) and 𝛥𝑣̃(𝑡′+1) represent the growth rates of the discrete-time system at time 𝑡′ and time 𝑡′+1,
+𝑖 𝑖
+respectively. 𝑟𝑎𝑛𝑑2 is the random number of a random variable. 𝑁(1,𝐷′) represents a random vector with dimension 𝐷. The ivy plant
+grows toward sunlight by seeking attachment surfaces, gradually expanding to cover the forest. Through a competition mechanism,
+the strongest individuals in the population survive. The update rule is shown in Eq. (71), where the growth rate calculation is
+defined by Eq. (72).
+𝐼𝑛𝑒𝑤=𝐼+∣𝑁(1,𝐷′)∣⊙(𝐼 −𝐼)+𝑁(1,𝐷′)⊙𝛥𝜈̃,𝑖=1,2,…,𝑁𝑝𝑜𝑝 (71)
+𝑖 𝑖 𝑖𝑖 𝑖 𝑖
+{
+𝐼 ⊘(𝐼 −𝐼 ), 𝐼𝑡𝑒𝑟=1
+𝛥𝜈̃ = 𝑖 𝑚𝑎𝑥 𝑚𝑖𝑛 (72)
+𝑖 𝑟𝑎𝑛𝑑2⊙(𝑁(1,𝐷′)⊙𝛥𝜈̃), 𝐼𝑡𝑒𝑟>1
+𝑖
+Here, the operation ‘‘𝑢⊘𝑣’’ is the Hadamard division of vector 𝑢 by vector 𝑣. The IVYA follows a process where an individual
+member 𝐼 performs local optimization after a global search by following the best member 𝐼 in the population to search for a
+𝑖 𝑏𝑒𝑠𝑡
+better solution nearby. Its update rule is shown in Eq. (73). Then, the new value of the growth rate 𝛥𝑣̃𝑛𝑒𝑤 for the current individual
+𝑖
+𝐼𝑛𝑒𝑤 is calculated by Eq. (74).
+𝑖
+𝐼𝑛𝑒𝑤=𝐼 ⊙(𝑟𝑎𝑛𝑑(1,𝐷′)+𝑁(1,𝐷′)⊙𝛥𝜈̃) (73)
+𝑖 𝐵𝑒𝑠𝑡 𝑖
+𝛥𝜈̃𝑛𝑒𝑤=𝐼𝑛𝑒𝑤⊕(𝐼 −𝐼 ) (74)
+𝑖 𝑖 𝑚𝑎𝑥 𝑚𝑖𝑛
+To simulate the two alternating stages of climbing and expanding in the life of the ivy plant in the IVYA, the following decision
+method is used: When the objective function value 𝑓(𝐼) of member 𝐼 is less than 𝑓(𝐼 ) and the parameter 𝛽=(2+rand)∕2 times,
+𝑖 𝑖 𝑏𝑒𝑠𝑡
+the ivy plant starts to expand the width of branches and leaves according to Eq. (71); otherwise, the ivy plant grows and climbs
+upward according to Eq. (73).
+Although the IVYA algorithm is a metaheuristic optimization method, all decision variables in the optimization modeling
+framework are discrete with 0 and 1, and the constraints are well-defined. Therefore, given the same initial parameters and
+constraints, the algorithm consistently converges to the same optimal solution, demonstrating high repeatability and stability. To
+15
+
+--- PAGE 16 ---
+J. Wei et al. Simulation Modelling Practice and Theory 146 (2026) 103223
+Fig. 7. 3D simulation model of subway station and schematic diagram of fire point location.
+further confirm this property, we performed multiple independent runs of the algorithm, and the results showed identical solutions
+with no fluctuations in the objective function values, indicating the stability and determinism of the model’s solutions.
+5. Case study
+To verify the effectiveness of the firefighting route optimization model proposed in this paper, we conducted a simulation study
+using Liaoyang East Road Subway Station in Qingdao, China, as the case study scenario. Qingdao Liaoyang East Road Station
+was selected as a case study based on the following considerations. First, as a transfer station with high passenger flow and typical
+passenger characteristics, it can effectively reflect the requirements for firefighting route optimization under complex passenger flow
+conditions. In addition, the station’s intricate structure, including multiple platforms and stairways, allows the model’s applicability
+and effectiveness to be fully demonstrated under complex multi-node, multi-channel, and multi-path conditions. Choosing this station
+as a validation case highlights the model’s generalizability and practical value in the complex subway station scenarios.
+During the simulation process, PyroSim software was used to simulate the fire evolution trends in the subway station, while
+Pathfinder software was employed to simulate passenger evacuation behavior under fire conditions. The station structure and fire
+point locations are shown in Fig. 7. The fire simulation in this study follows the requirements of the Standard for fire protection
+design of metro (GB 51298-2018). Smoke-resistant zoning was implemented within the station interior, and mechanical smoke
+exhaust and supply air systems were installed in each smoke-resistant zone. Smoke control and air supply between the platform and
+hall levels were achieved by calculating the required mechanical exhaust and supply air volumes. This design effectively maintains
+pressure differentials within the smoke-resistant zones, limiting smoke diffusion and ensuring the rationality and reliability of the
+PyroSim simulation results under fire scenarios. Since this study focuses on firefighting and rescue scenarios in subway stations and
+does not involve train operations, the platform screen doors remain closed throughout the simulation, and it is assumed that trains
+will not stop at the station in the event of a fire.
+Table 3 further presents the relevant parameters of the fire scenario. Among these parameters, the rescue value 𝑚 , decay
+𝑗
+coefficient 𝑙 , and right time window 𝑏 were obtained based on Eqs. (4)–(5) and Eq. (16). The fire radiation growth coefficient
+𝑗 𝑗
+was set to a medium-speed fire 𝛾̇, that was 𝛾̇ =0.011KW∕s2. The firefighting efficiency 𝜀̇ was defined as the sum of the firefighting
+efficiency of personnel and the efficiency of the sprinkler system, that was 𝜀̇ =0.167KW/s [44,59]. In this study, if the evacuation
+node and the fire node are on the same floor, 𝜉̇ =1; if they are one floor apart, 𝜉̇ =0.7; and if they are two floors apart, 𝜉̇ =0.4.
+According to the simulation experiment settings, each fire point is constrained to be handled by only one firefighting team.
+16
+
+--- PAGE 17 ---
+J. Wei et al. Simulation Modelling Practice and Theory 146 (2026) 103223
+Table 3
+Input parameters for fire scenario.
+Fire point Initial thermal Firefighting Degradation Left time Right time Area (m2)
+radiation (KW) value (𝑚 𝑗) coefficient (𝑙 𝑗) window (s) window (s)
+Fire point 1 2.5 125.9132 0.4 0 212.667 1
+Fire point 2 6 76.5767 0.1667 0 212.5604 1
+Fire point 3 2.6 70.471 0.3846 0 212.6457 1
+Fire point 4 1.5 28.6811 0.6667 0 212.8807 1
+Fire point 5 2 16.6444 0.5 0 212.7739 1
+Fire point 6 2.7 36.9813 0.3704 0 212.6243 1
+Fig. 8. Convergence analysis of node passage time prediction model.
+According to the classification criteria of fire types [60], the fire scenario is identified as a major fire based on the number of fire
+points and heat radiation data set in the case. Therefore, each firefighting team in the subway station consists of eight members.
+5.1. Analysis of node passage time prediction results
+Based on the constructed passenger gate and stair simulation system, different evacuation scenarios of the subway station were
+simulated and analyzed to obtain passenger traffic data in different scenarios, provide data sets for the BKA-GRU node passage
+time prediction model, and then provide a time calculation basis for the firefighting route optimization model. For the passenger
+traffic simulation system at the gate, 90 sets of simulation experiments with different scenario parameters were designed, and valid
+sample data under the corresponding scenarios were obtained. Among them, 36 samples were randomly selected as training sets, 27
+samples were selected as validation sets, and 27 samples were selected as test sets. For the passenger traffic simulation system at the
+stairs, 96 sets of simulation experiments with different scenario parameters were carried out, 48 samples were randomly selected
+as training sets, 29 samples were selected as validation sets, and 19 samples were selected as test sets. In the prediction experiment
+using the BKA-GRU, the initial population size was set to 5 and the maximum number of iterations was set to 50.
+Fig. 8 shows the change of the fitness function value of the passage time prediction model at the stairs and gates with the number
+of iterations. It can be seen that, whether at the stairs or the gates, the fitness value of the time prediction model gradually decreases
+with an increase in the number of iterations, and effectively converges to a better solution.
+Fig. 9 presents the comparison between the true values and predicted values of node passage time in the training set, validation
+set, and test set. It can be observed that the predicted values of the BKA-GRU model exhibit a high level of consistency with the
+true values across all three datasets, with minimal deviation between them. This indicates that the model can accurately capture
+the variation patterns of passage time, demonstrating strong predictive capability and generalization performance. It can provide
+high-precision time parameter support in complex emergency scenarios.
+Fig. 10 presents the calibration curves of the prediction model under the training set, validation set, and test set. It can be
+observed that the scatter points are closely distributed along the diagonal line 𝑦=𝑥, and the slope of the fitting line is close to 1,
+indicating a high degree of consistency between the predicted and true values. For the gate area, the coefficient of determination
+reaches 0.97385 and 0.97359 in the validation set and test set, respectively. For the stair area, the coefficient of determination
+reaches 0.98861 and 0.98192 in the validation set and test set, respectively. This further demonstrates that the BKA-GRU model
+can explain most of the data variability, possesses strong predictive capability, and can accurately compute the node passage time
+included in the total firefighting travel time.
+Fig. 11 presents the distribution of the MAE and MAPE of the time prediction model on the validation and test sets, respectively.
+As observed, the BKA-GRU model maintains low MAE and MAPE values for both gates and stairs in both phases, demonstrating high
+17
+
+--- PAGE 18 ---
+J. Wei et al. Simulation Modelling Practice and Theory 146 (2026) 103223
+Fig. 9. Comparison of true value and predicted value in the training set, validation set, and test set.
+Fig. 10. Calibration curves of the BKA-GRU model under the training set, validation set, and test set.
+fitting accuracy and stability in predicting passage time under fire conditions. The BKA is employed to optimize the hyperparameters
+in GRU, allowing it to more effectively capture the dynamic characteristics of passage time in fire environments, thereby significantly
+reducing prediction bias and enhancing the robustness of the strategy.
+Comparisons with traditional models such as GRU, SVR, BP, and RF indicate that the BKA-GRU model exhibits significant
+advantages in predicting both gate and stair passage time, achieving notably lower error values than the other models in terms of
+MAE and MAPE. These results demonstrate that the proposed model is not only robust in capturing nonlinear and time-dependent
+features but also accurate in representing the uncertainty of passage time under fire conditions. It provides reliable support for
+the precise prediction of firefighting travel time and greatly enhances the accuracy and stability of the robust optimization model.
+Overall, the outstanding performance of the BKA-GRU model establishes a solid data foundation for firefighting route optimization
+planning and emergency decision-making in subway station fire scenarios.
+5.2. Performance analysis of model solutions
+The Gurobi-IVYA proposed in this paper is the core method for solving the robust optimization model of firefighting routes. To
+verify the computational efficiency of this algorithm, this study selects the genetic algorithm (GA), simulated annealing (SA), and ant
+colony optimization (ACO) as alternative algorithms to IVYA for comparative analysis of the model-solving results. This study adopts
+the convergence time benchmark test method, using a preset fitness threshold to quantitatively compare the convergence speeds
+18
+
+--- PAGE 19 ---
+J. Wei et al. Simulation Modelling Practice and Theory 146 (2026) 103223
+Fig. 11. Error performance of different models on the validation and test sets.
+of these four solving algorithms under the same convergence criteria. Specifically, a clearly defined fitness function value target is
+set, which reflects the expected optimal solving quality in the robust optimization problem of firefighting routes. Subsequently, the
+four aforementioned solving algorithms are independently used to solve this target optimization problem. Finally, the computation
+time required for each algorithm to reach or exceed the fitness threshold for the first time is recorded. Through this approach, the
+solving speeds for different algorithms in addressing the same problem are quantified and compared, thereby providing a scientific
+basis for algorithm selection.
+To ensure the fairness and accuracy of the experimental results, all numerical simulations were conducted in the MATLAB
+programming environment, using a computer with the configuration of an Intel(R) Core(TM) i5-8265U CPU @ 1.60 GHz 1.80 GHz.
+The robust model-solving problem was solved by calling the Gurobi solver through the MATLAB interface. During the experiment,
+the default configuration of Gurobi’s computational parameters was maintained to prevent any impact on the experimental results
+from parameter adjustments. Fig. 12 presents the convergence time obtained by solving the model using IVYA, SA, ACO, and GA.
+It is clearly observed that IVYA has the fastest convergence speed, while GA is the slowest. This indicates that IVYA can reach
+the preset fitness threshold more quickly and exhibits superior solving efficiency when solving the robust optimization model for
+firefighting routes in subway station fire scenarios. Therefore, the IVYA algorithm is selected to solve the objective function shown
+in Eq. (58).
+In the objective function of firefighting route optimization given in Eq. (58), the path cost weight  , labor cost weight  ,
+1 2
+and firefighting value weight  directly determine the relative importance of each indicator, thereby influencing the direction
+3
+of the optimization results and the final objective value. Fig. 13 presents the sensitivity analysis results of the weight values. As
+the path cost weight  increases, the optimization results tend to favor shorter routes, while the firefighting value and labor
+1
+costs may be somewhat constrained. This analysis provides important insights for decision-makers, helping them adjust the weights
+based on actual needs to formulate the optimal firefighting route strategy. When the labor cost weight  increases, the system
+2
+prioritizes controlling personnel resource consumption, tending to select solutions with higher path cost  or lower firefighting
+1
+19
+
+--- PAGE 20 ---
+J. Wei et al. Simulation Modelling Practice and Theory 146 (2026) 103223
+Fig. 12. Comparison of solving speed for different model solving algorithms.
+Fig. 13. Relationship between total cost and weight factor.
+value  . When the firefighting value weight  is fixed, the objective function first increases and then decreases with the labor
+3 3
+cost weight  , indicating that there is an optimal weight combination that minimizes the objective function. Besides, increasing
+2
+the firefighting value weight  enhances the priority of protecting critical passenger evacuation areas but may also increase overall
+3
+costs. Overall, the relationship between total cost and weight factors provides intuitive guidance for adjusting weights in practical
+applications. Decision-makers can flexibly adjust the relative importance of these three weight factors based on specific scenarios,
+resource constraints, emergency levels, and firefighting efficiency. For example, in resource-constrained situations, increasing the
+path cost weight  and labor cost weight  can help minimize costs. Conversely, in cases where high-value or critical areas are
+1 2
+involved, prioritizing an increase in the firefighting value weight  would be preferable.
+3
+In order to further explore the relationship between the model solution value and the three weights, this section selects three cases
+( ) ( ) ( ) ( ) ( ) ( )
+of weight combinations R , R , R = 1,0,0 , R , R , R = 0,0,1 and R , R , R = 0.4,0.1,0.5 , namely, the
+1 2 3 1 2 3 1 2 3
+robust optimization model considering only the path cost, only the firefighting value, and the balance of the three, to solve the
+model shown in Eq. (58), and the route results are shown in Fig. 14. The firefighting routes obtained by considering only the path
+cost, the firefighting value, and the cost trade-off are all composed of three firefighting teams, which carry out firefighting along
+routes 1, 2, and 3, respectively. It should be pointed out that the total length of the firefighting route obtained by considering only
+the path cost, only the firefighting value, and the cost trade-off is shown in Fig. 15.
+20
+
+--- PAGE 21 ---
+J. Wei et al. Simulation Modelling Practice and Theory 146 (2026) 103223
+Fig. 14. Firefighting path results.
+Fig. 15. Total length of firefighting route under different firefighting strategies.
+To investigate the fire extinguishing conditions in the subway station under three different firefighting strategies, simulations
+were conducted using PyroSim. The variations in temperature, visibility, and CO concentration in the subway station under different
+firefighting strategies were obtained, as shown in Fig. 16. It should be noted that the data extraction was performed by establishing
+monitoring points and slices at a height of 1.6 m above the ground on both the concourse and platform levels, which approximately
+corresponds to the height of the human eye.
+21
+
+--- PAGE 22 ---
+J. Wei et al. Simulation Modelling Practice and Theory 146 (2026) 103223
+Fig. 16. The change of temperature, visibility and CO concentration over time under different firefighting strategies.
+As shown in Fig. 16, compared to the firefighting strategies obtained under the other two weight settings, the strategy derived
+by considering only the path cost results in higher air temperature and CO concentration, as well as lower visibility, creating a
+harsher evacuation environment for passengers. Therefore, when minimizing only the path cost, the selected firefighting route may
+be relatively efficient in terms of time and resource consumption but may fail to promptly extinguish fire points that significantly
+impact passenger evacuation. Meanwhile, if the strategy focuses solely on maximizing firefighting effectiveness and providing
+passengers with a safer evacuation environment, the designated firefighting route may be excessively long, leading to negative
+effects on firefighters, including increased physical and mental strain, equipment wear, safety risks, and longer response time. By
+comprehensively considering path cost, firefighting value, and human cost, these negative impacts can be effectively mitigated.
+To more intuitively assess the overall fire evolution in the subway station under three different firefighting strategies, snapshots
+22
+
+--- PAGE 23 ---
+J. Wei et al. Simulation Modelling Practice and Theory 146 (2026) 103223
+Fig. 17. Snapshots of temperature, visibility, and CO concentration in subway stations under different firefighting strategies.
+of temperature, visibility, and CO concentration in the station were captured at 100 s, 200 s, 300 s, 400 s, and 500 s, as shown in
+Fig. 17. Considering results in Figs. 15 to 17, the firefighting strategies obtained through different weight designs have their own
+emphases. In practical applications, the weights should be reasonably adjusted according to specific needs to formulate an efficient
+firefighting strategy that balances multiple objectives.
+5.3. Integration of firefighting route and passenger evacuation effectiveness analysis
+To further compare the effectiveness of three firefighting strategies, the fire evolution parameters obtained using PyroSim were
+imported into the subway station passenger evacuation simulation system built with Pathfinder to evaluate the evacuation effects
+under corresponding scenarios. In the Pathfinder software, the passenger input parameters and their composition ratios [61] are
+shown in Table 4. To better analyze the effects of different firefighting routes, different total passenger quantities were set for
+comparative analysis. The number of passengers distributed at the subway station concourse and platform levels is shown in Table
+5.
+Fig. 18 presents the total evacuation time under different firefighting strategies and different numbers of passengers, correspond-
+ing to the firefighting strategies obtained by considering only the firefighting value, the path cost, and the cost trade-off. It can be
+observed that, for the same number of passengers to be evacuated, the total evacuation time required under the firefighting strategy
+considering only the path cost is the longest, while the total evacuation time corresponding to the firefighting strategies obtained
+by considering only the firefighting value and the cost trade-off is relatively similar. To further analyze the impact of different
+firefighting strategies on passenger evacuation efficiency, Fig. 19 presents the number of people remaining in the station under
+different firefighting strategies and different numbers of passengers. It can be seen that in the initial stage of evacuation, the three
+firefighting strategies have little impact on the number of remaining passengers in the station at the same time point. However, as
+23
+
+--- PAGE 24 ---
+J. Wei et al. Simulation Modelling Practice and Theory 146 (2026) 103223
+Table 4
+Input parameters for fire scenario.
+Passenger type Speed (m/s) Body radius (cm) Proportion (%)
+Mean Deviation Mean Deviation
+Adult female 1.79 0.25 20 0.06 35
+Adult male 1.95 0.25 25 0.1 35
+Elderly 1.41 0.25 25 0.06 10
+Adult with children 0.95 0.25 0.37 0.2 5
+Passengers with large luggage 1.26 0.25 0.4 0.06 5
+Passengers with small luggage 1.4 0.25 0.35 0.15 10
+Table 5
+Passenger quantity distribution at the subway station concourse and platform levels.
+Total number of The number of people The number of people on The number of people on
+people on the concourse level the platform level of Line 2 the platform level of Line 4
+800 200 400 200
+1100 300 500 300
+1400 400 500 500
+1700 500 700 500
+Fig. 18. Total evacuation time under different firefighting strategies and different numbers of passengers.
+time progresses, the firefighting strategies obtained by considering only the firefighting value and the cost trade-off can significantly
+reduce the number of people remaining in the station. This result indicates that the firefighting routes obtained by considering the
+firefighting value have a significant positive effect on improving passenger evacuation efficiency, further verifying their importance
+in fire emergency response.
+Fig. 20 further presents simulation snapshots of passenger evacuation trajectory distributions under different firefighting
+strategies. It should be noted that this section takes the evacuation of 800 passengers and 1400 passengers as representative cases,
+with the trajectory colors indicating passenger movement speed. By comparison, it can be observed that under the firefighting
+strategy considering only the path cost, passenger evacuation speed in certain areas of the platform is significantly lower, increasing
+the risk of local congestion. In contrast, under the firefighting strategies obtained by considering only the firefighting value and
+the cost trade-off, the evacuation speed of passengers in the core areas of the platform improves, effectively alleviating local
+congestion and providing passengers with a safer and more efficient evacuation pathway. Together with Figs. 18–20, this intuitively
+24
+
+--- PAGE 25 ---
+J. Wei et al. Simulation Modelling Practice and Theory 146 (2026) 103223
+Fig. 19. The number of people remaining in the station under different firefighting strategies and different numbers of passengers.
+Fig. 20. Snapshot of the evacuation speed of 800 and 1400 passengers under different firefighting strategies.
+demonstrates the significant positive effect of firefighting value on improving passenger evacuation efficiency in the formulation of
+firefighting strategies.
+Fig. 21 presents a comparative analysis of the distribution of the total congestion time of individuals and the maximum continuous
+congestion time of individuals during passenger evacuation under the three firefighting strategies obtained by considering only path
+cost, only firefighting value, and a trade-off between cost and firefighting value. The results indicate that under the firefighting
+strategy considering only path cost, the distribution of the total congestion time of individuals is more dispersed, with significantly
+extreme high values. In contrast, under the firefighting strategies obtained by considering only firefighting value and the cost trade-
+off, the distribution of the total congestion time of individuals is more concentrated and stable. This suggests that the strategy
+considering only firefighting value performs better in reducing extreme congestion and improving evacuation stability. Regarding
+the maximum continuous congestion time of individuals, the maximum continuous congestion time under the firefighting strategy
+considering only firefighting value is lower than that under the strategy considering only path cost, while the maximum continuous
+congestion time under the strategy obtained through the cost trade-off is lower than that under the strategy considering only
+firefighting value. This further indicates that a firefighting strategy focusing on firefighting value can more effectively reduce the
+maximum continuous congestion time of individuals, thereby significantly enhancing overall evacuation efficiency. It is worth noting
+that as the total number of evacuated passengers increases, the positive impact of firefighting value on overall evacuation efficiency
+becomes more pronounced.
+25
+
+--- PAGE 26 ---
+J. Wei et al. Simulation Modelling Practice and Theory 146 (2026) 103223
+Fig. 21. Comparative analysis of total congestion time of individuals and maximum continuous congestion time.
+To further evaluate the effectiveness of different firefighting routes, we conducted a comparative analysis of the cost function
+values 𝐽∙ as shown in Eq. (36). This section defines the weight of the firefighting distance factor 𝐴 =0.4, the weight of the passenger
+1
+safety risk factor 𝐵 =0.5, and the weight of the passenger congestion factor 𝐶 =0.1 in Eq. (36).
+1 1
+To better analyze the relative importance of temperature, visibility, and CO concentration in the passenger safety risk factor,
+this section takes stair 4 as an example and examines the temporal variation trends of CO concentration, temperature, and smoke
+visibility under the three firefighting strategies obtained by considering only path cost, only firefighting value, and a trade-off
+between cost and firefighting value. The results are shown in Fig. 22. As observed in the figure, the visibility under all three
+firefighting strategies is below 10 m. When visibility falls below 10 m, smoke severely impairs passengers’ visual judgment, making
+it difficult or even erroneous to choose an evacuation direction, significantly affecting evacuation efficiency and safety. Therefore,
+visibility is assigned the highest weight in the cost function. Regarding temperature, it rises rapidly in the early stages of the fire.
+However, under the firefighting strategies obtained by considering only firefighting value and the cost trade-off, the temperature is
+generally controlled below 30 ◦C, whereas under the strategy considering only path cost, the maximum temperature remains stable
+below 50 ◦C. It is noteworthy that when the ambient temperature exceeds 65 ◦C, human physiological conditions deteriorate rapidly,
+significantly reducing evacuation capability. Nevertheless, within a safe range, the immediate impact of temperature on evacuation
+path selection is relatively minor. Therefore, the importance of temperature is ranked below visibility, and its weight in the cost
+function is set at a medium level. In terms of CO concentration, the concentration exhibits a slow upward trend. The CO concentration
+is nearly zero under the firefighting strategies obtained by considering only firefighting value and the cost trade-off, while the
+maximum CO concentration remains below 0.0012 mol/mol under the strategy considering only path cost. Studies have shown that
+when the CO concentration is below 0.1%, it is essentially harmless to humans, whereas when it exceeds 0.25%, it poses a severe
+life-threatening risk. Compared to visibility and temperature, the harmful effects of CO concentration have a certain delay, making
+its impact on immediate evacuation path selection weaker. Therefore, CO concentration is assigned the lowest importance, and its
+weight in the cost function is set at the lowest level. In summary, visibility holds the highest importance during the evacuation,
+followed by temperature, and finally CO concentration, that is 𝜏 >𝜏 >𝜏 , 𝜃 =𝜏 , 𝜃 =𝜏 , 𝜃 =𝜏 , and 𝐼 =1.5, 𝐼 =1.25.
+2 1 3 2 1 2 1 3 3 1 1
+Accordingly, 𝜏 =0.303, 𝜏 =0.455 and 𝜏 =0.242 are calculated based on Eqs. (43)–(45).
+1 1 1
+Table 6 compares the results of multiple indicators under three different firefighting plans. Through a comparative analysis of
+the performance of the three firefighting strategies obtained by considering only path cost, only firefighting value, and a trade-off
+between cost and firefighting value under different passenger numbers, it is found that all strategies can control the environmental
+safety of the subway station to a certain extent. However, the firefighting routes obtained through cost trade-offs demonstrate a
+significant advantage in reducing congestion time, as shown in 23(b), indicating that the robust optimization model for firefighting
+routes proposed in this study is effective in improving passenger evacuation efficiency and safety. Although the strategy considering
+only firefighting value performs well in enhancing firefighting efficiency and improving visibility, the firefighting strategy obtained
+through cost trade-offs slightly outperforms in overall evaluation indicators, as shown in 23(c). In contrast, while the strategy
+considering only path cost performs well in reducing the travel distance of firefighters, as shown in 23(a), its contribution to overall
+safety improvement and evacuation efficiency is limited.
+6. Conclusions
+This paper focuses on the optimization of firefighting routes for subway stations during fires to enhance passenger evacuation
+efficiency and safety. To address challenges such as limited rescue resources, complex firefighting routes, and restricted evacuation
+26
+
+--- PAGE 27 ---
+J.
+Wei
+et
+al.
+Table 6
+Quantitative value of comprehensive evaluation results of firefighting effect.
+Thetotalnumberof 800 1100 1400 1700
+passengers
+Firefightingstrategy Considering Considering Cost Considering Considering Cost Considering Considering Cost Considering Considering Cost
+onlythe onlythe trade-off onlythe onlythe trade-off onlythe onlythe trade-off onlythe onlythe trade-off
+pathcost firefighting pathcost firefighting pathcost firefighting pathcost firefighting
+value value value value
+Firefightingdistance 0.9658 0.8771 0.9658 0.9658 0.8771 0.9658 0.9658 0.8771 0.9658 0.9658 0.8771 0.9658
+factor 𝐿∙
+Passengersafetyrisk 0.6858 0.7369 0.7065 0.6858 0.7369 0.7065 0.6858 0.7369 0.7065 0.6858 0.7369 0.7065
+factor 𝑅∙
+Passengercongestion 0.9356 0.9488 0.9476 0.9321 0.9433 0.9444 0.933 0.9428 0.9432 0.9096 0.9155 0.9196
+factor 𝐶∙
+Thecomprehensive 0.8417 0.8497 0.8548 0.8403 0.8475 0.8535 0.8407 0.8473 0.853 0.8313 0.8364 0.84
+evaluationresultof
+firefighting effect 𝐽∙
+27
+Simulation
+Modelling
+Practice
+and
+Theory
+146
+(2026)
+103223
+
+--- PAGE 28 ---
+J. Wei et al. Simulation Modelling Practice and Theory 146 (2026) 103223
+Fig. 22. The change of temperature, visibility, and CO concentration with time at stair 4.
+Fig. 23. Quantitative value of the comprehensive evaluation result of firefighting effect.
+28
+
+--- PAGE 29 ---
+J. Wei et al. Simulation Modelling Practice and Theory 146 (2026) 103223
+efficiency, a robust optimization model for firefighting routes is developed, centered on firefighting value. The model incorporates
+a box-intersection polytope uncertainty set to describe fluctuations in travel time and firefighting time, improving the practicality
+of firefighting strategies. It employs the BKA optimization algorithm to enhance the GRU algorithm for calculating passage time at
+nodes such as gates, improving the efficiency and accuracy of time calculations in route optimization. Coupled simulations using
+PathFinder and PyroSim analyze the effectiveness of different firefighting routes. Simulation results show that the comprehensive
+evaluation score of the firefighting strategy, considering route costs, labor costs, and firefighting value, reaches 0.84, demonstrating
+optimal performance. The node passage time prediction errors, RMSE, are 0.97359 and 0.98192, indicating high model accuracy.
+After implementing the firefighting strategy, the temperature at the stairs drops below 30 ◦C, and the CO concentration decreases to
+below 0.0002 mol/mol. The proposed robust optimization model for firefighting routes effectively reduces fire risks and significantly
+improves passenger evacuation efficiency and safety.
+This study proposes a robust optimization method for firefighting routes in subway station fire scenarios. However, certain
+limitations remain. First, the model requires real-time computation during the solution process. Although computational efficiency
+has been substantially improved through the introduction of an enhanced algorithm structure and robust constraint design, its
+online responsiveness in extremely complex scenarios still requires further optimization. Second, the experimental validation was
+primarily conducted in a simulation environment. While the structure and fire evolution parameters of an actual subway station
+were referenced, a gap remains between the model and real-world fire emergency scenarios. Moreover, the model’s performance
+depends to some extent on the completeness and accuracy of input data, and real-time data collection in fire environments
+remains subject to uncertainty. Future research could further assess and refine the model’s dynamic adaptability and stability by
+integrating data from field emergency drills or multi-source sensor information. Additionally, exploring dynamic update methods
+that combine multi-source heterogeneous data with online learning mechanisms to enhance the model’s predictive accuracy and
+generalization capability under complex and uncertain conditions represents a promising direction for future work. Furthermore,
+explicitly incorporating the dynamic decline in firefighters’ operational effectiveness could improve the model’s practical relevance
+and predictive accuracy.
+Declaration of competing interest
+The authors declare that they have no known competing financial interests or personal relationships that could have appeared
+to influence the work reported in this paper.
+Acknowledgments
+This work is supported by the National Natural Science Foundation of China under Grant 62373209, the Shandong Province
+Higher Education Youth Innovation Team Project under Grant 2023KJ119, and the Taishan Scholar Young Expert Program of
+Shandong Province under Grant tsqn202507218.
+Data availability
+Data will be made available on request.
+References
+[1] X. Yang, M. Zhou, H. Dong, Passenger emergency evacuation in subway station systems: a bibliometric analysis and systematic review, IEEE Trans. Intell.
+Transp. Syst. 25 (2024c) 12912–12929.
+[2] J.L. Chen, X.M. Zhang, Q. Xu, J.Y. Li, Statistical analysis and countermeasures of subway fire accidents at home and abroad, Build. Saf. 36 (2021) 46–51.
+[3] K. McGrattan, B. Klein, S. Hostikka, J. Floyd, Fire Dynamics Simulator (Version 5) User’s Guide, National Institute of Standards and Technology,
+Gaithersburg, MD, 2007.
+[4] X. Wang, B. Liu, W. Ma, Y. Feng, Q. Li, T. Sun, Simulations on evacuation strategy and evacuation process of the subway train under the fire, Fire 7
+(2024a) 464.
+[5] F.V. Kubinyecz, C. Teodosiu, Verification of ventilation system efficiency in a curved subway tunnel in case of fire using numerical modeling, in: 2021
+10th International Conference on Energy and Environment, CIEM, IEEE, 2021, pp. 1–5.
+[6] F. Tang, L.H. Hu, L.Z. Yang, Z.W. Qiu, X.C. Zhang, Longitudinal distributions of CO concentration and temperature in buoyant tunnel fire smoke flow in
+a reduced pressure atmosphere with lower air entrainment at high altitude, Int. J. Heat Mass Transfer 75 (2014) 130–134.
+[7] M. Tsukahara, Y. Koshiba, H. Ohtani, Effectiveness of downward evacuation in a large-scale subway fire using fire dynamics simulator, Tunn. Undergr.
+Space Technol. Inc. Trenchless Technol. Res. 26 (2011) 573–581.
+[8] X. Wang, B. Liu, W. Ma, Y. Feng, Q. Li, T. Sun, Simulations on evacuation strategy and evacuation process of the subway train under the fire, Fire 7
+(2024b) 464–464.
+[9] Y. Yu, Y.Y. Chu, Q.X. Zhang, D. Liang, Numerical study on smoke exhaust in large-scale underground public buildings, in: 2014 7th International Conference
+on Intelligent Computation Technology and Automation, IEEE, 2014, pp. 406–408.
+[10] D. Ruan, X. Lou, S. Huang, M. Hu, Simulation study on emergency evacuation of pedestrians affected by water invasion on subway platform, in: International
+Conference on Computational & Experimental Engineering and Sciences, Springer, 2024, pp. 915–928.
+[11] P. Kachroo, S.J. Al-Nasur, S.A. Wadoo, A. Shende, Pedestrian Dynamics: Feedback Control of Crowd Evacuation, Springer Science & Business Media, 2008.
+[12] A. Borrmann, A. Kneidl, G. Köster, S. Ruzika, M. Thiemann, Bidirectional coupling of macroscopic and microscopic pedestrian evacuation models, Saf. Sci.
+50 (2012) 1695–1703.
+[13] L. Henderson, The statistics of crowd fluids, Nature 229 (1971) 381–383.
+[14] X. Yang, Q. Wang, Crowd hybrid model for pedestrian dynamic prediction in a corridor, IEEE Access 7 (2019) 95264–95273.
+29
+
+--- PAGE 30 ---
+J. Wei et al. Simulation Modelling Practice and Theory 146 (2026) 103223
+[15] S. Xue, F. Claudio, X. Shi, T. Li, Revealing the hidden rules of bidirectional pedestrian flow based on an improved floor field cellular automata model,
+Simul. Model. Pr. Theory 100 (2020) 102044.
+[16] Q. Zou, D.S. Fernandes, S. Chen, Agent-based evacuation simulation from subway train and platform, J. Transp. Saf. Secur. 13 (2021) 318–339.
+[17] X. Yang, Q. Wang, T. Liu, A fuzzy-theory-based social force model for studying the impact of alighting area width on alighting and boarding behaviors,
+IEEE Access 8 (2020a) 28595–28606.
+[18] L. Zhang, N. Gao, J. Li, X. Dai, B. Song, Modeling and simulation of subway station emergency evacuation based on improved social force model, in:
+2020 IEEE 5th Information Technology and Mechatronics Engineering Conference, ITOEC, IEEE, 2020, pp. 10–14.
+[19] X. Yang, X. Yang, Q. Wang, Y. Kang, F. Pan, Guide optimization in pedestrian emergency evacuation, Appl. Math. Comput. 365 (2020b) 124711.
+[20] X. Yang, R. Zhang, F. Pan, Y. Yang, Y. Li, X. Yang, Stochastic user equilibrium path planning for crowd evacuation at subway station based on social
+force model, Phys. A 594 (2022c) 127033.
+[21] L. Huang, J. Gong, W. Li, T. Xu, S. Shen, J. Liang, Q. Feng, D. Zhang, J. Sun, Social force model-based group behavior simulation in virtual geographic
+environments, ISPRS Int. J. Geo-Inf. 7 (79) (2018).
+[22] Y. Zhang, W. Li, Y. Rui, S. Wang, H. Zhu, Z. Yan, A modified cellular automaton model of pedestrian evacuation in a tunnel fire, Tunn. Undergr. Space
+Technol. 130 (2022) 104673.
+[23] J. Hu, L. You, H. Zhang, J. Wei, Y. Guo, Study on queueing behavior in pedestrian evacuation by extended cellular automata model, Phys. A 489 (2018)
+112–127.
+[24] A. Trivedi, S. Rao, Agent-based modeling of emergency evacuations considering human panic behavior, IEEE Trans. Comput. Soc. Syst. 5 (2018) 277–288.
+[25] Y. Deng, W. Liu, Q. Zhang, Z. Zhang, Implementation and application of a stochastic agent-based model for passenger flow distribution predicting in
+planned metro station service disruption scenario, in: 2022 IEEE 25th International Conference on Intelligent Transportation Systems, ITSC, IEEE, 2022,
+pp. 2252–2257.
+[26] S. Sharma, K. Ogunlana, D. Scribner, J. Grynovicki, Modeling human behavior during emergency evacuation using intelligent agents: A multi-agent
+simulation approach, Inf. Syst. Front. 20 (2018) 741–757.
+[27] F. Wang, Multi-scenario simulation of subway emergency evacuation based on multi-agent, Int. J. Simul. Model. 20 (2021) 387–397.
+[28] X. Yang, W. Dai, Y. Li, X. Yang, An efficient evacuation path optimization for passengers in subway stations under floods, Tunn. Undergr. Space Technol.
+143 (2024a) 105473.
+[29] X. Yang, J. Wan, H. Zhu, C.Z.T. Xie, B. Zhang, Optimization of passenger evacuation path in flood scenarios considering companion behaviors, Simul.
+Model. Pr. Theory (2025c) 103212.
+[30] X. Yang, Y. Yang, Y. Li, X. Yang, Path planning for guided passengers during evacuation in subway station based on multi-objective optimization, Appl.
+Math. Model. 111 (2022a) 777–801.
+[31] L. Sun, G. Yuan, L. Yao, L. Cui, D. Kong, Study on strategies for alighting and boarding in subway stations, Phys. A 583 (2021b) 126302.
+[32] X. Yang, R. Zhang, Y. Li, F. Pan, Passenger evacuation path planning in subway station under multiple fires based on multiobjective robust optimization,
+IEEE Trans. Intell. Transp. Syst. 23 (2022b) 21915–21931.
+[33] T. Zhang, R. Han, Numerical study on the influence of subway platform air curtains on smoke diffusion, Case Stud. Therm. Eng. 50 (2023) 103439.
+[34] Z. Liu, R. Zou, Dynamic evacuation path planning for subway station fire based on iaco, J. Build. Eng. 86 (2024) 108828.
+[35] N.V. Sahinidis, Optimization under uncertainty: state-of-the-art and opportunities, Comput. Chem. Eng. 28 (2004) 971–983.
+[36] H. Sun, Y. Wang, Y. Xue, A bi-objective robust optimization model for disaster response planning under uncertainties, Comput. Ind. Eng. 155 (2021a)
+107213.
+[37] R. Herding, E. Ross, W.R. Jones, V.M. Charitopoulos, L.G. Papageorgiou, Stochastic programming approach for optimal day-ahead market bidding curves
+of a microgrid, Appl. Energy 336 (2023).
+[38] P. Soofi, M. Yazdani, M. Amiri, M.A. Adibi, Robust fuzzy-stochastic programming model and meta-heuristic algorithms for dual-resource constrained flexible
+job-shop scheduling problem under machine breakdown, IEEE Access 9 (2021) 155740–155762.
+[39] V. Gabrel, C. Murat, A. Thiele, Recent advances in robust optimization: an overview, European J. Oper. Res. 235 (2014) 471–483.
+[40] X. Yang, H. Zhu, J. Wan, Y. Li, Z. Chen, Adaptability-enhanced evacuation path optimization and safety assessment for subway station passengers in
+floods: From uncertain challenge to reliable escape, Tunn. Undergr. Space Technol. 163 (2025d) 106683.
+[41] H. Li, D. Yu, Y. Zhang, Y. Yuan, A two-stage robust optimization model for emergency service facilities location–allocation problem under demand
+uncertainty and sustainable development, Sci. Rep. 15 (2895) (2025).
+[42] M. Liu, Research on Optimization of Personnel Evacuation under Fire Scenarios in Subway Stations (Master’s thesis), Xi’an University of Technology, 2024.
+[43] H. Wang, Z. Zhang, C. Yang, Z. Wang, Multi-objective firefighting and rescue task planning for uav swarms based on an improved abc algorithm, Fire
+Sci. Technol. 42 (2023) 838–843.
+[44] Q. Liu, K. Guo, X. Wu, Z. Xiao, L. Zhang, Simulation-based rescue plan modeling and performance assessment towards resilient metro systems under
+emergency, Reliab. Eng. Syst. Saf. 241 (2024a).
+[45] Y. Shi, Y. Zhou, W. Ye, Q.Q. Zhao, A relative robust optimization for a vehicle routing problem with time-window and synchronized visits considering
+greenhouse gas emissions, J. Clean. Prod. 275 (2020) 124112.
+[46] X. Yang, Y. Yang, D. Qu, X. Chen, Y. Li, Multi-objective optimization of evacuation route for heterogeneous passengers in the metro station considering
+node efficiency, IEEE Trans. Intell. Transp. Syst. 24 (2023) 12448–12461.
+[47] K. Cho, B. van Merrienboer, Çaglar Gülçehre, F. Bougares, H. Schwenk, Y. Bengio, Learning phrase representations using rnn encoder–decoder for statistical
+machine translation, 2014, CoRR abs/1406.1078.
+[48] X. Yang, J. Wan, Y. Li, C.Z.T. Xie, B. Zhang, A knowledge-data dual-driven framework for intelligent flood evacuation in subway stations, Phys. A (2025b)
+130924.
+[49] J. Wang, W. Wang, X. Hu, L. Qiu, H. Zang, Black-winged kite algorithm: a nature-inspired meta-heuristic for solving benchmark functions and engineering
+problems, Artif. Intell. Rev. 57 (4) (2024) 98.
+[50] X. Yang, W. Dai, M. Zhou, D. Qu, Flood-induced evacuation time prediction and optimization strategy toward metro stations, IEEE Trans. Intell. Transp.
+Syst. (2025a).
+[51] X. Yang, J. Wang, Y. Kang, W. Dai, C. Cui, A passage time prediction method of gates for passengers in subway stations, in: 2024 36th Chinese Control
+and Decision Conference, CCDC, IEEE, 2024b, pp. 3080–3085.
+[52] X. Liu, J. Huang, J. Zhao, Y. Ji, X. Fan, T. Du, Predicting temporal evacuation travel time in staircases between adjacent floors of super high-rise buildings
+by artificial neural networks, J. Build. Eng. 98 (2024b) 111133.
+[53] Y. Wang, H. Yuan, J. Wang, Q. Pei, Q. Sun, Y. Zhang, L. Yang, Application of multi-objective artificial gorilla troops optimization algorithm in intelligent
+evacuation path planning for building fires, J. Build. Eng. 93 (2024c) 109757.
+[54] Y. Liu, Y. Liu, X. Bai, Robust Optimization Methods and Applications, Science Press, Beijing, 2022.
+[55] A. Ben-Tal, L. El Ghaoui, A. Nemirovski, Robust Optimization, Princeton University Press, Princeton, 2009.
+[56] R.R. Jia, X.J. Bai, Robust optimization approximation for ambiguous p-model and its application, Math. Probl. Eng. 2018 (2018) 5203127.
+[57] J. Hu, Y. Tong, X. Liu, J. Wang, Y. Xu, Multi-time scale robust optimization strategy for integrated energy systems considering refined hydrogen utilization,
+Trans. China Electrotech. Soc. 39 (2024) 1419–1435.
+30
+
+--- PAGE 31 ---
+J. Wei et al. Simulation Modelling Practice and Theory 146 (2026) 103223
+[58] M. Ghasemi, M. Zare, P. Trojovský, R.V. Rao, E. Trojovská, V. Kandasamy, Optimization based on the smart behavior of plants with its engineering
+applications: Ivy algorithm, Knowl.-Based Syst. 295 (2024) 111850.
+[59] C. Li, S. Zhao, W. Dong, J. Kang, Numerical analysis of the synergistic fire extinguishing efficiency of co and fine water mist spraying in a machine room
+2
+fire, J. Harbin Eng. Univ. (2024) 1–7.
+[60] L. Qiong, H. Renfei, Z. Limao, Simulation-based multi-objective optimization for enhanced safety of fire emergency response in metro stations, Reliab.
+Eng. Syst. Saf. 228 (2022).
+[61] H. Xu, Y. Wei, Y. Tan, Optimization of emergency evacuation in complex rail transit station, J. Build. Eng. 95 (2024) 110321–110321.
+31

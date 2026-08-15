@@ -1,0 +1,364 @@
+{
+  "schema_version": "1.0",
+  "source": "Zotero local API and local PDF attachments",
+  "record_count": 22,
+  "records": [
+    {
+      "item_key": "R9KTTSQW",
+      "role": "core_framework",
+      "item_type": "journalArticle",
+      "title": "Dynamic firefighting route planning for efficient evacuation in complex subway stations: A deep learning-enhanced robust optimization approach",
+      "creators": [
+        "Jinli Wei",
+        "Chunyue Cui",
+        "Xiaoxia Yang"
+      ],
+      "year": "2026",
+      "publication": "Simulation Modelling Practice and Theory",
+      "doi": "10.1016/j.simpat.2025.103223",
+      "abstract_note": "The enclosed spaces and high-density population in subway stations significantly complicate evacuation during fires, thus increasing the difficulty of emergency response. To enhance fire rescue capabilities, this study conducts robust optimization modeling for firefighting routes from costs of station facility layout, passenger flow distribution, smoke propagation patterns, and human resource expenditure. Firstly, the BKA-GRU deep learning method is designed to calculate passenger passage time at critical nodes such as gates, improving the rationality of firefighting route design. Secondly, a firefighting value function based on the importance of fire nodes is constructed, making the firefighting routes more conducive to efficient and safe passenger evacuation. Thirdly, a box-based intersection polyhedron uncertainty set is employed to model the uncertainties in firefighting travel time and firefighting time, enhancing the adaptability and robustness of the routes. Fourthly, the advanced Ivy algorithm combined with Gurobi is adopted to solve the developed robust optimization model, enabling rapid identification of efficient and stable firefighting routes in complex environments. Finally, both quantitative and qualitative analyses are used to comprehensively evaluate firefighting effectiveness. The results indicate that: (i) The BKA-GRU prediction model exhibits high accuracy and reliability in predicting node passage time. (ii) The robust optimization model for firefighting routes significantly reduces fire by-products, shortens passenger evacuation time, and mitigates congestion. (iii) The firefighting route design achieves significant improvements in temperature control and visibility enhancement, effectively improving the fire environment and enhancing rescue efficiency and safety. This study provides an innovative solution for fire rescue in complex environments.",
+      "pdf": null
+    },
+    {
+      "item_key": "XPJBUP4M",
+      "role": "core_framework",
+      "item_type": "journalArticle",
+      "title": "Fire simulation and evacuation optimization for metro stations with interpretability: A hybrid BIM, fire dynamics simulator and multiobjectives optimization algorithm approach",
+      "creators": [
+        "Zongbao Feng",
+        "Huiying (Cynthia) Hou",
+        "Yang Liu"
+      ],
+      "year": "2026",
+      "publication": "Journal of Building Engineering",
+      "doi": "10.1016/j.jobe.2025.114798",
+      "abstract_note": "Effective metro stations evacuation in the event of a fire is a crucial component of ensuring safe metro operations. To achieve efficient metro fire simulation and evacuation optimization in highdensity and complex metro station environments, a hybrid approach that integrates building information modeling (BIM), fire dynamics simulator (FDS) and multiobjective optimization algorithm is proposed. A BIM model of a metro station was imported into Pyrosim software for smoke simulation and Pathfinder for evacuation. An orthogonal design yielded data for hybrid algorithm optimization to seek effective evacuation measures. The applicability of this approach is verified by taking a metro station as an example. The results indicate that:(1) The proposed method can effectively simulate metro station fire and realize evacuation optimization. (2) The predictive model combined with machine learning performs well, among which the prediction accuracy of Bayesian optimization (BO) natural gradient boosting (NGBoost) is above 0.85, better than random forest (RF) and adaptive boosting (AdaBoost). SHapley Additive explanation (SHAP) is used to unveil that passenger flow and the number of exits are the most important factors in evacuation. (3) Under the premise of meeting the maximum passenger flow, the optimized evacuation objectives have been significantly improved, with improvements in evacuation time, evacuation density, and cost optimization by 31.02 %, 2.70 % and 51.41 %, respectively, and the overall improvement is 28.38 %. Hence, the proposed method can provide decision-making tools for developing effective evacuation optimization plans, while fully considering the complexity and multi-objective problems of evacuation events.",
+      "pdf": null
+    },
+    {
+      "item_key": "GMHF8A6K",
+      "role": "core_framework",
+      "item_type": "journalArticle",
+      "title": "Optimization of emergency evacuation in complex rail transit station",
+      "creators": [
+        "Hui Xu",
+        "Yuxi Wei",
+        "Yongtao Tan"
+      ],
+      "year": "2024",
+      "publication": "Journal of Building Engineering",
+      "doi": "10.1016/j.jobe.2024.110321",
+      "abstract_note": "Post-earthquake fires in populated stations pose a significant threat to passenger safety, necessitating the implementation of efficient emergency evacuation procedures to adequately safeguard lives and property. Utilizing Building Information Modeling (BIM) and Pathfinder, this study innovatively delves into the emergency evacuation optimization measures under a postearthquake fire. Three pivotal research questions are explored: a comparative analysis of the Required Safe Egress Time (RSET) versus the Available Safe Egress Time (ASET) to evaluate the safety of evacuation procedures; a focused examination of critical time points and influential factors during evacuation process; and the formulation of optimization measures to enhance evacuation efficiency. The Beijing Xiyuan rail transit station was chosen as a case study, with four post-earthquake fire scenarios simulated. Additionally, the impact of obstacles and injured personnel resulting from the earthquake was considered. The results show that: (1) During evacuations, critical issues arise at specific time points. The entrances of escalators/stairs, turnstiles, and exits are key sites, where congestion becomes critical issues. (2) Evacuating rescue personnel through public non-paid areas saves 9.1 % of the evacuation time compares to crossing turnstiles. (3) The most impactful measures for optimizing evacuation is that trains arrive in only one direction, followed by the deployment of evacuation guidance. Thus, key control time points and optimization measures for the evacuation process of complex urban rail transit stations can be obtained. The findings provide insights and guidance for optimizing emergency evacuation in rail transit stations to mitigate post-earthquake fire risks and ensure public safety.",
+      "pdf": null
+    },
+    {
+      "item_key": "ZXT3LHCP",
+      "role": "core_framework",
+      "item_type": "journalArticle",
+      "title": "Simulation-based passenger evacuation optimization in metro stations considering multi-objectives",
+      "creators": [
+        "Kai Guo",
+        "Limao Zhang"
+      ],
+      "year": "2022",
+      "publication": "Automation in Construction",
+      "doi": "10.1016/j.autcon.2021.104010",
+      "abstract_note": "Evacuation is critical for safety management due to the highly overcrowded passengers in the metro stations. A simulation-based approach integrating Random Forest (RF) and Non-dominated Sorting Genetic Algorithm III (NSGA-III) is proposed to perform the evacuation evaluation and optimization at metro stations. A 3D model of the metro station is built to simulate the dynamic process of passenger evacuation in metro stations. A framework consisting of 9 influential factors and 3 objectives is developed to model the input-output relationship in passenger evacuation. An RF-based meta-model is used to construct the relationship between influential factors and objectives. At last, NSGA-III is applied to seeking the optimal solutions for the station renovation in order to achieve a safe evacuation. A station model simulating a real metro station in Singapore is constructed to test the effectiveness and applicability of the proposed approach. It is found that (1) A safe evacuation could be achieved for the station, but along with the increasing passenger volume and panic level, the requirement of evacuation objectives, the evacuation time and density, may not be met. Especially under the high passenger volume conditions, the passenger density could reach up to 6.2 unit/m2 (extremely dangerous); (2) An average improvement degree, 7.5%, can be achieved for the optimization of 20 test cases, and a maximum improvement degree, 22.5%, can be achieved for the evacuation optimization at metro stations; (3) It could be difficult to keep both of the evacuation time and density within the standards if one major exit is closed, even after the optimization. But a larger average improvement degree, 10.8%, can be achieved by the proposed optimization approach, which indicates the optimal solutions still could reduce the risk to a great extent. The novelty of this research lies in that (a) An RF algorithm is incorporated to build the meta-model that can properly represent the relationship between influential factors and objectives, despite the complexity and even conflicting between them; (b) Optimal measures for the evacuation improvement are provided from the MOO perspective by integrating NSGA-III. This hybrid approach can be used as a decision tool to assist regulatory authorities in developing effective emergency evacuation evaluation and optimization plans with adequate consideration of the complexity and multi-objective nature under evacuation events.",
+      "pdf": null
+    },
+    {
+      "item_key": "NVCRI2G2",
+      "role": "core_framework",
+      "item_type": "journalArticle",
+      "title": "Adaptive multi-objective optimization for emergency evacuation at metro stations",
+      "creators": [
+        "Kai Guo",
+        "Limao Zhang"
+      ],
+      "year": "2022",
+      "publication": "Reliability Engineering & System Safety",
+      "doi": "10.1016/j.ress.2021.108210",
+      "abstract_note": "Evacuation is a critical issue at metro stations, where damage, or even death, could be caused due to unexpected accidents if without proper evacuation. Multi-objectives are often desired in the evacuation management, and evacuation strategies should be tailored due to the dynamic features of overcrowded passengers and high uncertainty at the metro stations. A simulation-based approach integrating Light Gradient Boosting Machine (LightGBM) and Non-dominated Sorting Genetic Algorithm III (NSGA-III) is proposed to realize the automatic evacuation evaluation and adaptive optimization at metro stations. A framework consisting of 3 objectives and 9 influential factors is developed for the evacuation evaluation and adaptive optimization. A LightGBM based meta-model is used to construct the relationship between influential factors and objectives. A LightGBM and NSGA-III integrated optimization algorithm is employed to automatically evaluate the evacuation events and seek the adaptive strategies for the station renovation in order to achieve a safe evacuation under specific conditions. A station model simulating a metro station in Singapore is constructed to test the effectiveness and applicability of the proposed approach. It is found that (1) Among 50 target station based cases, 33 failing cases (at least one of the objectives fails) are identified, and the automatic evaluation results indicate the studied metro station could successfully evacuate the passengers when the passenger volume is no more than 1000, but it is very likely to fail when a higher volume exists; (2) Adaptive optimization strategies can be found for every different scenario, and an average 24.8% of the improvement degree can be achieved for all scenarios; (3) The adaptive multi-objective optimization is more cost-effective, presenting an average cost efficiency 2.04, which is significantly higher than the average of the non-adaptive optimization cost efficiency, 0.57. The novelty of this research lies in that (a) A LightGBM-based meta-model is built to construct the relationship between desired multi-objectives and the influential factors, which lays the foundation for the evacuation management from multi-objective optimization perspective; (b) The LightGBM and NSGA-III integrated model can realize the automatic evacuation evaluation and accordingly provide the adaptive strategies under specific conditions.",
+      "pdf": null
+    },
+    {
+      "item_key": "KJBRNNEI",
+      "role": "core_framework",
+      "item_type": "journalArticle",
+      "title": "An efficient evacuation path optimization for passengers in subway stations under floods",
+      "creators": [
+        "Xiaoxia Yang",
+        "Wenkai Dai",
+        "Yongxing Li",
+        "Xiaoli Yang"
+      ],
+      "year": "2024",
+      "publication": "Tunnelling and Underground Space Technology",
+      "doi": "10.1016/j.tust.2023.105473",
+      "abstract_note": "The optimization of passenger evacuation paths in subway stations under flood scenarios plays an important role in improving evacuation efficiency and ensuring escape safety. Considering the impact of evacuation network failures such as gates on path planning, a two-stage passenger evacuation path optimization method under flood scenarios of subway stations is established with the objectives of minimizing total evacuation time, risk, and congestion. The black widow algorithm is proposed to optimize the BP neural network model to predict the travel time of passengers at nodes, which could improve the prediction accuracy of calculating the total evacuation time. The path optimization model is solved by the NSGA-II algorithm, and the optimal Pareto solution is determined based on the minimum total cost. Taking a subway station in Qingdao, China as an example, a passenger evacuation simulation system under flood scenarios is built using PathFinder software. The effect of the path optimization strategy is comprehensively evaluated through comparative experiments. It is found that the overall evacuation optimization degree could be increased by 18.75%, by comparing the evacuation time, congestion, and risk objectives under the situations with and without path optimization strategies.",
+      "pdf": null
+    },
+    {
+      "item_key": "RSGBKACX",
+      "role": "core_framework",
+      "item_type": "journalArticle",
+      "title": "Two-stage stochastic optimization of passenger evacuation routes in metro stations considering stampede incidents",
+      "creators": [
+        "Yi Yang",
+        "Dong-Fan Xie",
+        "Xiao-Mei Zhao",
+        "Bin Jia"
+      ],
+      "year": "2025",
+      "publication": "Reliability Engineering & System Safety",
+      "doi": "10.1016/j.ress.2025.111047",
+      "abstract_note": "Stampede incidents frequently occur in densely populated metro stations during emergencies, and if not promptly addressed, they can cause more severe cascading effects, resulting in passenger injuries and even deaths. To address this issue, this study proposes a two-stage stochastic optimization model that incorporates the occurrence of unpredictable stampedes to effectively plan individualized evacuation routes for passengers. The model aims to minimize evacuation time by optimizing both the initial evacuation routes of passengers and the subsequent routes after stampede incidents, thereby mitigating passenger congestion in bottleneck areas and providing passengers with alternative destinations. By introducing auxiliary variables, the model is reformulated to reduce the constraints. The model is tested under various stampede scenarios. The results indicate that the proposed optimization strategy can significantly reduce evacuation time, as well as the density in bottleneck area of the metro station, regardless of the severity of stampede incidents. Via comprehensive sensitivity analysis, the critical factors having a significant impact on the evacuation process have been identified. This finding is expected to provide valuable insights for regulatory agencies in the effective implementation of evacuation strategies.",
+      "pdf": null
+    },
+    {
+      "item_key": "I5B7WA9Q",
+      "role": "core_framework",
+      "item_type": "journalArticle",
+      "title": "Dynamic evacuation path planning for subway station fire based on IACO",
+      "creators": [
+        "Zhaohui Liu",
+        "Ruihong Zou"
+      ],
+      "year": "2024",
+      "publication": "Journal of Building Engineering",
+      "doi": "10.1016/j.jobe.2024.108828",
+      "abstract_note": "Fire in subway stations is the most serious type of accident causing casualties, and traditional static evacuation paths are no longer able to guarantee evacuation safety. To solve this problem, this study proposes an improved ant colony algorithm (IACO), which dynamically adjusts the evacuation paths by combining the simulation results of simulation software (PyroSim), and extends the available safe evacuation time of the personnel in a limited way. First, PyroSim is used to simulate the subway station hall and platform fire scenarios with the temperature, carbon monoxide (CO) concentration, and visibility at each location, obtained from twelve sets of monitors. Improvements in the pheromone concentration and update strategy of the ant colony algorithm (ACO) can improve the accuracy and convergence speed of the algorithm. Optimal path planning is achieved by the IACO, and then evacuation paths are dynamically adjusted by comparing the time at which each monitoring point on the path reaches the human hazard thresholds. Finally, until no adjustments can be made to obtain an evacuation path that extends the available safe evacuation time for personnel in a limited way. Compared to the traditional static evacuation path, this study provides a dynamic evacuation path that takes into account the real-time changes of fires in subway stations. This dynamic evacuation path planning approach will be put into use in subway stations before the accident to provide guidance on fire safety in subway stations and to provide contingency plans for emergency evacuation.",
+      "pdf": null
+    },
+    {
+      "item_key": "75BAPU3J",
+      "role": "transfer_fire_validation",
+      "item_type": "journalArticle",
+      "title": "Smoke flow and evacuation safety in the event of fire in an underground rail transit transfer station",
+      "creators": [
+        "Jinbo Wang",
+        "Changqun Zuo",
+        "Qinghui Duan",
+        "Zhen Ma",
+        "Shenglong Gong"
+      ],
+      "year": "2025",
+      "publication": "Buildings",
+      "doi": "10.3390/buildings15173008",
+      "abstract_note": "Underground rail transit transfer stations are large-scale, complex structures with highpassenger ﬂows, making them more vulnerable to ﬁres and rescue challenges than other stations. Taking Zhongnan Road Metro Transfer Station in Wuhan as a project example, this study simulates two typical ﬁre scenarios—ﬂammable package ignition and equipment short circuits—using PyroSim to analyze changes in smoke movement, temperature, visibility, and CO concentration within the station. The required safety egress time (TRSET) was determined according to the critical threshold. Then, the critical evacuation phase time (tmove’) at each key evacuation node was calculated by working backward from TRSET. The threshold control of the open/close time nodes of the evacuation passages in the Pathﬁnder calculation was realized based on this time parameter. Based on the improved optimization algorithm method, personnel evacuation simulations are conducted to analyze evacuation characteristics, efﬁciency, and safety levels. Results show that the combustion characteristics of the ﬁre source signiﬁcantly affect the efﬁciency of passenger evacuation. The evacuation fails in Scenario 1 (ﬂammable package) but succeeds in Scenario 2 (short circuit of an elevator circuit). Safety ratings for exits A–F are Level 1 (Good), Staircase 1 is Level 2 (Qualiﬁed), Staircases 2 and 3 are Level 3 (At Risk), and Staircase 4 is Level 4 (Poor). Finally, suggestions for improvement were proposed regarding size, quantity, and layout optimization of egress staircases.",
+      "pdf": null
+    },
+    {
+      "item_key": "RQGYAQX6",
+      "role": "actual_station_experiment",
+      "item_type": "journalArticle",
+      "title": "Experimental study for investigating the pedestrian evacuation dynamics pattern in an actual full-size subway station",
+      "creators": [
+        "Chao Li",
+        "Zexuan Tian",
+        "Ruihang Yang",
+        "Tiejun Zhou",
+        "Dachuan Wang",
+        "Haibin Zhang",
+        "Zheng Liang",
+        "Bofu Liu"
+      ],
+      "year": "2025",
+      "publication": "Tunnelling and Underground Space Technology",
+      "doi": "10.1016/j.tust.2025.106962",
+      "abstract_note": "The characteristics of long evacuation distances and few exits in subway stations have posed serious challenges to safe evacuation. To understand the pedestrians’ movement patterns and evacuation behavior in the subway station, a series of full-size, real-life, and on-site evacuation experiments were conducted in the Wulichong subway station in Guiyang, China. Based on video analysis technology, the trajectory, behavior, speed, evacuation time, and heart rate (HR) of the pedestrians in each experimental condition were analyzed in detail. The main findings are: (a) After the pedestrian arrives at the concourse level from the platform level, their trajectories do not intersect significantly, and if they do not choose the ticket gates, they tend to move along the edges of the evacuation facilities. (b) Pedestrian choice behavior exhibits bounded rationality, with exit choices based on intuition, distance, and herding; with ticket-gate opening choice based on the final exit choice rather than the opening’s width. (c) The pedestrian speed at the ticket gates has a significant attenuation, but it will not decrease when the gate opening is used uniformly. The speed attenuation law follows a linear pattern in the front of the staircase at the platform level. (d) Pedestrians’ bounded rationality in exit choice prolongs evacuation time, and pedestrians may feel fatigued (HR > 160 bpm) during long-term evacuation. These conclusions further the understanding of pedestrian evacuation and provide empirical data for the design, safety, and emergency management in subway stations.",
+      "pdf": null
+    },
+    {
+      "item_key": "CIV5EXIW",
+      "role": "agent_based_station_capacity",
+      "item_type": "journalArticle",
+      "title": "Improving emergency evacuation capacity for subway stations based on agent-based modelling",
+      "creators": [],
+      "year": "2024",
+      "publication": "Construction Innovation: Information, Process, Management",
+      "doi": "10.1108/CI-04-2023-0065",
+      "abstract_note": "Modern subway transportation systems need to satisfy increasing safety demands to rapidly evacuate passengers under hazardous emergency circumstances,…",
+      "pdf": null
+    },
+    {
+      "item_key": "FBRLJGRA",
+      "role": "simulation_time_analysis",
+      "item_type": "journalArticle",
+      "title": "Data-driven mathematical simulation analysis of emergency evacuation time in smart station’s operations management",
+      "creators": [
+        "Yang Hui",
+        "Qiang Yu",
+        "Hui Peng",
+        "Ahmed Mancy Mosa"
+      ],
+      "year": "2024",
+      "publication": "PLOS ONE",
+      "doi": "10.1371/journal.pone.0298622",
+      "abstract_note": "This research establishes an emergency evacuation time model specifically designed for subway stations with complex structures. The model takes into account multiple factors, including passenger flow rate, subway facility parameters, and crowd density, to accurately assess evacuation times. It considers the impact of horizontal walking distance, flow rate, subway train size, and stair parameters on the overall evacuation process. By identifying bottleneck points such as gates, car doors, and stairs, the model facilitates the evaluation of evacuation capacity and the formulation of effective evacuation plans, particularly in multiline subway transfer stations. The good consistency is achieved between the calculated evacuation time and simulated results using the Pathfinder software (with the relative error of 5.4%). To address urban traffic congestion and enhance subway station safety, the study recommends implemented measures for emergency diversion and passenger flow control. Additionally, the research presents characteristic mathematical models for various evacuation routes by considering the structural and temporal characteristics of metro systems.",
+      "pdf": null
+    },
+    {
+      "item_key": "6NC6D3ZJ",
+      "role": "guided_path_planning",
+      "item_type": "journalArticle",
+      "title": "Path planning for guided passengers during evacuation in subway station based on multi-objective optimization",
+      "creators": [
+        "Xiaoxia Yang",
+        "Yi Yang",
+        "Yongxing Li",
+        "Xiaoli Yang"
+      ],
+      "year": "2022",
+      "publication": "Applied Mathematical Modelling",
+      "doi": "10.1016/j.apm.2022.07.024",
+      "abstract_note": "The reasonable setting of guides can directly improve the evacuation capacity in the subway station. The important role of guide assignment scheme and evacuation path planning of guided passengers is particularly prominent. Considering the distribution of passengers in the station, one contribution is that an assignment scheme of the initial number and location of guides is ﬁrstly established based on Gaussian mixture model and cost function method, so as to increase the guidance range and reduce the waste of human resources. Another contribution is that a multi-objective optimization model is developed for guide path planning and NSGA-II method is used to ﬁnd the optimal solution, which could help avoiding the evacuation bottlenecks in advance. Massmotion embedded with social force model and minimum cost model is adopted to simulate the movement of people, which is veriﬁed by the independent sample t-test in this paper. Evacuation experiments under the random distribution of passengers are carried out to demonstrate the signiﬁcance of the proposed guidance method. The results indicate that the total evacuation eﬃciency can be improved by about 13% in the scenario with guides, and the passengers’ choice of stairs/escalators is more balanced. Moreover, passengers induced by different guides can avoid reaching the same evacuation node at the same time window, which alleviates the pressure of nodes. The results could provide theoretical support for passenger safety management and even improve the service level of stations.",
+      "pdf": null
+    },
+    {
+      "item_key": "BPQDMNCP",
+      "role": "prediction_based_route_choice",
+      "item_type": "journalArticle",
+      "title": "Shortest or locally quickest? A prediction-based approach for evacuation choice simulation between multiple staircases",
+      "creators": [
+        "Ying Hua",
+        "Jincheng Zhao",
+        "Hai-Ting Li",
+        "Liping Duan"
+      ],
+      "year": "2024",
+      "publication": "Journal of Safety Science and Resilience",
+      "doi": "10.1016/j.jnlssr.2024.04.001",
+      "abstract_note": "Staircase choice is one of the most critical factors leading to the difference in pedestrian flow and evacuation routes in buildings with multiple staircases. Neither the shortest path to the building exit nor the locally quickest path to the nearest staircase can represent the natural mode of evacuation path choices for an authentic evacuation simulation. Thus, a prediction-based approach is established to predict and simulate evacuation choices, which helps to address three key issues: (1) extracting evacuation data through a controlled experiment; (2) establishing a Logit model for staircase choice prediction based on experimental data; (3) developing a prediction-based cellular automaton model. The proposed approach has achieved the coupling between choice prediction and evacuation simulation. A comparison with Pathfinder software is conducted to reveal the superiority of the prediction-based CA model for simulating staircase choice.",
+      "pdf": null
+    },
+    {
+      "item_key": "JNCRY9Q9",
+      "role": "facility_service_chain",
+      "item_type": "journalArticle",
+      "title": "Model cascading overload failure and dynamic vulnerability analysis of facility network of metro station",
+      "creators": [
+        "Yi Shen",
+        "Huang Yang",
+        "Gang Ren",
+        "Bin Ran"
+      ],
+      "year": "2024",
+      "publication": "Reliability Engineering & System Safety",
+      "doi": "10.1016/j.ress.2023.109711",
+      "abstract_note": "The existing studies mainly focused on the cascading failure of the whole metro but rarely on stations. In this paper, we map a metro station into a directed and hierarchical network, and propose a cascading overload failure model to study the network dynamic vulnerability. The passenger behavior and node load update are considered based on impedance function and mutual flow redistribution. Without changing the network topology, a flow optimization strategy is proposed to improve the network performance against cascading failure. Yuantong station of Nanjing Metro is studied. The results show the network is vulnerable and global failure occurs easily under small node tolerance. When the node tolerance excesses a critical value, the network can transit abruptly from global failure to balance state. We obtain that the critical node tolerances are 0.17 for the largest degreebased attack(LDA) and 0.19 for the largest load-based attack(LLA). The ranges of the optimal flow redistribution coefficient are identified by the flow optimization strategy, which are [0.15 0.2] for LDA and [0.2 0.25] for LLA. The result indicates that a proper guidance of passenger flow can be beneficial to the network performance while a strong intervention to passenger flow can instead increase the cascading failure risk.",
+      "pdf": null
+    },
+    {
+      "item_key": "KKYAMMMM",
+      "role": "node_queueing_dta",
+      "item_type": "journalArticle",
+      "title": "A passenger flow spatial–temporal distribution model for a passenger transit hub considering node queuing",
+      "creators": [
+        "Xin Wen",
+        "Bingfeng Si",
+        "Meng Xu",
+        "Fang Zhao",
+        "Rui Jiang"
+      ],
+      "year": "2024",
+      "publication": "Transportation Research Part C: Emerging Technologies",
+      "doi": "10.1016/j.trc.2024.104640",
+      "abstract_note": "Passenger transit hub is a quintessential complex system, characterized by intricate interactions among humans, facilities, and the surrounding environment. External disturbances often precipitate crowd congestion and safety risks. Modeling the spatial–temporal distribution of passenger flow within the hub is an important element in operational management. Prevailing research predominantly focuses on static models or monitoring data to assess the spatial–temporal characteristics of passenger flow throughout the hub. Nevertheless, few studies have been found in modeling passenger flow distribution for passenger transit hub from the vantage point of traveler behavior in the intricate ‘human-facility-environment’ complex network. Thus, this paper proposes a computational model for the passenger flow spatial–temporal distribution based on traveler behavior. First, combining consideration of critical spatial facilities and passenger flow streamlines, a passenger flow network is established. Second, the instantaneous travel times of link and node are defined while considering queuing and congestion at crucial facilities in the hub. Then, a passenger flow spatial–temporal distribution model for the passenger transit hub is constructed, which consists of dynamic route choice model and dynamic passenger flow loading model. A solution algorithm is simultaneously designed. Finally, the effectiveness of the model and algorithm are verified by a numerical example. The results show that the proposed model can effectively capture real-time congestion and the dynamic distribution of passenger flow in the hub. Therefore, this study contributes to the safety management and layout optimization of the hub, holding significant importance for improving hub operational efficiency and service levels.",
+      "pdf": null
+    },
+    {
+      "item_key": "RT65SAGN",
+      "role": "dynamic_network_loading",
+      "item_type": "journalArticle",
+      "title": "A Dynamic Network Loading Model for Hub Station Pedestrian Flow Collection and Distribution",
+      "creators": [
+        "Weihao Zheng",
+        "Ruifang Mou"
+      ],
+      "year": "2023",
+      "publication": "Mathematics",
+      "doi": "10.3390/math11173654",
+      "abstract_note": "A macro network loading model for multi-ﬂow lines, time varying, and pedestrian congestion is proposed. The station hub is abstracted as a network of different types of nodes, and the ﬂow of passengers at each node is calculated in real time for the purpose of simulating the hub’s collection and distribution process. For correct transmission of passenger ﬂow on heterogeneous networks, three types of indexes are proposed to distinguish the nodes, and the corresponding fundamental diagrams are then matched. This paper divides the update process of the dynamic network loading model into multiple processes by ﬂow lines, and improves the computational speed of the DNL model. The proposed model is applied to the simulation of passenger ﬂow collection and distribution in an actual hub station with multi-ﬂow lines. The analysis results illustrate that the model can accurately reﬂect the realistic congestion facilities and explain the formation process of high-density areas. A rolling passenger ﬂow control model based on optimal control theory is proposed. The effectiveness of the control model is veriﬁed based on simulation data.",
+      "pdf": null
+    },
+    {
+      "item_key": "T2QCZLYD",
+      "role": "crowd_prediction_control",
+      "item_type": "journalArticle",
+      "title": "Multiple-input-single-output prediction models of crowd dynamics for model predictive control (MPC) of crowd evacuations",
+      "creators": [
+        "Miguel A. Lopez-Carmona",
+        "Alvaro Paricio Garcia"
+      ],
+      "year": "2023",
+      "publication": "Transportation Research Part C: Emerging Technologies",
+      "doi": "10.1016/j.trc.2023.104268",
+      "abstract_note": "Predicting crowd dynamics in real-time may allow the design of adaptive pedestrian flow control mechanisms that prioritize attendees’ safety and overall experience. Single-Input-SingleOutput (SISO) AutoRegresive eXogenous (ARX) prediction models of crowd dynamics have been effectively used in Linear Model Predictive Controllers (MPC) that adaptively regulate the movement of people to avoid overcrowding. However, an open research question is whether Multiple-Input, State-space, and Nonlinear modeling approaches may improve MPC control performance through better prediction capabilities. This paper considers a simulated controlled evacuation scenario, where evacuees in a long corridor dynamically receive speed instructions to modulate congestion at the exits. We aim to investigate Multiple-Input-Single-Output (MISO) prediction models such that the inputs are the control action (speed recommendation) and pedestrian flow measurement, and the output is the local density of the pedestrian outflow. State-space and Input–output MISO models, linear and neural, are identified using a datadriven approach in which input–output datasets are generated from strategically designed microscopic evacuation simulations. Different estimation algorithms, including the subspace method, prediction error minimization, and regularized AutoRegressive eXogenous (ARX) model reduction, are evaluated and compared. Finally, to investigate the importance of measuring and modeling the pedestrian inflow, the case in which the models’ structure is defined as a Single-Input-Single-Output (SISO) system has been explored, where the pedestrian inflow is considered an unmeasured input disturbance. This study has important implications for the design of more effective MPC controllers for regulating pedestrian flows. We found that the prediction error minimization algorithm performs best and that nonlinear state-space modeling does not improve prediction performance. The study suggests that modeling the inner state of the evacuation process through a state-space model positively influences predicting system dynamics. Also, modeling pedestrian inflow improves prediction performance from a predefined prediction horizon value. Overall, linear state-space models have been deemed the most suitable option in corridor-type scenarios.",
+      "pdf": null
+    },
+    {
+      "item_key": "UYB3DIHS",
+      "role": "astar_method_support",
+      "item_type": "journalArticle",
+      "title": "A passage time–cost optimal A* algorithm for cross-country path planning",
+      "creators": [
+        "Yuanmin Liu",
+        "Xinyu Gao",
+        "Bo Wang",
+        "Jiaxin Fan",
+        "Qiurong Li",
+        "Wen Dai"
+      ],
+      "year": "2024",
+      "publication": "International Journal of Applied Earth Observation and Geoinformation",
+      "doi": "10.1016/j.jag.2024.103907",
+      "abstract_note": "Path planning plays a crucial role in various domains, such as autonomous driving, robot navigation, logistics and emergency rescue. In applications such as logistics distribution and emergency rescue, the passage time cost is often a key factor. Traditional path planning algorithms prioritize the shortest or cost-optimal paths while overlooking passage time efficiency. This paper proposes an improved A* algorithm for the optimal passage time cost. First, we used the analytic hierarchy process method to establish the passage time cost based on multiple topographic and geological factors. Then, we improved the heuristic function in the A* algorithm by taking the time cost as the evaluation index. Finally, the performance of the improved A* algorithm was validated under rectangular and hexagonal grid settings and compared to that of the classical A* and Dijkstra algorithms. The experimental results show that the path passage time planned with the proposed time–cost optimal A* algorithm is reduced by 20.21% and 20.08% on average compared with that of the path shortest A* algorithm under rectangular and hexagonal grids, respectively. The proposed time–cost optimal A* algorithm saves computing time by 9.08% and 44.56% under rectangular and hexagonal grids, respectively, compared to Dijkstra. The passage time costs of the paths planned by the proposed A* algorithm under hexagonal grids are reduced by 5.99%-13.98% compared to those under rectangular grids, indicating that hexagonal grids are more suitable than rectangular grids for path planning. The proposed method reduces the response time, enhances the life-saving efficiency, and minimizes casualties and property damage when determining the fastest rescue route for emergency scenarios.",
+      "pdf": null
+    },
+    {
+      "item_key": "2XRWJ6M7",
+      "role": "astar_method_support",
+      "item_type": "journalArticle",
+      "title": "Research on global path planning algorithm for mobile robots based on improved A*",
+      "creators": [
+        "Xing Xu",
+        "Jiazhu Zeng",
+        "Yun Zhao",
+        "Xiaoshu Lü"
+      ],
+      "year": "2024",
+      "publication": "Expert Systems with Applications",
+      "doi": "10.1016/j.eswa.2023.122922",
+      "abstract_note": "In order to shorten searching time and reduce the quantity of redundant nodes in path planning, an improved A* algorithm was proposed. In the novel algorithm, compared with the A* algorithm, the octet neighborhood was replaced a rectangular boundary without obstacles. The map was explored in two directions from the starting point and the target point respectively. The exploration generated fewer nodes. Due to the enlargement of the search neighborhood and the rectilinear passage without obstacles in the rectangular region, the new algorithm used Euclidean distance as distance estimate. And a new operator was designed to seek the best search node to reduce the time complexity, so as to improve the efficiency of the algorithm. For improving the safety of mobile robot, the novel algorithm adopted adaptive cost function to improve the ability of road safety discrimination. A Slide-Rail corner adjustment method was designed to reduce unnecessary corners and improve the smoothness of the path. The simulation results showed that, compared with the traditional A* algorithm and various improved A* algorithms, the proposed algorithm can shorten the path length and searching time, reduce the number of turns, the total turning angles and search nodes. Compared to A*, the searching time was reduced by 64.76%, the total turning angles were reduced by 56.34%, and the search nodes were reduced by 82.76% averagely in test maps of this paper. Moreover, the average interval width in improved A* was 3.07 and was more than 1.5 times the average interval width in Rectangle Expansion A*.",
+      "pdf": null
+    },
+    {
+      "item_key": "PJ2XRQ3A",
+      "role": "robust_dynamic_flow_support",
+      "item_type": "journalArticle",
+      "title": "Robust building evacuation planning in a dynamic network flow model under collapsible nodes and arcs",
+      "creators": [
+        "Youngchul Shin",
+        "Ilkyeong Moon"
+      ],
+      "year": "2023",
+      "publication": "Socio-Economic Planning Sciences",
+      "doi": "10.1016/j.seps.2022.101455",
+      "abstract_note": "Rapid urbanization has caused various social problems. One typical example is the high population density of a building, particularly in a commercial building or a mega-mall. When an emergency, such as a natural or human-made disaster, occurs in a building with a high population, establishing a proper evacuation plan is required to minimize casualties. Accordingly, the evacuation planning problem, which determines optimal routes for evacuees from disaster-prone areas to safe areas, has been actively studied in various fields. However, research considering the possibility of further collapse of a specific area or intermediate route in the building has been overlooked. We propose a robust evacuation planning problem based on a dynamic network flow model that determines the optimal routes for evacuees from a building that has the potential to collapse. Computational results show that routes passing through areas with the potential to collapse may or may not be optimal for evacuees, depending on the given timeframe. If the timeframe is sufficient, detouring around the collapsible areas could be the optimal plan; however, if the timeframe is insufficient, passing through collapsible areas, with taking the risk, could be the optimal plan.",
+      "pdf": null
+    },
+    {
+      "item_key": "HHECV3AK",
+      "role": "improved_astar_parameter_source",
+      "item_type": "attachment",
+      "title": "基于改进A*算法的多层邮轮疏散系统仿真_蒙盾",
+      "creators": [],
+      "year": null,
+      "publication": null,
+      "doi": null,
+      "abstract_note": "",
+      "pdf": null
+    }
+  ]
+}

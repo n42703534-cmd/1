@@ -1,0 +1,26 @@
+.codex/
+__pycache__/
+*.py[cod]
+
+# Generated runs, caches, and temporary working data.
+outputs/
+tmp/
+backups/
+
+# Local diagnostics and transient logs.
+*.log
+*.bak
+_diag_*.txt
+_diag_*.log
+_improved_*_result.txt
+_improved_*_run.log
+_pure_improved_result.txt
+_pure_improved_run.log
+
+# Rendered document QA outputs and Office lock files.
+docs/manuscript_working/render*/
+docs/manuscript_working/**/rendered-pages/
+docs/manuscript_working/~$*
+
+# Inaccessible/local-only station assets in this workspace.
+龙阳路/

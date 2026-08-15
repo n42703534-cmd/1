@@ -1,0 +1,40 @@
+# 版本快照
+
+## Step 5C 修改前（已验收 Step 5B）
+
+- `network.py`: `3BD80BC4525CB424F67A2077F86836D35A6FE2ED67CECBB23B8996818CC78CE8`
+- `single_path_routing.py`: `D756109A78A76AA0A6D50D24A5B00865B0AEAC9F1D590BDD12CE71ADDC8660A0`
+- `algorithm_comparison.py`: `3247479ACBFFB24709E141E4027E8BFD6B35037CE3CAEA0CC7D5C56EE0F28623`
+
+备份：`staged_modifications/step5c_edge_near_jam_diagnostics/backup`
+
+## Step 5C 通过版本（Step 6 修改前）
+
+- `network.py`: `34984201885158346762F07A21E0178A5D804D122800A181E111084DA087616C`
+- `single_path_routing.py`: `D756109A78A76AA0A6D50D24A5B00865B0AEAC9F1D590BDD12CE71ADDC8660A0`
+- `algorithm_comparison.py`: `9925F6A70459AF0D7FD7FB2FC9DDBFB62DFFDE125C34466EDE801A1D956A0D98`
+
+备份：`staged_modifications/step6_gate_service_order/backup`
+
+## Step 6 通过版本（Step 7 修改前）
+
+- `network.py`: `FD4FBC1CC9B8BC0BCBE00A6EA0B1BA73A11EE7E562D81790E070395AEB8AB539`
+- `single_path_routing.py`: `F3858B1CB30EB2D36A4C2EF677767E7960D493905B6C3552C9581F50029AD730`
+- `algorithm_comparison.py`: `E86E8717BEA9CEE8E83EC8FB9AEB04E8F2168F191ADFE7A0E9C8670B7A601E84`
+
+备份：`staged_modifications/step7_improved_gate_density/backup`
+
+## 当前 Step 7 通过版本
+
+- `network.py`: `0417D5CBF246B7347CF62352B04907D579E8CEC35B922425C8CA055496785124`
+- `single_path_routing.py`: `F3858B1CB30EB2D36A4C2EF677767E7960D493905B6C3552C9581F50029AD730`
+- `algorithm_comparison.py`: `908B99BF48C762C8E2C02B54E64ECBC13F3C570CAC6ED1EE21F98CF2F8B442C3`
+
+最终回归输出：
+
+- 默认：`outputs/algorithm_compare/mode4_20260726_052653`
+- 3.0 Improved：`outputs/algorithm_compare/mode4_20260726_053451/ImprovedAStar`
+- 3.0 AA：`outputs/algorithm_compare/mode4_20260726_085212/AdaptiveQueueAwareAStar`
+- 3.9：`outputs/algorithm_compare/mode4_20260726_085903`
+
+没有发生代码回滚。未启动 Pathfinder 软件验证。

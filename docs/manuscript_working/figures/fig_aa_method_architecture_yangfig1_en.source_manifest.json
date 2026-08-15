@@ -1,0 +1,21 @@
+{
+  "figure": "C:\\Users\\28146\\Desktop\\network\\FIRST\\docs\\manuscript_working\\figures\\fig_aa_method_architecture_yangfig1_en",
+  "dimensions_mm": [
+    183,
+    101
+  ],
+  "archetype": "schematic-led",
+  "primary_visual_reference": "Yang et al. (2024) Fig. 1",
+  "secondary_visual_references": [
+    "Wei et al. (2026) Fig. 1 colour hierarchy",
+    "Junfeng et al. (2026) Fig. 1 step hierarchy"
+  ],
+  "sources": {
+    "dwg_sha256": "29F0C16B4A0D2CF4FCC4F3AC3943329B2049049C9AF42417FC22AB052310CB31",
+    "dxf_sha256": "62E002E6C57643965E02396B022CC026941E8A1C79663710C1A668786803E358",
+    "pathfinder_overview_sha256": "7C1B83A9025E6717C076B9F06A0A058097691457007A208208C8BB857B4F2C16",
+    "completion_profile": "C:\\Users\\28146\\Desktop\\network\\FIRST\\docs\\manuscript_working\\figures\\fig2_pathfinder_high_load_validation.png"
+  },
+  "text_language": "English",
+  "quantitative_claims_added": false
+}

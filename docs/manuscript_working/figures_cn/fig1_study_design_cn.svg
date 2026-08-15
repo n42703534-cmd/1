@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="473.541115pt" height="280.62pt" viewBox="0 0 473.541115 280.62" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-08-13T14:41:47.673252</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 280.62 
+L 473.541115 280.62 
+L 473.541115 -0 
+L 0 -0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 68.06016 126.067645 
+L 145.59984 126.067645 
+Q 152.83152 126.067645 152.83152 124.180688 
+L 152.83152 55.201935 
+Q 152.83152 53.314978 145.59984 53.314978 
+L 68.06016 53.314978 
+Q 60.82848 53.314978 60.82848 55.201935 
+L 60.82848 124.180688 
+Q 60.82848 126.067645 68.06016 126.067645 
+z
+" clip-path="url(#pa639e940b0)" style="fill: #e8ebef; stroke: #88929b; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 170.50896 126.067645 
+L 248.04864 126.067645 
+Q 255.28032 126.067645 255.28032 124.180688 
+L 255.28032 55.201935 
+Q 255.28032 53.314978 248.04864 53.314978 
+L 170.50896 53.314978 
+Q 163.27728 53.314978 163.27728 55.201935 
+L 163.27728 124.180688 
+Q 163.27728 126.067645 170.50896 126.067645 
+z
+" clip-path="url(#pa639e940b0)" style="fill: #e8f1ee; stroke: #88929b; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 272.95776 126.067645 
+L 350.49744 126.067645 
+Q 357.72912 126.067645 357.72912 124.180688 
+L 357.72912 55.201935 
+Q 357.72912 53.314978 350.49744 53.314978 
+L 272.95776 53.314978 
+Q 265.72608 53.314978 265.72608 55.201935 
+L 265.72608 124.180688 
+Q 265.72608 126.067645 272.95776 126.067645 
+z
+" clip-path="url(#pa639e940b0)" style="fill: #e7f0fa; stroke: #88929b; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 375.40656 126.067645 
+L 452.94624 126.067645 
+Q 460.17792 126.067645 460.17792 124.180688 
+L 460.17792 55.201935 
+Q 460.17792 53.314978 452.94624 53.314978 
+L 375.40656 53.314978 
+Q 368.17488 53.314978 368.17488 55.201935 
+L 368.17488 124.180688 
+Q 368.17488 126.067645 375.40656 126.067645 
+z
+" clip-path="url(#pa639e940b0)" style="fill: #f7eee0; stroke: #88929b; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 8.2px; font-family: 'Microsoft YaHei', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle" x="106.83" y="72.555792" transform="rotate(-0 106.83 72.555792)">真实站体与客流</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 7.5px; font-family: 'Microsoft YaHei', 'Arial', 'DejaVu Sans', sans-serif; fill: #40464b" transform="translate(90.216914 90.109714)">CAD 几何</text>
+    <text style="font-size: 7.5px; font-family: 'Microsoft YaHei', 'Arial', 'DejaVu Sans', sans-serif; fill: #40464b" transform="translate(84.33 100.66737)">站内基准客流</text>
+    <text style="font-size: 7.5px; font-family: 'Microsoft YaHei', 'Arial', 'DejaVu Sans', sans-serif; fill: #40464b" transform="translate(84.33 111.225027)">列车到达客流</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 8.2px; font-family: 'Microsoft YaHei', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle" x="209.2788" y="72.555792" transform="rotate(-0 209.2788 72.555792)">共同物理执行器</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 7.5px; font-family: 'Microsoft YaHei', 'Arial', 'DejaVu Sans', sans-serif; fill: #40464b" transform="translate(194.2788 90.109714)">行走时间</text>
+    <text style="font-size: 7.5px; font-family: 'Microsoft YaHei', 'Arial', 'DejaVu Sans', sans-serif; fill: #40464b" transform="translate(190.5288 100.66737)">设施服务率</text>
+    <text style="font-size: 7.5px; font-family: 'Microsoft YaHei', 'Arial', 'DejaVu Sans', sans-serif; fill: #40464b" transform="translate(183.0288 111.225027)">有限接收与溢回</text>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 8.2px; font-family: 'Microsoft YaHei', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle" x="311.7276" y="72.555792" transform="rotate(-0 311.7276 72.555792)">路径决策</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 7.5px; font-family: 'Microsoft YaHei', 'Arial', 'DejaVu Sans', sans-serif; fill: #40464b" transform="translate(289.278577 95.388542)">Improved A*</text>
+    <text style="font-size: 7.5px; font-family: 'Microsoft YaHei', 'Arial', 'DejaVu Sans', sans-serif; fill: #40464b" transform="translate(273.88717 105.946198)">AA* 到达时刻队列感知</text>
+   </g>
+   <g id="text_7">
+    <text style="font-weight: 700; font-size: 8.2px; font-family: 'Microsoft YaHei', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle" x="414.1764" y="72.555792" transform="rotate(-0 414.1764 72.555792)">双层验证</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 7.5px; font-family: 'Microsoft YaHei', 'Arial', 'DejaVu Sans', sans-serif; fill: #40464b" transform="translate(399.1764 90.109714)">网络仿真</text>
+    <text style="font-size: 7.5px; font-family: 'Microsoft YaHei', 'Arial', 'DejaVu Sans', sans-serif; fill: #40464b" transform="translate(379.556869 100.66737)">Pathfinder 微观复现</text>
+    <text style="font-size: 7.5px; font-family: 'Microsoft YaHei', 'Arial', 'DejaVu Sans', sans-serif; fill: #40464b" transform="translate(399.1764 111.225027)">模块消融</text>
+   </g>
+   <g id="patch_6">
+    <path d="M 152.020644 89.691311 
+Q 157.051107 89.691311 160.963536 89.691311 
+" style="fill: none; stroke: #59636b; stroke-linecap: round"/>
+    <path d="M 157.963536 88.191311 
+L 160.963536 89.691311 
+L 157.963536 91.191311 
+z
+" style="fill: #59636b; stroke: #59636b; stroke-linecap: round"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 254.469444 89.691311 
+Q 259.499907 89.691311 263.412336 89.691311 
+" style="fill: none; stroke: #59636b; stroke-linecap: round"/>
+    <path d="M 260.412336 88.191311 
+L 263.412336 89.691311 
+L 260.412336 91.191311 
+z
+" style="fill: #59636b; stroke: #59636b; stroke-linecap: round"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 356.918244 89.691311 
+Q 361.948707 89.691311 365.861136 89.691311 
+" style="fill: none; stroke: #59636b; stroke-linecap: round"/>
+    <path d="M 362.861136 88.191311 
+L 365.861136 89.691311 
+L 362.861136 91.191311 
+z
+" style="fill: #59636b; stroke: #59636b; stroke-linecap: round"/>
+   </g>
+   <g id="text_9">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'Microsoft YaHei', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="61.632" y="35.703381" transform="rotate(-0 61.632 35.703381)">a</text>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_9">
+    <path d="M 68.25606 197.921761 
+C 69.460668 197.921761 70.616102 197.681913 71.467889 197.25504 
+C 72.319676 196.828167 72.798272 196.249122 72.798272 195.645432 
+C 72.798272 195.041743 72.319676 194.462698 71.467889 194.035825 
+C 70.616102 193.608952 69.460668 193.369103 68.25606 193.369103 
+C 67.051451 193.369103 65.896017 193.608952 65.04423 194.035825 
+C 64.192443 194.462698 63.713847 195.041743 63.713847 195.645432 
+C 63.713847 196.249122 64.192443 196.828167 65.04423 197.25504 
+C 65.896017 197.681913 67.051451 197.921761 68.25606 197.921761 
+z
+" clip-path="url(#p2f94ec49be)" style="fill: #1769aa"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 68.25606 227.324342 
+C 69.460668 227.324342 70.616102 227.084493 71.467889 226.65762 
+C 72.319676 226.230747 72.798272 225.651702 72.798272 225.048013 
+C 72.798272 224.444323 72.319676 223.865278 71.467889 223.438405 
+C 70.616102 223.011532 69.460668 222.771684 68.25606 222.771684 
+C 67.051451 222.771684 65.896017 223.011532 65.04423 223.438405 
+C 64.192443 223.865278 63.713847 224.444323 63.713847 225.048013 
+C 63.713847 225.651702 64.192443 226.230747 65.04423 226.65762 
+C 65.896017 227.084493 67.051451 227.324342 68.25606 227.324342 
+z
+" clip-path="url(#p2f94ec49be)" style="fill: #1769aa"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 68.25606 256.726922 
+C 69.460668 256.726922 70.616102 256.487074 71.467889 256.060201 
+C 72.319676 255.633328 72.798272 255.054283 72.798272 254.450593 
+C 72.798272 253.846904 72.319676 253.267859 71.467889 252.840986 
+C 70.616102 252.414113 69.460668 252.174264 68.25606 252.174264 
+C 67.051451 252.174264 65.896017 252.414113 65.04423 252.840986 
+C 64.192443 253.267859 63.713847 253.846904 63.713847 254.450593 
+C 63.713847 255.054283 64.192443 255.633328 65.04423 256.060201 
+C 65.896017 256.487074 67.051451 256.726922 68.25606 256.726922 
+z
+" clip-path="url(#p2f94ec49be)" style="fill: #1769aa"/>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 7.7px; font-family: 'Microsoft YaHei', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="76.772707" y="197.76594" transform="rotate(-0 76.772707 197.76594)">RQ1  到达时刻队列感知能否改善尾部清空与等待暴露？</text>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 7.7px; font-family: 'Microsoft YaHei', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="76.772707" y="227.168521" transform="rotate(-0 76.772707 227.168521)">RQ2  改善是否以更长绕行和更高计算代价为交换？</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 7.7px; font-family: 'Microsoft YaHei', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="76.772707" y="256.571101" transform="rotate(-0 76.772707 256.571101)">RQ3  改善由哪些规划机制驱动，并能否在微观模型中复现？</text>
+   </g>
+   <g id="text_13">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'Microsoft YaHei', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="38.920939" y="180.875894" transform="rotate(-0 38.920939 180.875894)">b</text>
+   </g>
+   <g id="text_14">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'Microsoft YaHei', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="61.632" y="172.572966" transform="rotate(-0 61.632 172.572966)">研究问题</text>
+   </g>
+  </g>
+  <g id="axes_3">
+   <g id="line2d_1">
+    <path d="M 277.918334 182.884195 
+L 311.984926 182.884195 
+" clip-path="url(#p6d810adba7)" style="fill: none; stroke: #7a7d80; stroke-width: 3; stroke-linecap: round"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 277.918334 211.62572 
+L 311.984926 211.62572 
+" clip-path="url(#p6d810adba7)" style="fill: none; stroke: #1769aa; stroke-width: 3; stroke-linecap: round"/>
+   </g>
+   <g id="line2d_3">
+    <path d="M 277.918334 240.367246 
+L 311.984926 240.367246 
+" clip-path="url(#p6d810adba7)" style="fill: none; stroke: #d28e2b; stroke-width: 3; stroke-linecap: round"/>
+   </g>
+   <g id="line2d_4">
+    <path d="M 277.918334 269.108771 
+L 311.984926 269.108771 
+" clip-path="url(#p6d810adba7)" style="fill: none; stroke: #3a8d64; stroke-width: 3; stroke-linecap: round"/>
+   </g>
+   <g id="text_15">
+    <text style="font-weight: 700; font-size: 7.5px; font-family: 'Microsoft YaHei', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="319.555279" y="184.949625" transform="rotate(-0 319.555279 184.949625)">场景真实性</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 7.5px; font-family: 'Microsoft YaHei', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #4f555a" x="372.547755" y="184.949625" transform="rotate(-0 372.547755 184.949625)">CAD + 实际客流构成</text>
+   </g>
+   <g id="text_17">
+    <text style="font-weight: 700; font-size: 7.5px; font-family: 'Microsoft YaHei', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="319.555279" y="213.69115" transform="rotate(-0 319.555279 213.69115)">算法效果</text>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 7.5px; font-family: 'Microsoft YaHei', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #4f555a" x="372.547755" y="213.69115" transform="rotate(-0 372.547755 213.69115)">T95/T100、等待、负荷均衡</text>
+   </g>
+   <g id="text_19">
+    <text style="font-weight: 700; font-size: 7.5px; font-family: 'Microsoft YaHei', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="319.555279" y="242.432675" transform="rotate(-0 319.555279 242.432675)">外部复现</text>
+   </g>
+   <g id="text_20">
+    <text style="font-size: 7.5px; font-family: 'Microsoft YaHei', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #4f555a" x="372.547755" y="242.432675" transform="rotate(-0 372.547755 242.432675)">Pathfinder 个体完成时间</text>
+   </g>
+   <g id="text_21">
+    <text style="font-weight: 700; font-size: 7.5px; font-family: 'Microsoft YaHei', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="319.555279" y="271.174201" transform="rotate(-0 319.555279 271.174201)">机制归因</text>
+   </g>
+   <g id="text_22">
+    <text style="font-size: 7.5px; font-family: 'Microsoft YaHei', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #4f555a" x="372.547755" y="271.174201" transform="rotate(-0 372.547755 271.174201)">五项单模块消融</text>
+   </g>
+   <g id="text_23">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'Microsoft YaHei', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="251.422096" y="180.875894" transform="rotate(-0 251.422096 180.875894)">c</text>
+   </g>
+   <g id="text_24">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'Microsoft YaHei', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="274.133157" y="172.572966" transform="rotate(-0 274.133157 172.572966)">证据与结论的对应关系</text>
+   </g>
+  </g>
+  <g id="text_25">
+   <text style="font-weight: 700; font-size: 11px; font-family: 'Microsoft YaHei', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="7.2" y="15.993125" transform="rotate(-0 7.2 15.993125)">研究设计：以真实换乘站为对象检验到达时刻队列感知路径规划</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pa639e940b0">
+   <rect x="61.632" y="37.8" width="401.76" height="104.830932"/>
+  </clipPath>
+  <clipPath id="p2f94ec49be">
+   <rect x="61.632" y="178.572966" width="189.258843" height="94.847034"/>
+  </clipPath>
+  <clipPath id="p6d810adba7">
+   <rect x="274.133157" y="178.572966" width="189.258843" height="94.847034"/>
+  </clipPath>
+ </defs>
+</svg>

@@ -1,0 +1,10 @@
+﻿line,exit_name,change,label
+L18,Exit_L18_17,-1650,18号线 → 18-17
+L16,Exit_L16_10,-428,16号线 → 16-10
+Maglev,Exit_Maglev_19,-382,磁浮 → 磁-19
+L2,Exit_L2_3,-359,2号线 → 2-3
+L2,Exit_L2_6,-198,2号线 → 2-6
+L16,Exit_L16_11_west,446,16号线 → 16-11西
+L2,Exit_L2_4,509,2号线 → 2-4
+Maglev,Exit_Maglev_18,575,磁浮 → 磁-18
+L18,Exit_L18_12,1650,18号线 → 18-12

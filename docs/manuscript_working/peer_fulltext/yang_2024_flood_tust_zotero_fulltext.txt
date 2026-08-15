@@ -1,0 +1,478 @@
+Tunnelling and Underground Space Technology 143 (2024) 105473
+Available online 28 October 2023
+0886-7798/© 2023 Elsevier Ltd. All rights reserved.
+Contents lists available at ScienceDirect
+Tunnelling and Underground Space Technology
+journal homepage: www.elsevier.com/locate/tust
+An efficient evacuation path optimization for passengers in subway stations under floods
+Xiaoxia Yang a,∗, Wenkai Dai b, Yongxing Li c, Xiaoli Yang d
+a School of Information and Control Engineering, Qingdao University of Technology, Qingdao 266520, China b School of Civil Engineering, Qingdao University of Technology, Qingdao 266520, China c Beijing Key Laboratory of Traffic Engineering, Beijing University of Technology, Beijing 100124, China d School of Economics and Management, China University of Petroleum (East China), Qingdao 266580, China
+ARTICLE INFO
+Keywords:
+Subway station Evacuation path optimization Network efficiency Flood Passenger
+ABSTRACT
+The optimization of passenger evacuation paths in subway stations under flood scenarios plays an important role in improving evacuation efficiency and ensuring escape safety. Considering the impact of evacuation network failures such as gates on path planning, a two-stage passenger evacuation path optimization method under flood scenarios of subway stations is established with the objectives of minimizing total evacuation time, risk, and congestion. The black widow algorithm is proposed to optimize the BP neural network model to predict the travel time of passengers at nodes, which could improve the prediction accuracy of calculating the total evacuation time. The path optimization model is solved by the NSGA-II algorithm, and the optimal Pareto solution is determined based on the minimum total cost. Taking a subway station in Qingdao, China as an example, a passenger evacuation simulation system under flood scenarios is built using PathFinder software. The effect of the path optimization strategy is comprehensively evaluated through comparative experiments. It is found that the overall evacuation optimization degree could be increased by 18.75%, by comparing the evacuation time, congestion, and risk objectives under the situations with and without path optimization strategies.
+1. Introduction
+Urban rail transit has become an important means of transportation in recent years for citizens due to its advantages such as large volume, fast speed, environmental protection, and punctuality. A total of 290 urban rail transit lines with a total length of 10, 291 km have been opened in 55 cities in the Chinese Mainland by the end of 2022. Among them, the proportion of subway operation lines is as high as 77.85% (Association, 2022). The subway system has significantly improved the convenience of people’s travel, and the large-scale passenger flow it attracts has posed new challenges to the safe operation and management of subway stations. The statistical results of past evacuation accidents at subway stations indicate that the flood is the third most frequent type of disaster, accounting for 11% (Yu et al., 2019). Although some scholars have studied the flood evolution process in subway stations and the movement changes of pedestrians affected by floods according to our limited literature statistics (Forero-Ortiz et al., 2020; Lin et al., 2022), they did not give suggestions on the optimization of passenger emergency evacuation paths in subway stations under flood scenarios. The planning of evacuation paths has achieved remarkable results in
+∗ Corresponding author. E-mail address: yangxiaoxia@qut.edu.cn (X. Yang).
+improving evacuation efficiency (Yang et al., 2022,b, 2023), which is the starting point of this study. When a sudden flood occurs, the flood can quickly spread within the subway station, making passengers prone to unstable psychological states such as panic and impatience, and even resulting in overcrowding and stampede incidents (Li et al., 2018). Reasonable evacuation path planning under floods can not only improve evacuation efficiency, but also safeguard the safe travel. The optimization of the evacuation path should not only consider the impact of flood dynamics parameters on passenger movement behaviors, but also consider the coordination of passenger distribution in the spatiotemporal domain during the evacuation process. The optimization effect of path decision-making is the result of multi-objective comprehensive effects such as evacuation time, congestion degree, and danger coefficient (Fahad et al., 2019). Obviously, reasonable evacuation path planning is a difficult and painful point in the process of formulating evacuation plans, which seriously restricts the improvement of the service level of operation organization in subway stations. The unreasonable evacuation path may even exacerbate the uneven utilization of stairs, gates, and channels, leading
+https://doi.org/10.1016/j.tust.2023.105473 Received 5 June 2023; Received in revised form 7 August 2023; Accepted 21 October 2023
+
+
+ Tunnelling and Underground Space Technology incorporating Trenchless Technology Research 143 (2024) 105473
+2
+X. Yang et al.
+to the occurrence of secondary accidents such as crowding and stampede (Pan et al., 2006). Therefore, it is of great significance to optimize the evacuation path decision-making in combination with the hazard diffusion theory and pedestrian dynamics under flood, to improve the efficiency of evacuation strategies and their practicability under multiple scenario parameters. Thanks to the rapid development of computer technology and the widespread application of smartphones, passengers can obtain real-time path recommendation information from mobile applications (Yang et al., 2022d), which provides a good channel of information exchange for the timely and effective sending and reading of optimized evacuation path strategies. The structure of the remaining parts of this paper is as follows: Section 2 reviews and summarizes the relevant results around the research content of this paper. Section 3 introduces the hydrodynamic model of the subway station, the passenger motion model, and the twostage evacuation path optimization model for passengers. Among them, the travel time of passengers at key bottleneck nodes such as stairs and gates is obtained based on the BP neural network model optimized by the black widow optimization algorithm (BWO-BP). Section 4 takes Qingdao May Fourth Square subway station as a case study to explore the relationship between objective functions under different weights. The optimal evacuation path is obtained based on the principle of minimizing the total cost function, and the effect of the two-stage evacuation path optimization method is evaluated through comparisons. The last section summarizes the main results of this paper.
+2. Literature review
+At present, the scenario of passenger emergency evacuation in subway stations mainly focuses on emergency passenger clearance when there are safety hazards of facilities and evacuation in case of fire accidents. The research content involves evacuation capacity and risk assessment, deduction of passenger spatiotemporal distribution, simulation of passenger evacuation based on VR, optimization of internal facilities such as railings, and optimization of evacuation paths (Yang et al., 2022b). Zhang et al. (2023) analyzed the evacuation risk of tunnel fires and constructed a path optimization model based on dynamic risk values using a multiple regression model. Mandal et al. (2023) reviewed the passenger emergency evacuation in subway stations through analyzing 221 literature. Zhang and Jia (2023) studied the design method of guidance information system in subway stations to improve the efficiency of wayfinding. However, research on passenger evacuation path planning in subway stations under the typical scenario of floods is relatively limited (Goldbeck et al., 2019). The fruitful achievements made by scholars in optimizing passenger evacuation paths, analyzing the capacity of network nodes such as stairs, and simulating passenger evacuation dynamics have greatly promoted the research content of this paper. Therefore, a summary and analysis of the current research status will be conducted from these three aspects.
+2.1. Passenger evacuation path optimization in subway stations
+The passenger evacuation path optimization (PEPO) model in subway stations is usually constructed using the objective programming method. The objective function mainly refers to single objective and multiple objectives. Shi et al. (2012) proposed an evacuation safety strategy with the objective of minimizing evacuation time in a regular passenger clearance scenario of subway stations. Zhang et al. (2016) proposed a decision method for selecting passenger evacuation paths in subway stations under ordinary passenger clearance scenarios, with the single objective of minimizing the sum of evacuation path length, evacuation time, and passenger flow density. Yang et al. (2022d) proposed a single objective PEPO model based on Fisk stochastic user equilibrium theory, which can alleviate congestions at key locations within the subway station. There are usually conflicts between different
+desired objectives of safe and efficient passenger evacuation. For example, longer evacuation time and higher passenger flow density may increase evacuation risks, and the minimum requirement for achieving both objectives simultaneously is the most ideal path decision-making solution. Overemphasizing the shortening of evacuation time may lead to potential high-density risks, thereby increasing the likelihood of safety accidents such as stampedes. Generally, PEPO can be seen as a multi-objective planning problem. At present, the relevant research mainly focuses on relatively simple scenarios, such as single-story exhibition halls, and multiple exit rooms (Shuaib, 2018; Hosseini et al., 2021; Guo and Zhang, 2022). Evacuation time, path length, congestion, risk, cost, etc. are often chosen in terms of parameter selection that affects path optimization. Guo and Zhang (2022) proposed a multi-objective PEPO model under the passenger clearance scenario of subway stations, which can improve the evacuation effect to a certain extent, especially during peak operation hours. Yang et al. (2022b) considered the auxiliary guidance role of the guide in the passenger clearance scenario of subway stations and established a dual objective programming model with the shortest evacuation time and the lowest congestion cost. The method can be used to reasonably determine the guidance path to lead the crowd to avoid the bottlenecks in advance. The above studies only considered the travel time of the road segment in the modeling process of evacuation time objective, but ignored the calculation of travel time at nodes. Nodes such as stairs and gates are bottleneck areas during the evacuation process, and congestion at the bottleneck can significantly prolong the total evacuation time, which in turn directly affects the path planning results. Therefore, the path optimization model constructed without considering node travel time is not reliable enough. Due to the complex internal structure of the subway station, the difficulty in real-time extraction of flood diffusion parameters, and the difficulty in pedestrian microscopic motion simulation of integrating flood parameters in complex scenes, research on PEPO in subway stations is rare at present, but it seems to have attracted the attention of scholars. According to our limited literature investigation, there has not been any relevant research on the PEPO in subway stations under floods. The PEPO schemes that do not consider the influence of flood parameters could have a significant impact on accurately determining the effectiveness of passenger evacuation under flood disasters, due to the significant changes in hydrodynamic parameters such as flood depth over time. Lim et al. (2013) stated that optimizing evacuation paths during floods is the key to reducing the adverse effects of floods. Therefore, one of the main tasks of this paper is to explore the path planning method for passenger evacuation in subway stations under the influence of flood parameters.
+2.2. Node traffic analysis
+In the evacuation network of subway stations, the traffic state at important nodes such as gates and stairs/escalators may become an important factor affecting the overall traffic efficiency. The factors that affect traffic efficiency vary at different nodes. In recent years, scholars have been conducting relevant research on passenger traffic at nodes of subway stations. The research on passenger evacuation at stairs/escalators and gates mainly focuses on building evacuation models and analyzing behavior patterns. Bao and Huo (2021) proposed a stair evacuation model that considered pedestrian rotation behavior, exploring the evacuation behavior characteristics of pedestrians under different geometric shapes of stairs. Liu et al. (2019) proposed a random FFCA model that considered the impact of visibility to simulate the evacuation behavior of people going upstairs, pointing out that reduced visibility can have a significant negative impact on the spatiotemporal distribution of pedestrians. Lei and Tai (2019) explored the impact of stair position on evacuation results through scene simulation experiments. Ye et al.
+
+
+ Tunnelling and Underground Space Technology incorporating Trenchless Technology Research 143 (2024) 105473
+3
+X. Yang et al.
+(2020) conducted a comparative experiment to study the motion characteristics of pedestrians on two-way stairs with different flow ratios. There are relatively few research results on gate evacuation capacity. Previous research showed that the number of gates, the passable width between gates, the number of passengers, and the coefficient of hazard may affect the traffic capacity. Fang et al. (2022) analyzed lane changing behavior in multiple gate scenarios based on video data. Munoz et al. (2018) proposed a new idea of adding a gate in the middle of the subway platform to improve the traffic efficiency of passenger flow on the platform. Han et al. (2012) analyzed the traffic capacity of the gate through on-site testing and simulation analysis. The modeling of passenger movements, reasonable layout of stairs and gates, and analysis of the impact of passenger flow on traffic efficiency are indeed important issues, which are the basis for simulating evacuation behaviors at nodes and further improving evacuation capacity. Accumulated research indicates that there are not many related research results on evacuation time calculation at key nodes of subway stations. Sano et al. (2017) constructed a simplified mathematical model for computing stair evacuation time based on flow, which took into account the impact of confluence. Yang et al. (2021) predicted the travel time of passengers going upstairs in subway stations based on the random forest method. In fact, the microscopic pedestrian motion model under evacuation scenarios of stairs/escalators and gates can also directly be used to simulate the movement behaviors to obtain evacuation time, but the real-time calculation performance under different scene parameters may not meet the practical application requirements. Therefore, how to use mature pedestrian motion models and advanced algorithms to design a fast and high-precision calculation method for passenger evacuation time at nodes such as stairs/escalators and gates is a problem that this paper aims to solve.
+2.3. Pedestrian dynamics simulation
+Conducting emergency evacuation experiments in real-life scenarios may be too dangerous, and simulation has been proven to be one of the most effective methods for studying evacuation management strategies (Zhang et al., 2019). The pedestrian motion model provides an effective mathematical modeling method for studying the evacuation behavior of passengers in subway stations, which mainly includes macroscopic models and microscopic models. Classical macroscopic models mainly include fluid dynamics models and queuing theory models (Henderson, 1974; Lovas, 1994; Lim et al., 2012). The macroscopic model describes the relationship between pedestrian flow, density, and speed, and it is not suitable for the modeling of passenger movement behavior studied in this paper. Microscopic models are based on the description of individual movement behaviors, and the accuracy of the model simulation is relatively high. The microscopic model can be divided into two categories, namely, the continuous model and the discrete model from a spatiotemporal perspective. The classical microscopic models mainly include the social force model, the cellular automata model, the lattice gas model, and the agent model. The social force model (Yang et al., 2016b,a, 2021, 2020) and the agent model (Liu et al., 2014) belong to the continuous motion model, which can simulate the movement characteristics of pedestrian flow and reproduce typical self-organization phenomena. They have been used to explore the impact of emergency evacuation signs on passenger evacuation in subway stations (Cai et al., 2022) and verify the effectiveness of evacuation plans for existing buildings (Camillen et al., 2009). The cellular automata model (Tajima and Nagatani, 2001; Yang et al., 2022c) and the lattice gas model (Guo and Huang, 2008) belong to discrete pedestrian motion models, and the direction of pedestrian motion is limited by a finite grid space. Among them, the lattice gas model is a special case of the cellular automata model. They were applied to solve the modeling problem of evacuation behaviors (You et al., 2020) .
+With the gradual improvement and maturity of pedestrian dynamics models, a series of crowd dynamics simulation software have emerged, such as PathFinder, Anylogic, MassMotion, FDS+Evac, Steps, Legion, and Building exodus, which can be applied to study pedestrian evacuation in multiple scenarios (Canomoreno et al., 2021) as listed in Table 1. The crowd dynamics simulation software provides a basic simulation platform for the modeling of passenger evacuation motion in subway stations. However, different software has its own limitation and applicability. The Anylogic software simulates pedestrian movements with the social force model, but the parameters of the bottom motion model cannot be modified according to the hazard scene, and the logical expression mode of pedestrians is complex. The MassMotion software uses the minimum cost model to find the path, but it is unable to simulate the speed change of pedestrians affected by hazard parameters in the process of evacuation. The Steps, Legion, and Building exodus software are based on the discrete cellular automata model to model pedestrian movement behaviors, which are limited by the limited feasible directions within the grids, making them difficult to ensure the accuracy of crowd evacuation simulation results in complex environments. The FDS+Evac software is an open-source software specifically designed to simulate human evacuation during fires, which can directly observe changes in fire and smoke. However, the simulation modules in the FDS+Evac are not yet comprehensive, and the relevant performance of the software needs to be improved. The PathFinder software drives pedestrians based on the agent model, and can realistically simulate the individual travel habits of heterogeneous pedestrians by using the combination of path planning, guidance mechanism, and collision processing. In addition, this is also the most important thing that the software provides relevant channels to set corresponding parameters for the movement behavior changes of pedestrians affected by hazard parameters. Therefore, PathFinder software is more suitable for building passenger evacuation simulation systems under floods. At present, some achievements in understanding and simulating the evolution of hydrodynamics have been made, providing possibilities for studying the evacuation movement of passengers under floods. The depth of flood is a direct factor affecting evacuation efficiency, mainly reflected in its impact on pedestrian movement speed (Zhang et al., 2018b). In the construction of pedestrian motion velocity models in flood environments, the basic dataset of the model is mainly obtained through video analysis under the real flood event, human experiments in the laboratory environment, and simulation experiments. Dias et al. (2021) obtained the relationship between flood depth and walking speed based on the data collected in the laboratory. Lin et al. (2022) simulated the process of flood invasion through numerical simulations and analyzed the impact of different channel design structures and location distributions on personnel evacuation plans. The achievement of relevant results directly provides reliable supports for the calculation of passenger travel speed at the evacuation network under flood disasters.
+3. Model
+The hydrodynamic model can be used to obtain flood propulsion parameters such as flood depth and flow speed within the station, and the passenger movement speeds corresponding to different flood depths can be calculated. Then, different passenger speeds and different numbers of passengers are used as input data in the simulation scenarios of nodes such as stairs constructed by PathFinder, the simulated travel time is obtained, thereby the basic data set of the node travel time prediction model is got. It provides data support of node travel time for the calculation of total evacuation time. After that, the two-stage evacuation path optimization model is proposed considering the evacuation time, stability risk, and congestion, which is solved by the NSGA-II algorithm to obtain the complete evacuation path connecting the starting node, intermediate node, and ending node. Finally, the path optimization scheme is set at the nodes of the evacuation system constructed by Pathfinder to achieve the simulation of passenger evacuation behavior that integrates path optimization strategies.
+
+
+ Tunnelling and Underground Space Technology incorporating Trenchless Technology Research 143 (2024) 105473
+4
+X. Yang et al.
+Table 1
+Studies on evacuations based on the crowd dynamics simulation software.
+Accident types Evacuation scenarios
+Topics Software References
+Fire Hotel Simulate the escape behavior of pedestrians PathFinder Kai et al. (2020)
+Emergency Subway station Simulate and optimize the evacuation process by changing the operation status of gates and escalators
+Anylogic Zhuang and Wang (2022)
+Emergency High-rise building
+Evaluate the evacuation effects of different evacuation strategies
+Steps Ronchi and Nilsson (2014)
+Fire Subway platform Study the effects of fire dynamics parameters and different initial pedestrian densities on evacuation
+FDS+Evac Yang et al. (2016c)
+Emergency Subway station Study the passenger flow management strategy and evacuation behavior under the COVID-19
+MassMotion Yang et al. (2022a)
+3.1. The hydrodynamic model
+There may be floods pouring into the subway station due to low terrain, unstable water retaining walls at the entrance/exit, etc., when occurring extreme weather such as rainstorms. At this time, the life safety of passengers in the station could be threatened to a certain extent, and emergency evacuation must be required. The hydrodynamic model (Zheng et al., 2019) is adopted for the calculation of flood routing in subway stations. The model can take into account the impact of different sizes of channels, stairs, platforms, etc. in subway stations on flood propulsion (Ishigaki et al., 2006). The accuracy of the simulation results is high, avoiding the risks, cost investment, and time consumption issues that exist in the process of conducting truly controllable experiments. This model has been recognized by scholars and applied to the calculation of flood propulsion in subway stations (Mo, 2010). The model is chosen for the calculation of flood parameters in subway stations because its effectiveness has been verified, and it has the advantage of high computational efficiency, which can quickly provide flood dynamics parameters for the evacuation path optimization model. The relationship between the depth of accumulated water at the entrance of the subway station h0 and the flow rate through stairs is set based on the experimental results of real size model (Ishigaki et al., 2006). The intrusion flood volume of the first basement that is the station hall floor V1 can be defined by Eq. (1).
+V1(t) = ∫
+t
+1
+1.98 ⋅ (B1 − B2) ⋅ h0(t)1.621dt. (1)
+Here, B1 and B2 represent the widths of entrance stairs at the basement floor and the 2nd basement floor, respectively. The relationship between the flood depth hu1 and the intrusion flood volume of the basement floor can be defined by Eq. (2).
+hu1(t) = V1(t)∕As1. (2)
+Here, As1 represents the surface area of the underground space on the basement floor. The intrusion flood volume of the 2nd basement floor can be defined by Eq. (3), and the relationship between the flood depth hu2 and the intrusion flood volume V2 can be defined by Eq. (4).
+V2(t) = ∫
+t
+0
+1.98 ⋅ B2 ⋅ hu1(t)1.621dt. (3)
+hu2(t) = V2(t)∕As2. (4)
+Here, As2 represents the surface area of the underground space on the 2nd basement floor. The flood depth at the stairs Hs′
+0(t) can be defined by Eq. (5).
+Hs′
+0(t) = hs′
+0(t) ⋅ cos ψ. (5)
+Here, ψ represents the inclination angle of the stair. s′
+0 represents the node of stair/escalator, and hs′
+0(t) is the flood depth of the floor at
+the upper end of the stair/escalator.
+3.2. Passenger motion model
+The movement modes of pedestrians in the PathFinder software mainly include SFPE mode and Steering mode. Pedestrians in SFPE mode use the length of path they are about to walk as the main reference standard and choose evacuation exits based on the principle of proximity, without considering factors such as collision and congestion. However, if the distance between individuals or the length of the path to the nearest point exceeds a certain threshold in Steering mode, a new path can be regenerated to adapt to the new environment, allowing pedestrians to deviate from the path while still moving in the correct direction. Therefore, the Steering mode of PathFinder software is more in line with the actual situation of passenger evacuation behaviors in subway stations, which is used in this paper. The motion environment of people in Steering mode is composed of a complete three-dimensional triangular mesh, and the speed of pedestrian moving to the next mesh depends on factors such as people speed, density, turning, and obstacle distribution in the forward direction. The pedestrian movement acceleration is defined as Eq. (6). Among them, the maximum acceleration amax is defined as Eq. (7), which is determined by the tangential forward component af max, tangential reverse component ab max, and radial component ar max of the acceleration.
+a⃗ =
+⃗Vdes − ⃗Vcurr
+| | |
+⃗Vdes − ⃗Vcurr
+| | |
+⋅ amax. (6)
+amax = af max + ab max + ar max. (7)
+Here, ⃗Vcurr is the current movement velocity of pedestrians. af max =
+Vmax taccel
+, ab max = 2 ⋅ af max, and ar max = 1.5 ⋅ af max. taccel is the acceleration time, and Vmax is the designated maximum speed. Readers can refer to Dearholt and Schvaneveldt (1990) for more information on the agent models used in PathFinder software.
+3.3. The two-stage PEPO model
+In the process of PEPO in subway stations, the physical environment of the station is usually simplified as an evacuation network diagram composed of nodes and edges. An optimization model for evacuation paths with the shortest evacuation time, the smallest congestion, and the lowest risk objectives is established, which fully considers the impact of flood evolution within subway stations on passenger escape speed and risk. It is an evacuation scenario that has not been addressed in previous evacuation path optimization studies, and it is also an exploratory study. Meanwhile, this model can be based on the path scheme allocated in the first stage, and dynamically optimize the evacuation path in the event of node or road segment failures according to the actual flood evolution situation, achieving a real-time response effect. The research content of this paper is to further enrich the optimization of passenger evacuation paths in subway stations, and provide improvement suggestions for determining evacuation paths after the occurrence of flood. In addition, a passenger node travel time
+
+
+ Tunnelling and Underground Space Technology incorporating Trenchless Technology Research 143 (2024) 105473
+5
+X. Yang et al.
+prediction model based on the BWO-BP neural network algorithm is proposed, which has a high accuracy in the prediction results. The two-stage PEPO model constructed in this paper is divided into two stages. The first stage belongs to static path planning, and the main task is to comprehensively optimize the evacuation path based on the objective values of evacuation time, congestion, and risk, in order to set a reasonable evacuation plan in advance. The second stage is based on the path optimization plan generated in the first stage, and further considers the possibility of node or road segment failures caused by floods. It is necessary to optimize the evacuation path of passengers on the failed node or road segment for a second time. At this point, passengers on feasible paths still evacuate based on the path optimization results of the first stage, in order to achieve the effect of dynamically optimizing the evacuation path based on the actual flood evolution situation. The goal of the second stage optimization is to achieve the same optimization goal as the first stage in the event of node or road segment failures. Therefore, the two-stage PEPO models established in this paper are similar, except for changes in walkable nodes and road segments. Thus, only the path optimization model in the first stage is provided in this section.
+3.3.1. Evacuation time objective
+Evacuation time refers to the total duration spent by all passengers from their starting positions to the safe positions, mainly composed of the travel time of the road segment tij and the passage time of nodes ts0 such as stairs/escalators and gates. The travel time of a road segment (i, j) is calculated based on the road length dij , walking speed vij , and the
+number of passengers qij on the road segment. tij = dij
+vij
+⋅ qij (Yang et al., 2022a). It should be noted that a method for predicting node travel time ts0 based on the BP neural network optimized by the black widow optimization (BWO) algorithm is proposed, which can quickly obtain travel time at different nodes based on facility attributes, passenger numbers, and flood parameters. In the process of calculating the travel time of a road segment, the definition of passenger motion speed is involved, which is set based on the Weidmann model (Daamen, 2002) as given in Eq. (8). It assumes a negative correlation between passenger speed and density, and has been validated by relevant results.
+v0
+ij = vf
+[
+1 − exp
+(
+−1.913
+(1
+ρ− 1
+ρmax
+))]
+. (8)
+Here, vf refers to the free flow speed of passengers, ρ refers to the flow density, and ρmax refers to the maximum density of passengers. The motion speed of passengers under floods vij may change due to the hydrodynamic parameters of flood evolution in subway stations (Zhang et al., 2018b). It can be further defined by Eqs. (9)–(11) based on the experimental results obtained by Higo et al. (2017).
+vij =
+{ v0
+ij , h ≤ hlittle.
+(
+v0
+ij ⋅ m ⋅ θ∕0.5
+)
+⋅ 0.5, hlittle ≤ h ≤ hmax. (9)
+m = 1 − h∕hmax. (10)
+θ = 1∕ (0.982 + e(1.12t−4)) . (11)
+Here, m refers to the reduction coefficient of speed at different flood depths, θ refers to the pedestrian fatigue index over time, and hmax refers to the critical flood depth at which passengers cannot travel. According to the results of Zheng et al. (2019) and Keiichi and Toda (2007), set hmax = 0.7 m. hlittle represents the depth of flood that has almost no effect on passenger travel speed, it is set to be 0.1 m (Zheng et al., 2019). Due to capacity limitations of gates and stairs/escalators, they can easily become bottlenecks in the evacuation process (Jin et al., 2020). The travel time of nodes accounts for an important part of the total evacuation time and cannot be ignored. The commonly used regression algorithms, neural networks, and support vector machines in machine
+learning provide important optimization schemes for predicting passenger travel time at nodes under flood scenarios. BP neural network belongs to a complex nonlinear system dynamics model that abstractly simulates brain functions. It has the characteristics of strong selflearning ability, large-scale parallel processing, good fault tolerance, etc., which has been one of the most widely used neural network models (Cui and Jing, 2019). It is adopted to predict node travel time in this paper. The learning process of the BP neural network consists of the forward propagation of signals and back propagation of errors. The basic principle of error back-propagation is to use the gradient descent method shown in Eqs. (12)–(13) to find the weights of each unit, so as to minimize the difference between the true output and the expected output.
+z(m+1) = z(m) − η ⋅ ∂ε
+∂z(m)
+. (12)
+ε= 1
+n
+i=n
+∑
+i=1
+(yi −ŷ i)2. (13)
+Here, z(m) refers to the weight value after m iterations. η refers to the step size of iteration, representing the learning rate of the BP neural network. The size of its value largely determines the accuracy of the iteration results. If the value is too large, it is difficult to find the optimal solution. Otherwise, it will result in an excessive computation. yi is the true value of the ith sample.ŷ i is the corresponding prediction value, and n is the total number of samples. In this paper, the BWO algorithm is adopted to optimize the weight of the BP neural network for predicting the node travel time. The BWO algorithm is a mathematical model inspired by the unique mating behavior of black widow spiders, which includes initialization population, movement, pheromone, etc. Hayyolalam and Kazem (2020). Each candidate solutionx⃗ i in the BWO algorithm represents the position of the black widow spider, which can be represented by the corresponding weight wi and threshold θi of the BP neural network. Therefore, the position of the black widow spider obtained when the termination condition is reached refers to the optimal weight and threshold of the BP neural network. The black widow spider moves in a linear and spiral manner within the spider web, and its position updates as given in Eq. (14).
+⃗ ⃖xi(t + 1) =
+{ ⃗ ⃖x∗(t) − ξ ⋅ ⃗ ⃖xr1(t), φ ≤ 0.3.
+⃗ ⃖x∗(t) − cos(2πβ) ⋅ ⃗ ⃖xi(t), Otherwise. (14)
+Here,x⃗ i(t + 1) is the updated individual location,x ⃗ ∗(t) is the current optimal individual position, and ξ is a randomly generated floating number between 0.4 and 0.9. φ is a random number between 0 and 1, and β is a random number between −1 and 1. r1 is a random integer between 1 and the maximum population size.x ⃗ r1(t) is the ith randomly selected position of the black widow spider, andx⃗ i(t) is the current position of the individual. The pheromone ph plays a very important role in the courtship process of the black widow spider, which is expressed by Eq. (15). A well-nourished female spider produces more silk than a hungry female spider. Male spiders respond more sensitively to pheromones from wellnourished female spiders, mainly to avoid the cost of risky mating with hungry female spiders.
+ph(i) = f itmax − f it(i)
+f itmax − f itmin
+. (15)
+Here, f itmax and f itmin respectively represent the worst and best fitness values in the current population. f it(i) is the fitness value of the ith individual. The pheromone ph is the normalized fitness within the range of 0 to 1. Eq. (16) is used to update the individual position when ph is less than or equal to 0.3.
+⃗ ⃖xi(t) = ⃗ ⃖x∗(t) + 1
+2
+[⃗ ⃖xr1(t) − (−1)σ ⋅ ⃗ ⃖xr2(t)] . (16)
+
+
+ Tunnelling and Underground Space Technology incorporating Trenchless Technology Research 143 (2024) 105473
+6
+X. Yang et al.
+Here, Both r1 and r2 are random integers between 1 and the maximum population size, and r1 ≠ r2. σ ∈ [0, 1], and it is a random binary number. The hydrodynamic model can be used to obtain flood propulsion parameters in the station, and then the passenger motion speed corresponding to different flood depths can be calculated based on the previous research results obtained by scholars (Ishigaki et al., 2006; Higo et al., 2017). Different passenger speeds and numbers of passengers are adopted as input data in the simulation scenarios of nodes built by PathFinder, the simulated travel time is obtained, thereby the basic data set of the node travel time prediction model is received. An effective node travel time prediction model based on the BWO-BP neural network can be obtained through training and testing. The use of the BWO-BP neural network for node travel time prediction is partly because the input parameters of the model are relatively simple. After inputting the items into the prediction model, the node travel time results can be quickly obtained. The PathFinder needs to set software parameters manually one by one according to different passenger flows, which is time-consuming and labor-intensive. What is more, the software runs in 3D dynamic simulation. It takes much more time to simulate the same number of people passing through the node facilities than that of Matlab. In emergency evacuations, time is life. Therefore, a faster calculation method should be adopted from the perspective of computational efficiency requirements. Another main reason is that the proposed path optimization model involves the calculation of evacuation time objective, and the simulation run of the model is based on Matlab. It is unreasonable to set the PathFinder operation environment based on passenger flows and flood parameters to obtain the node travel time once this time is needed in the calculation process of Matlab. Considering the coordination and efficiency of the software used for model operations, PathFinder is also not applicable for calculating the node travel time which is useful for the path optimization.
+3.3.2. Stability risk objective
+Floods can affect the stability of the human body in the water, and the stability risk of passengers is highly correlated with the flood depth during passenger evacuation (Dias et al., 2021). The influence of flood depth when calculating the stability risk of road segments is mainly considered in this paper, because of the slow rise of floods due to the large surface area of hall and platform floors. The stability risk objective of road segment Rij is defined by Eq. (17). The stairs/escalators have characteristics of small surface areas and large slopes, and the stability risk objective at the node of the stair/escalator is also considered in this paper. In the process of constructing the risk function at the stairs/escalators Rs′
+0 , it is necessary to consider the risk impact caused
+by the flood flow velocity caused by the slope of the stair/escalator (Li et al., 2022), in addition to considering the influence of flood depth.
+Rs′
+0 is defined by Eq. (18).
+Rij =
+hij
+hmax
+⋅ qij . (17)
+Rs′
+0 =(
+hs′
+0
+hmax
++
+Vs′
+0 Vc
+) ⋅ qs′
+0
+. (18)
+Here, Vs′
+0 represents the speed of flood flow at the stairs/escalators,
+defined by Eq. (19) (Ishigaki et al., 2006). The critical flood flow speed Vc during human sliding and instability in floods can be represented by Eq. (20) (Xia et al., 2014). hij and hs′
+0 respectively represent the flood
+depth at the road segment (i, j) and the node s′
+0, qij and qs′
+0 represent
+the number of passengers allocated to the road segment (i, j) and the node s′
+0, respectively.
+Vs′
+0 = 2.09 ⋅ q0.5
+f ⋅ A0.35
+s′
+0
+. (19)
+Vc = α
+(h
+hp
+)β
+√ √ √ √
+mp
+ρf ⋅ h2 −
+(
+b1 h ⋅ hp
++ a1
+hp2
+)
+⋅
+(a2 ⋅ mp + b2
+). (20)
+Here, qf and As′
+0 represent the flow of flood and the surface area
+of the stairs/escalators, respectively. ρf represents the density of flood, and hp and mp represent the height and weight of a person, respectively. a1, b1, a2 and b2 are determined by the average body characteristic of people. Parameters α and β are set based on the results of water tank experiments on real human fall instability (Karvonen et al., 2000; Abt et al., 1989).
+3.3.3. Congestion objective
+The congestion degree of subway stations can reflect the severity of passenger aggregation in different areas, and express the comfort level of passengers during the evacuation process (Zhao et al., 2022). Because the congestion at nodes is directly affected by the congestion on the road segment, this paper only considers the impact of passenger congestion on the road segment Dij as referenced in Wang et al. (2016). Dij can be described by the area of the passage and the number of passengers, which can be modeled based on the enhanced crowd danger proposed by Feliciani and Nishinari (Feliciani and Nishinari, 2018; Yang et al., 2022a) that is defined by Eq. (21).
+Dij =
+(
+1 − e−κ qij
+Cij
+)
+⋅ qij . (21)
+Here, κ is an empirical parameter which is set to be 0.0929 m2. The capacity of a road segment Cij is related to the area of the passage Aij and the area occupied by individual passengers, which is defined by Eq. (22).
+Cij =
+Aij
+π ⋅ r2 . (22)
+In a conclusion, a two-stage multi-objective optimization model of evacuation path based on the evacuation time objective, risk objective, and congestion objective is proposed to effectively plan the escape route of passengers under flood conditions, the model can be defined by Eqs. (23)–(25).
+min ZT =
+∑
+(i,j)∈W
+tij +
+∑
+s0 ∈S0
+ts0 . (23)
+min ZR =
+∑
+(i,j)∈W
+Rij +
+∑
+s′
+0 ∈S ′
+0
+Rs′
+0
+. (24)
+min ZD =
+∑
+(i,j)∈W
+Dij . (25)
+Here, W represents the set of all feasible road segments. S0 represents the set of all nodes in the passenger evacuation network, and s0 represents one of the nodes. S′
+0 represents the node set of all
+stairs/escalators, and s′
+0 represents one of them. Certain constraints should be met in the two-stage PEPO model as shown in Eqs. (26)–(28). Among them, Eq. (26) is to ensure the accuracy of the number of passengers allocated on the road segment. γp
+ij
+represents the situation where the passenger p selects a road segment (i, j), which is 1 when it is selected, otherwise, it is 0. Eq. (27) is to ensure that all passengers have completed evacuation. Eq. (28) is used to constrain the actual number of people in the evacuation process to be less than the maximum capacity of the road segment.
+∑
+p∈P
+γp
+ij = qij , (i, j) ∈ W . (26)
+∑
+p∈P
+∑
+j ′ ∈O
+γp
+j′ =
+∑
+p∈P
+∑
+i′ ∈E
+γp
+i′ . (27)
+∑
+p∈P
+γp
+ij ≤ Cij , (i, j) ∈ W . (28)
+Here, P represents the set of all passengers, O represents the set of all origins, and E is the set of all exits. The execution process of the passenger evacuation simulation system integrating path optimization strategy is shown in Fig. 1. A path optimization plan from initial positions to safe destinations can be
+
+
+ Tunnelling and Underground Space Technology incorporating Trenchless Technology Research 143 (2024) 105473
+7
+X. Yang et al.
+Fig. 1. The execution process of the passenger evacuation simulation system integrating path optimization strategy.
+obtained on the basis of the optimization model that comprehensively considers evacuation time, congestion cost, and risk, thereby determining the probability of passengers choosing feasible paths at each node. This probability value can be set on the corresponding nodes in the passenger evacuation 3D simulation system built by PathFinder. Passengers determine the next critical node based on the selection probability, thereby achieving decision optimization of the complete evacuation path. The correction value of passenger movement speed affected by the flood parameters is input into the node of the 3D simulation system, and is used as the current movement speed of passengers passing through this node. The motion speed based on this correction value and the direction of passengers from the current node to the next node are continuously updated based on the speed and obstacle avoidance rules defined by the Steering mode in PathFinder until reaching the next target node. Passengers can obtain corresponding path recommendation solutions in real time from the designed apps.
+4. Case study
+4.1. Evacuation scenario description
+A subway station in Qingdao is taken as an example to conduct simulation research on passenger evacuation under flood scenarios, as shown in Fig. 2. This station is a transfer station with two underground floors, including the platform floor and the hall floor. There are a total of 8 escalators and 3 stairs on the platform floor, 6 sets of gates, and 7 entrances/exits on the hall floor. The evacuation network corresponding to the subway station is shown in Fig. 3. Among these, the gates and stairs/escalators are topologically transformed into nodes, and the edges are formed by connecting the nodes. In Fig. 3, nodes 1 to 6 and nodes 7 to 12 represent the entrances/exits of stairs/escalators on the platform and the hall, respectively. Nodes 13 to 18 represent the gates, and nodes A1, A2, B1, B2, C, D, and E represent the exits. The total number of passengers in the initial condition is 2000 who randomly distributed on the platform, and passenger attributes are listed in Table 2 (Yang et al., 2022c). The maximum free speed of passengers is set at 1.2 m/s, and the speed would change according to flood parameters, surrounding pedestrians and obstacles. In some flood accidents, the possibility of passengers trapped in the train may be very high, for example, the extremely heavy rainstorm in Zhengzhou, China, led to the flood trapped train accident in 2021. However, passengers inside the station may be significantly affected
+in some flood accident scenarios. For example, some underground platforms of subway stations in New York City were flooded during Hurricane Katrina in 2005. Although passengers can enter the station hall through the stairs, the flood blocked some passages out of the station, causing passengers to be unable to leave the platform in time, forming the dilemma of emergency evacuation. The subway station in Bangkok, Thailand was hit by severe flooding in 2011, causing some passengers to be stranded on the platform for a long time. In fact, the simulation scenario set up in this paper is only a possibility of occurrence, but the optimization method for passenger evacuation paths under floods is always effective and is not affected by the distribution of passengers in the initial state. The ultimate goal is to hope that passengers in the station can quickly and safely reach safe areas and avoid local congestions. Therefore, it is necessary to improve the efficiency and reliability of evacuation strategies for subway station managers in response to flood accidents, which also reflects the important practical significance of this study. When a flood occurs in a subway station, it may lead to potential risk accidents such as power supply equipment failures, personnel congestion and stampede accidents, causing congestion or damage to road segments or nodes and rendering them impassable. The variation of flood parameters in the case study of this paper over time at different locations within the subway station can be obtained based on the adopted hydrodynamic model, as shown in Fig. 4. In the second stage of the path optimization model constructed in this paper, it is necessary to reassign passengers on the failed road segments or nodes based on the results of the path plan made in the first stage, in order to achieve fast and safe evacuation, and avoid overcrowding at certain nodes or road segments. A robustness analysis of the evacuation efficiency of the subway evacuation network is conducted in order to determine certain key nodes. Assuming that the failure status of the key node serves as the basis for updating the evacuation network in the second stage, a path optimization plan for this scenario could be further developed. In actual evacuation scenarios, the network can be updated based on real-time conditions, thereby re-planning the evacuation path for passengers on ineffective road segments or nodes. Robustness analysis can reflect the resistance of the subway evacuation network to external interference, characterizing the ability of the network to maintain normal operation after a certain road segment or node is attacked and fails. The sudden flood is viewed as a random attack on the evacuation network, and the global network efficiency is selected to measure the traffic capacity of the evacuation network. The higher the network efficiency value, the more significant the impact of
+
+
+ Tunnelling and Underground Space Technology incorporating Trenchless Technology Research 143 (2024) 105473
+8
+X. Yang et al.
+Fig. 2. The diagram of the structure of the subway station.
+Fig. 3. The evacuation network of the station.
+failed nodes or road segments on the robustness of the evacuation network in subway stations. From the perspective of the overall network, the average efficiency between two nodes is taken as the global network efficiency which is represented by Eall and defined by Eq. (29) (Barrat et al., 2004).
+Eall = 1
+Ny(Ny − 1)
+∑
+i,j ∈i ,i≠j
+1
+dij
+. (29)
+Here, the efficiency between nodes i and j can be expressed as the reciprocal of dij . When the node i and node j are not connected, dij is equal to infinity. Ny represents the total number of nodes in the evacuation network. Fig. 5 shows the network efficiency after a node failure in the subway station. When the exit with node identification number of 22 fails, i.e. exit A2 fails, the network efficiency value is most affected. Therefore, this paper assumes that the optimization of the passenger evacuation path in the second stage is carried out in the case of failure of the exit A2.
+4.2. Prediction result analysis of node travel time
+Taking the travel of passengers through gates as an example, 100 sets of data samples were obtained through simulation experiments. Among these, 80 samples were randomly selected as the training set for training the model, and the remaining 20 samples were used as the test set to evaluate the performance of the model. In order to further improve the coverage of the data set, the volume of passengers ranges from 10 to 310 and the passenger speed ranges from 0.6 m/s to 1.2 m/s. This basically covers the scenario parameters of passengers in
+the station, ensuring the integrity of the data set to a certain extent and improving the training accuracy of the prediction model. The initial population size in the node travel time prediction model is set to 100, and the maximum number of iterations is 1000. The upper and lower bounds of weight w in the BP neural network are −5.0124 and 6.0425, respectively. Fig. 6 shows the trend of the optimal solution as the number of iterations increases. The curve tends to relax when the number of iterations is around 200, and the mean square error (MSE) value of the optimal solution is already very small when it approaches 1000. Fig. 7 shows the comparison of the prediction results in the BWO-BP neural network model corresponding to the training set and the test set. It can be observed that the fitting degree between the prediction values and the true data is high, indicating to some extent that the node travel time prediction model constructed in this paper has a good prediction effect. Fig. 8 further shows the distribution of model accuracy. It can be concluded that the accuracy of the model is concentrated at 90% to 100%. Fig. 9 analyzes the precision of the prediction results, and the slope of the fitting line is 0.9932 which is close to 1. Therefore, the accuracy of the prediction model for node travel time can basically meet the requirements of time calculation. In order to further verify the accuracy of the BWO-BP neural network model, the performance of the prediction model is evaluated comprehensively by four evaluation indicators (Ahmar, 2020; Coyle and Lin, 1988), namely, the mean absolute error (MAE), MSE, the root mean square error (RMSE), and the mean absolute percentage error (MAPE), as given in Eqs. (30)–(33). Meanwhile, the prediction results of the BWO-BP neural network model are compared with the BP neural network model, the particle swarm optimization-based BP (PSO-BP) neural network model, and the genetic algorithm-based BP (GA-BP) neural network model. The comparison results are listed in Table 3. It should be noted that the population size is set to 50 and the number of iterations is set to 1000 in the comparative experiments. It can be concluded that the BWO-BP neural network model has significantly smaller prediction errors compared to the other three models, and the prediction results are more accurate. Therefore, the BWO-BP neural network model can provide reliable and accurate prediction results of node travel time.
+MAE = 1
+n
+n
+∑
+i=1
+| |
+ŷ i − yi|
+|
+. (30)
+MSE = 1
+n
+n
+∑
+i=1
+(ŷ i − yi
+)2 . (31)
+RMSE =
+√ √
+√
+√1
+n
+n
+∑
+i=1
+(ŷ i − yi
+)2. (32)
+MAP E = 1
+n
+n
+∑
+i=1
+| | | |
+ŷ i − yi
+yi
+| | | |
+. (33)
+
+
+ Tunnelling and Underground Space Technology incorporating Trenchless Technology Research 143 (2024) 105473
+9
+X. Yang et al.
+Fig. 4. The change of flood parameters with time.
+Fig. 5. The identification number of failed node and its corresponding network efficiency.
+Fig. 6. The MSE of the optimal solution of prediction results varies with the number of iterations.
+Fig. 7. Prediction results of training and test sets at the gate.
+Table 2
+The passenger attributes (Yang et al., 2022c). Passenger attributes Mail adults Female adults Children The old
+Proportion (%) 47.5 48 3.1 1.4 Radius (m) 0.27 0.24 0.21 0.25 Height (m) 1.85 1.65 1.30 1.60
+Table 3
+Performance comparisons of prediction models.
+Error
+Model MAE MSE RMSE MAPE
+BP 0.8580 1.1442 1.0697 0.0143 PSO-BP 0.8386 1.1308 0.9560 0.0325 GA-BP 0.7193 0.8108 0.9004 0.0282 BWO-BP 0.6276 0.6718 0.8196 0.0243
+4.3. Calculation result analysis of evacuation path
+Each objective in the multi-objective optimization problem is constrained by each other, and its solution is usually a set of non-inferior solutions, namely the Pareto solution set (Gunantara, 2018). The NSGAII algorithm is used to solve the optimization model in this paper. The NSGA-II algorithm is a fast non-dominated sorting genetic algorithm with an elite mechanism based on the NSGA algorithm. It ensures
+
+
+ Tunnelling and Underground Space Technology incorporating Trenchless Technology Research 143 (2024) 105473
+10
+X. Yang et al.
+Fig. 8. Model prediction accuracy analysis.
+Fig. 9. Model prediction precision analysis.
+that excellent individuals have a greater probability of being retained, while reducing the computational complexity of the algorithm and achieving a high solving efficiency (Deb et al., 2002). This algorithm has an adaptive mechanism that can automatically adjust algorithm parameters and strategies. Meanwhile, NAGA-II has a good scale-ability and can adapt to solving problems of different scales and complexities. The population size in the NSGA-II algorithm is set as P opSize = 100, the optimal front-end individual coefficient is set as P F = 0.1, and the deviation of the fitness function is set as T F = 1e-100. Fig. 10 shows the changes in evacuation time, congestion cost, and risk with the number of iterations during the solving process of the two-stage PEPO model. When the number of iterations in the first and second stages reaches 2500, the Pareto solutions will converge. Fig. 11 shows ten sets of solutions in the two stages obtained by solving the model using the NSGA-II algorithm, and the mutual influence relationship among evacuation time, congestion degree, and risk can be observed. It should be pointed out that the number of solutions in some graphs is less than ten, because the optimal solutions may overlap. The objective value of evacuation time is positively
+correlated with the objective value of congestion as shown in Fig. 11(a), indicating that the evacuation time will significantly increase when passengers experience congestion during the evacuation process. The risk value decreases with an increase in evacuation time as shown in Fig. 11(b), indicating that passengers did not choose a short but high-risk evacuation path in order to stay away from the road with a deep flood, which results in an increase in the total evacuation time. Fig. 11(c) further reflects that the total risk value decreases with the increase in total congestion, which also indicates that most passengers tend to gather and choose certain paths with a high safety index in order to stay away from deep flood paths. However, congestion is highly likely to occur due to capacity limitations, leading to an increase in total congestion costs. The linear weighted sum method (Sojobi et al., 2021) is used in this paper to assign different coefficients to the normalized evacuation time ̄ZT , congestion ̄ZD, and risk ̄ZR, respectively, in order to determine the final path recommendation scheme as shown in Eq. (34). Therefore, a comprehensive evaluation is conducted on the 10 sets of Pareto solutions, and the Pareto solution corresponding to the minimum Z is chosen as an optimal evacuation path for passengers.
+Z = β1 ⋅ ̄ZT + β2 ⋅ ̄ZD + β3 ⋅ ̄ZR. (34)
+Here, βn ≥0 (n = 1, 2, 3), which are weight coefficients, and
+∑3
+n=1 βn = 1.
+There is a significant numerical difference between evacuation time, congestion, and risk. It may cause a significant deviation in the final data results without normalization, which could affect the selection of path plans. The maximum minimum normalization method is used to normalize the data, mapping each value to the interval of [0,1], as shown in Eq. (35), which can ensure the comparability of different target values.
+̄Zi = Zi − Zi min
+Zi max − Zi min
+. (35)
+Here, ̄Zi denotes the standardized value, and Zi denotes the original data. Zi max and Zi min are the maximum and minimum possible values of the original data, respectively. Fig. 12 shows the relationship between the total cost Z and β1 and β2 in the first stage of optimization when the value of β3 increases from 0.1 to 0.9. The results indicate that the total cost Z increases with an increase of the weight value of the total evacuation time β1 while the weight value β3 remains unchanged. Figs. 13 further illustrate
+
+
+ Tunnelling and Underground Space Technology incorporating Trenchless Technology Research 143 (2024) 105473
+11
+X. Yang et al.
+Fig. 10. Objective function values under different iterations in two stages.
+Table 4
+Path optimization effects solved by different algorithms. Algorithm Before optimization After optimization Optimization effect
+Time (s) Congestion Risk Time (s) Congestion Risk Time Congestion Risk Total
+NSGA-II algorithm
+385 40.46 87.26
+316 23.45 83.74 7.6% 37.1% 11.9% 18.75%
+Genetic algorithm optimized by the K-means
+320 23.81 84.44 7.4% 36.7% 11.7% 18.48%
+Particle swarm optimization algorithm
+332 27.63 86.41 6.8% 32.9% 11.1% 16.83%
+Genetic algorithm
+331 26.40 85.32 6.8% 34.1% 11.4% 17.33%
+the relationship among β1, β2, β3 and each objective. It indicates that when the weight value of risk β3 is low, the values of evacuation time objective ZT and the congestion objective ZD show significant cliff of displacements with changes in β1 or β2. When β3 is high, ZT and ZD show a stable trend of change. In addition, the risk objective ZR increases and then stabilizes with an increase of β3 when β2 is low. Therefore, β1, β2, and β3 indeed affect the objective values, and should be set according to different requirements.
+4.4. Evaluation of evacuation path optimization effect
+Assume that the weight values of three objectives are all positive, which can be continuously adjusted to meet the preference requirements for path planning formulation. If a preference is set for a certain objective, the weight value corresponding to that objective can be appropriately increased. It is assumed that no preference is set in this paper for any objective value, that is, β1 = 0.34, β2 = 0.33, and
+
+
+ Tunnelling and Underground Space Technology incorporating Trenchless Technology Research 143 (2024) 105473
+12
+X. Yang et al.
+Fig. 11. The relationship between objective function values.
+Fig. 12. The relationship between Z and β1, β2 and β3 in the first stage of optimization.
+β3 = 0.33. Therefore, the selected path optimization scheme can be determined based on the principle of minimizing total cost. In order to illustrate the effect of the evacuation path optimization model constructed in this paper, the evacuation results under this model are compared with those under the Steering mode as shown in Table 4. It should be pointed out that the Steering mode of PathFinder
+could be used to simulate passenger evacuation behavior under no path optimization strategy. As shown in Table 4, the total evacuation time decreases from 385 s to 316 s after the node failure of the evacuation network in the second stage, significantly improving the evacuation efficiency of the station. At the same time, the total congestion value decreases from 40.46 to 23.45, and the risk value is slightly reduced. It indicates that the evacuation path optimization method proposed in this paper achieves good optimization results, especially in the situation of evacuation network failures. In order to further quantitatively evaluate the overall optimization effect of the PEPO model constructed in this paper, the evaluation indicators given in Eqs. (36)–(39) are set to obtain the optimization degree corresponding to each objective and the overall optimization degree (Guo and Zhang, 2022). The results are also given in Table 4. Choosing appropriate evaluation indicators is not only the key to scientifically evaluating the rationality of evacuation paths, but also the foundation for optimizing and updating the plans. The overall optimization degree after node failures can reach 18.75%, which shows a good optimization effect.
+I = IT ⋅ 0.34 + IR ⋅ 0.33 + ID ⋅ 0.33. (36)
+IT =
+{ T −St
+T ⋅ τ + St−To
+St
+⋅ μ, T ≥ St. T −TO
+T ⋅ μ, T < St. (37)
+IR =
+{ R−Sr
+R ⋅ τ + Sr−Ro
+Sr
+⋅ μ, R ≥ Sr. R−RO
+R ⋅ μ, R < Sr. (38)
+ID =
+{ D−Sd
+D ⋅ τ + Sd −Do
+Sd
+⋅ μ, D ≥ Sd . D−RO
+R ⋅ μ, D < Sd . (39)
+
+
+ Tunnelling and Underground Space Technology incorporating Trenchless Technology Research 143 (2024) 105473
+13
+X. Yang et al.
+Fig. 13. The relationship between ZT , ZD, ZR and β1, β2 β3.
+Here, I denotes the overall improvement. IT , IR, and ID denote the improvements in evacuation time, risk, and congestion, respectively. T , R, and D respectively represent the evacuation time, risk, and congestion values obtained in the absence of path optimization strategies. TO, RO, and DO respectively denote the evacuation time, risk, and congestion values obtained under the path optimization strategies. St, Sr, and Sd are constants, representing the standards of required evacuation time, risk, and congestion, respectively. According to the relevant
+requirements of the metro design specification in China (Shi et al., 2012), St is set to be 360 s, which represents the upper limit of the safe evacuation time for passengers in the subway station. Meanwhile, Sr is set to be 70, and Sd is set to be 20. It should be noted that τ and μ are coefficients, which are set to be 0.8 and 0.2, respectively. Generally, the improvement is often more important when the target value is higher than the standard (Guo and Zhang, 2022).
+
+
+ Tunnelling and Underground Space Technology incorporating Trenchless Technology Research 143 (2024) 105473
+14
+X. Yang et al.
+Fig. 14. The distribution of the number of passengers who have completed evacuation over time.
+Fig. 14 shows the changes in the number of evacuees over time after node failures. In the initial stage of evacuation, the trend of the number of evacuees over time is relatively steep, and the number of evacuees gradually reaches its peak. The impact of path optimization strategies on passenger evacuation efficiency during this period is not significant. The number of passengers completing evacuation sharply decreases over time in the absence of an optimization strategy. However, adopting a path optimization strategy can make the decreasing trend of the number of passengers completing evacuation become relatively slow over time. Fig. 15 captures the cumulative time heat maps of space usage of the station hall floor without and with path optimization schemes, respectively. The map could represent the cumulative usage time at different spatial locations from the beginning of evacuation to the end of evacuation. It should be pointed out that the simulation scenario parameters, including station and passenger attributes, are consistent in two different simulation experiments, and the time of capturing the heat map is at the completion of evacuation. The only difference is the evacuation path plan. The customized path selection method is adopted in the Steering mode of PathFinder in the case of none path optimization scheme, which could characterize passenger evacuation behaviors under no intervention conditions. The proposed path optimization strategy is adopted in the case of path optimization scheme. Passengers may overlook the use of certain exits and severe congestion may occur at some corner positions after the failure of an exit with a high utilization rate, when there is no path optimization strategy. If the path optimization strategy is adopted, there are no excessively congested road segments, exits of the station are fully utilized, and the negative impact of exit failures can be alleviated. In the existing research on evacuation path optimization, whether single objective optimization or multi-objective optimization methods are used for mathematical modeling, most of them do not consider the impact of evolutionary parameters of hazards on the set of objective functions. The evolution of floods may have varying degrees and aspects of impact on passenger movements, and the effectiveness of path optimization models constructed without considering flood parameters is difficult to guarantee. Therefore, the passenger evacuation path optimization model considering flood parameters constructed in this paper cannot be compared with the results of existing models that did not consider hazard parameters. However, different methods could be used for solving path optimization models. In order to illustrate the effectiveness and feasibility of the NSGAII algorithm used in this paper, the particle swarm optimization algorithm, genetic algorithm and genetic algorithm optimized by Kmeans algorithm are specially selected to solve the path optimization model to compare the effects of different algorithms. Evacuation path schemes corresponding to different solving algorithms are obtained under the same number of iterations. The optimization schemes are set
+in PathFinder and simulation experiments on passenger evacuations are conducted, obtaining the comparative results shown in Table 4. It can be seen that the overall optimization degree of the solution obtained by the NSGA-II algorithm is superior to other algorithms. Although the particle swarm optimization algorithm has fast solving speed, its global optimization ability needs to be strengthened (Zhang et al., 2018a). Although the genetic algorithm has certain global optimization abilities, its convergence rate is slightly slow (Liu et al., 2018). The solving speed of genetic algorithm optimized by the K-means has been improved to a certain extent compared to the genetic algorithm, but there is still room for further improvements in its solving ability (Omagari and Higashino, 2020). The effective transmission of path recommendation information is very important, which is the key to ensure the implementation of evacuation strategies. Taking Chinese subway stations as examples, the transmission strategy for most stations to deal with accidents is through emergency broadcasting or guiding personnel, which can to some extent maintain the orderly evacuation. However, the information released by broadcasting may have a certain lag, affecting the safety and efficiency of passenger evacuation. With the rapid development of computer technology, the use of mobile applications and applets has become very popular. The evacuation path navigation function can be designed and infiltrated into mobile applications or applets to meet the demand for the rapid release of path recommendation information, as shown in Fig. 16. This method of transmitting guidance information is more convenient, efficient, and beneficial for reducing labor costs. With the continuous improvement of smart stations, this function is believed to be successfully implemented in the future. Some scholars also studied the effective guidance of crowd evacuation from the perspective of designing intelligent diversion railings and guidance light strips (Wu et al., 2022).
+5. Conclusions
+A two-stage evacuation path optimization model for passengers under flood scenarios of subway stations is constructed in this paper, taking into account the total evacuation time, the congestion, and the risk values. The model can provide evacuation plans for passengers in case of ineffective road segments, which is more in line with actual evacuation requirements. The black widow algorithm is used to optimize the BP neural network model for predicting the travel time of passengers at key nodes, which can improve the calculation accuracy of evacuation time. The relationship between the evacuation time objective, congestion objective, and risk objective, as well as the impact of the weights of each objective on the path plan, are analyzed based on the objective results of the path optimization model. The optimization effect of the model is further explained by comparing the evacuation results with and without path strategies. The results
+
+
+ Tunnelling and Underground Space Technology incorporating Trenchless Technology Research 143 (2024) 105473
+15
+X. Yang et al.
+Fig. 15. Comparison of passenger evacuation paths after node failures.
+Fig. 16. Schematic diagram of intelligent navigation applet.
+of this study provide a strategy for the safe evacuation of passengers under flood scenarios, which can improve the operation service level of subway stations. The PathFinder software is used to construct a three-dimensional evacuation simulation system of a subway station in Qingdao, China and the evacuation behaviors of passengers under flood scenarios are explored. The simulation results show that: (1) The cumulative increase in flood depth over time could let more passengers choose nearby intermediate nodes in the path optimization plan. Meanwhile, the optimized plan also considers the spatio-temporal balance of passenger flow to avoid an excessive use of a particular node. (2) The slope of the fitting line between the predicted results of the travel time prediction model at nodes such as gates and stairs/escalators and the true values can be as high as 0.9932 and the error of the prediction model, such as MSE, can be as low as 0.6718, indicating that the prediction performance of the model is relatively good. (3) The three objective values of evacuation time, congestion, and risk interact with each other. The evacuation time objective is positively correlated with the congestion objective, while the risk objective is negatively correlated with the evacuation time objective. (4) The path optimization strategy can significantly improve the evacuation efficiency of passengers after network failures, and the use of paths and exits is more reasonable. The total evacuation time has been reduced by 69 s, and the overall optimization degree can be improved by up to 18.75% through using NSGA-II for solving. The research results of this paper do have some limitations. On the one hand, the parameters in the model may be uncertain, which could affect the generation of path optimization results. Rapid dynamic programming for handling unexpected uncertain events is crucial. The research content of this paper is a preliminary exploration of modeling the optimization of passenger evacuation paths in subway stations under flood scenarios. One of our future research directions is to use optimization modeling methods such as stochastic optimization and robust optimization to address parameter uncertainty in solving evacuation path optimization problems. On the other hand, the rapid release and effective transmission of path strategies is an important link in ensuring the implementation of optimization solutions. Developing intelligent path navigation functions embedded in mobile applications or applets is also an important research topic in the future.
+CRediT authorship contribution statement
+Xiaoxia Yang: Conceptualization, Methodology, Software, Validation, Writing – review & editing, Supervision. Wenkai Dai: Data curation, Software, Methodology, Writing – original draft. Yongxing Li: Formal analysis, Visualization. Xiaoli Yang: Investigation, Writing review & editing.
+
+
+ Tunnelling and Underground Space Technology incorporating Trenchless Technology Research 143 (2024) 105473
+16
+X. Yang et al.
+Declaration of competing interest
+The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.
+Data availability
+The authors do not have permission to share data.
+Acknowledgments
+This work is supported by the National Natural Science Foundation of China under Grants 62373209 and 62003182.
+References
+Abt, S., Wittier, R., Taylor, A., Love, D., 1989. Human stability in a high flood hazard zone 1. JAWRA J. Am. Water Resour. Assoc. 25 (4), 881–890. Ahmar, A.S., 2020. Forecast error calculation with mean squared error (MSE) and mean absolute percentage error (MAPE). JINAV: J. Inf. Vis. 1 (2), 94–96. Association, C.U.R.T., 2022. Statistics and analysis report of urban rail transit in 2022. Bao, Y., Huo, F., 2021. An agent-based model for staircase evacuation considering agent’s rotational behavior. Physica A 572, 125923. Barrat, A., Barthelemy, M., Pastor-Satorras, R., Vespignani, A., 2004. The architecture of complex weighted networks. Proc. Natl. Acad. Sci. 101 (11), 3747–3752. Cai, Z., Zhou, R., Cui, Y., Wang, Y., Jiang, J., 2022. Simulation based on a modified social force model for sensitivity to emergency signs in subway stations. Chin. Phys. B. Camillen, F., Capri, S., Garofalo, C., Ignaccolo, M., Inturri, G., Pluchino, A., Rapisarda, A., Tudisco, S., 2009. Multi agent simulation of pedestrian behavior in closed spatial environments. In: 2009 IEEE Toronto International Conference Science and Technology for Humanity. TIC-STH, IEEE, pp. 375–380. Canomoreno, J.D., de Pedro, J.M.M.S., Esteban, B.S., Nicolau, M.S., 2021. Influence of the slope and delay on passenger evacuation from a fire along a railway tunnel with natural ventilation. Fire Technol. 57, 1569–1588. Coyle, E.J., Lin, J.H., 1988. Stack filters and the mean absolute error criterion. IEEE Trans. Acoust. Speech Signal Process. 36 (8), 1244–1254. Cui, K., Jing, X., 2019. Research on prediction model of geotechnical parameters based on BP neural network. Neural Comput. Appl. 31, 8205–8215. Daamen, W., 2002. Modelling passenger flows in public transport facilities. Dearholt, D.W., Schvaneveldt, R.W., 1990. Properties of Pathfinder Networks. Ablex Publishing. Deb, K., Pratap, A., Agarwal, S., Meyarivan, T., 2002. A fast and elitist multiobjective genetic algorithm: NSGA-II. IEEE Trans. Evol. Comput. 6 (2), 182–197. Dias, C., Abd Rahman, N., Zaiter, A., 2021. Evacuation under flooded conditions: Experimental investigation of the influence of water depth on walking behaviors. Int. J. Disaster Risk Reduct. 58, 102192. Fahad, M.G.R., Nazari, R., Bhavsar, P., Jalayer, M., Karimi, M., 2019. A decisionsupport framework for emergency evacuation planning during extreme storm events. Transp. Res. D Transp. Environ. 77, 589–605. Fang, Y., Shi, Q., Hu, H., Hao, Y., Liu, Z., 2022. Analysis of pedestrian lane change behavior spectrum based on video data at ticket gate facilities in subway stations. J. Adv. Transp. 2022. Feliciani, C., Nishinari, K., 2018. Measurement of congestion and intrinsic risk in pedestrian crowds. Transp. Res. C 91, 124–155. Forero-Ortiz, E., Martinez-Gomariz, E., Canas Porcuna, M., 2020. A review of flood impact assessment approaches for underground infrastructures in urban areas: A focus on transport systems. Hydrol. Sci. J. 65 (11), 1943–1955. Goldbeck, N., Angeloudis, P., Ochieng, W.Y., 2019. Resilience assessment for interdependent urban infrastructure systems using dynamic network flow models. Reliab. Eng. Syst. Saf. 188, 62–79. Gunantara, N., 2018. A review of multi-objective optimization: Methods and its applications. Cogent Eng. 5 (1), 1502242. Guo, R., Huang, H.J., 2008. A mobile lattice gas model for simulating pedestrian evacuation. Physica A 387 (2–3), 580–586. Guo, K., Zhang, L., 2022. Simulation-based passenger evacuation optimization in metro stations considering multi-objectives. Autom. Constr. 133, 104010. Han, X., He, X., Cong, B., 2012. Simulation analysis of traffic capacity for ticket gates of metro station. In: Advances in Electronic Engineering, Communication and Management. Springer, pp. 549–553. Hayyolalam, V., Kazem, A.A.P., 2020. Black widow optimization algorithm: a novel meta-heuristic approach for solving engineering optimization problems. Eng. Appl. Artif. Intell. 87, 103249. Henderson, L.F., 1974. On the fluid mechanics of human crowd motion. Transp. Res. 8 (6), 509–515.
+Higo, E., Okada, N., Hipel, K.W., Fang, L., 2017. Cooperative survival principles for underground flooding: Vitae system based multi-agent simulation. Expert Syst. Appl. 83, 379–395. Hosseini, O., Maghrebi, M., Maghrebi, M.F., 2021. Determining optimum stagedevacuation schedule considering total evacuation time, congestion severity and fire threats. Saf. Sci. 139, 105211. Ishigaki, T., Toda, K., Baba, Y., Inoue, K., Nakgawa, H., 2006. Experimental study on evacuation from underground space by using real size models. Proc. Hydraul. Eng. 50, 583–588. Jin, B., Wang, J., Wang, Y., Gu, Y., Wang, Z., 2020. Temporal and spatial distribution of pedestrians in subway evacuation under node failure by multi-hazards. Saf. Sci. 127, 104695. Kai, H., Xuewei, L., Lei, X., 2020. Simulation of hotel fire and safe evacuation based on FDS and pathfinder. In: 2020 International Conference on Robots & Intelligent System. ICRIS, IEEE, pp. 737–740. Karvonen, R., Hepojoki, A., Huhta, H., Louhio, A., 2000. The use of physical models in dam-break analysis. In: RESCDAM Final Report. Helsinki University of Technology, Helsinki, Finland. Keiichi, Toda, 2007. Urban flooding and measures. J. Disaster Res. Lei, W., Tai, C., 2019. Effect of different staircase and exit layouts on occupant evacuation. Saf. Sci. 118, 258–263. Li, B., Hou, J., Ma, Y., Bai, G., Wang, T., Xu, G., Wu, B., Jiao, Y., 2022. A coupled highresolution hydrodynamic and cellular automata-based evacuation route planning model for pedestrians in flooding scenarios. Nat. Hazards 110 (1), 607–628. Li, M., Kwan, M.P., Yin, J., Yu, D., Wang, J., 2018. The potential effect of a 100-year pluvial flood event on metro accessibility and ridership: A case study of central Shanghai, China. Appl. Geogr. 100, 21–29. Lim, G.J., Zangeneh, S., Baharnemati, M.R., Assavapokee, T., 2012. A capacitated network flow optimization approach for short notice evacuation planning. European J. Oper. Res. 223 (1), 234–245. Lim, Jr., H., Lim, M.B., Piantanakulchai, M., 2013. A review of recent studies on flood evacuation planning. J. East. Asia Soc. Transp. Stud. 10, 147–162. Lin, Z., Hu, S., Zhou, T., Zhong, Y., Zhu, Y., Shi, L., Lin, H., 2022. Numerical simulation of flood intrusion process under malfunction of flood retaining facilities in complex subway stations. Buildings 12 (6), 853. Liu, R., Fu, Z., Schadschneider, A., Wen, Q., Chen, J., Liu, S., 2019. Modeling the effect of visibility on upstairs crowd evacuation by a stochastic FFCA model with finer discretization. Physica A 531, 121723. Liu, Z., Liu, J., Zhou, F., Liu, R.W., Xiong, N., 2018. A robust GA/PSO-hybrid algorithm in intelligent shipping route planning systems for maritime traffic networks. J. Internet Technol. 19 (6), 1635–1644. Liu, S., Lo, S., Ma, J., Wang, W., 2014. An agent-based microscopic pedestrian flow simulation model for pedestrian traffic problems. IEEE Trans. Intell. Transp. Syst. 15 (3), 992–1001. Lovas, G.G., 1994. Modeling and simulation of pedestrian traffic flow. Transp. Res. B 28 (6), 429–443. Mandal, T., Rao, K.R., Tiwari, G., 2023. Evacuation of metro stations: A review. Tunnell. Undergr. Space Technol. 140, 105304. Mo, W., 2010. Numerical Simulation on the Flooding in Subway Station and Discussion on Its Flood Prevention Measures (Thesis). Zhejiang University, The Japan Society for Aeronautical and Space Sciences. Munoz, J.C., Soza-Parra, J., Didier, A., Silva, C., 2018. Alleviating a subway bottleneck through a platform gate. Transp. Res. A Policy Pract. 116, 446–455. Omagari, H., Higashino, S.I., 2020. Route generation for drone delivery service using an evolutionary multi-objective optimization method. Trans. Jpn. Soc. Aeronaut. Space Sci. Aerosp. Technol. Jpn. 18 (4), 123–132. Pan, X., Han, C.S., Dauber, K., Law, K.H., 2006. Human and social behavior in computational modeling and analysis of egress. Autom. Constr. 15 (4), 448–461. Ronchi, E., Nilsson, D., 2014. Modelling total evacuation strategies for high-rise buildings. In: Building Simulation, Vol. 7. Springer, pp. 73–87. Sano, T., Ronchi, E., Minegishi, Y., Nilsson, D., 2017. A pedestrian merging flow model for stair evacuation. Fire Saf. J. 89, 77–89. Shi, C., Zhong, M., Nong, X., He, L., Shi, J., Feng, G., 2012. Modeling and safety strategy of passenger evacuation in a metro station in China. Saf. Sci. 50 (5), 1319–1332. Shuaib, M.M., 2018. Incorporating intelligence for typical evacuation under the threat of fire spreading. Saf. Sci. 106, 1–9. Sojobi, A.O., Xuan, D., Li, L., Liu, S., Poon, C.S., 2021. Optimization of gas-solid carbonation conditions of recycled aggregates using a linear weighted sum method. Dev. Built Environ. 7, 100053. Tajima, Y., Nagatani, T., 2001. Scaling behavior of crowd flow outside a hall. Physica A 292 (1–4), 545–554. Wang, W., He, W., Su, J., Chen, Y., 2016. Cupid: Congestion-free consistent data plane update in software defined networks. In: IEEE INFOCOM 2016-the 35th Annual IEEE International Conference on Computer Communications. IEEE, pp. 1–9. Wu, P., Wang, Y., Jiang, J., Wang, J., Zhou, R., 2022. Evacuation optimization of a typical multi-exit subway station: overall partition and local railing. Simul. Model. Pract. Theory 115, 102425. Xia, J., Falconer, R.A., Wang, Y., Xiao, X., 2014. New criterion for the stability of a human body in floodwaters. J. Hydraul. Res. 52 (1), 93–104.
+
+
+ Tunnelling and Underground Space Technology incorporating Trenchless Technology Research 143 (2024) 105473
+17
+X. Yang et al.
+Yang, X., Daamen, W., Hoogendoorn, S.P., Dong, H., Yao, X., 2016a. Dynamic feature analysis in bidirectional pedestrian flows. Chin. Phys. B 25 (2), 028901. Yang, X., Dong, H., Yao, X., Sun, X., 2016b. Bottleneck effects on the bidirectional crowd dynamics. Chin. Phys. B 25 (12), 128901. Yang, X., Dong, H., Yao, X., Sun, X., 2016c. Pedestrian evacuation at the subway station under fire. Chin. Phys. B 25 (4), 048902. Yang, X., Jiang, H., Kang, Y., Yang, Y., Li, Y., Yu, C., 2022a. Passenger management strategy and evacuation in subway station under Covid-19. Chin. Phys. B 31 (7), 078901. Yang, X., Yang, Y., Li, Y., Yang, X., 2022b. Path planning for guided passengers during evacuation in subway station based on multi-objective optimization. Appl. Math. Model. 111, 777–801. Yang, X., Yang, X., Pan, F., Kang, Y., Zhang, J., 2021. The effect of passenger attributes on alighting and boarding efficiency based on social force model. Physica A 565, 125566. Yang, X., Yang, Y., Qu, D., Chen, X., Li, Y., 2023. Multi-objective optimization of evacuation route for heterogeneous passengers in the metro station considering node efficiency. IEEE Trans. Intell. Transp. Syst.. Yang, X., Yang, X., Wang, Q., Kang, Y., Pan, F., 2020. Guide optimization in pedestrian emergency evacuation. Appl. Math. Comput. 365, 124711. Yang, X., Zhang, R., Li, Y., Pan, F., 2022. Passenger evacuation path planning in subway station under multiple fires based on multiobjective robust optimization. IEEE Trans. Intell. Transp. Syst. 23 (11), 21915–21931. Yang, X., Zhang, R., Li, Y., Yang, Y., Qu, D., Liu, T., Zhao, B., 2022c. Fuzzy-theory-based pedestrian dynamics models for studying the waiting passenger distribution at the subway platform. Tunnell. Undergr. Space Technol. 129, 104680. Yang, X., Zhang, R., Pan, F., Yang, Y., Li, Y., Yang, X., 2022d. Stochastic user equilibrium path planning for crowd evacuation at subway station based on social force model. Physica A 594, 127033. Ye, R., Zhan, Z., Chraibi, M., Lian, L., Zhang, J., Song, W., 2020. Investigating the effect of stairs on the bidirectional movement of pedestrians. J. Stat. Mech. Theory Exp. 2020 (2), 023405. You, L., Wu, Q., Wei, J., Hu, J., Wang, J., Liang, Y., 2020. A study of pedestrian evacuation model of impatient queueing with cellular automata. Phys. Scr. 95 (9), 095211.
+Yu, H., Wang, Y., Qiu, P., Chen, J., 2019. Analysis of natural and man-made accidents happened in subway stations and trains: based on statistics of accident cases. In: MATEC Web of Conferences, Vol. 272. EDP Sciences, p. 01031. Zhang, X., Chen, L., Jiang, J., Ji, Y., Han, S., Zhu, T., Xu, W., Tang, F., 2023. Risk analysis of people evacuation and its path optimization during tunnel fires using virtual reality experiments. Tunnell. Undergr. Space Technol. 137, 105133. Zhang, Z., Jia, L., 2023. Optimal multiobjective design of guidance information systems in underground spaces: Model development and a transportation hub case study. Tunnell. Undergr. Space Technol. 134, 105007. Zhang, C., Li, Q., Chen, P., Feng, Q., Cui, J., 2018a. An improved multi-objective particle swarm optimization and its application in raw ore dispatching. Adv. Mech. Eng. 10 (2), 1687814018757376. Zhang, L., Liu, M., Wu, X., AbouRizk, S.M., 2016. Simulation-based route planning for pedestrian evacuation in metro stations: A case study. Autom. Constr. 71, 430–442. Zhang, J., Wang, S., Wang, X., 2018b. Comparison analysis on vulnerability of metro networks based on complex network. Physica A 496, 72–78. Zhang, L., Wu, X., Liu, M., Liu, W., Ashuri, B., 2019. Discovering worst fire scenarios in subway stations: A simulation approach. Autom. Constr. 99, 183–196. Zhao, B., Tang, Y., Wang, C., Zhang, S., Soga, K., 2022. Evaluating the flooding level impacts on urban metro networks and travel demand: behavioral analyses, agent-based simulation, and large-scale case study. Resilient Cities Struct. 1 (3), 12–23. Zheng, Y., Li, X., Jia, B., Jiang, R., 2019. Simulation of pedestrians’ evacuation dynamics with underground flood spreading based on cellular automaton. Simul. Model. Pract. Theory 94, 149–161. Zhuang, J., Wang, C., 2022. Study on evacuation model considering panic emotion. In: 2021 6th International Conference on Intelligent Transportation Engineering. ICITE 2021, Springer, pp. 942–952.

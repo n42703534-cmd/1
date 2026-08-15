@@ -1,0 +1,49 @@
+{
+  "figure": "C:\\Users\\28146\\Desktop\\network\\FIRST\\docs\\manuscript_working\\figures\\fig_aa_method_architecture_real_en",
+  "dimensions_mm": [
+    183,
+    112
+  ],
+  "sources": {
+    "dwg_sha256": "29F0C16B4A0D2CF4FCC4F3AC3943329B2049049C9AF42417FC22AB052310CB31",
+    "dxf_sha256": "62E002E6C57643965E02396B022CC026941E8A1C79663710C1A668786803E358",
+    "pathfinder_png_sha256": "7C1B83A9025E6717C076B9F06A0A058097691457007A208208C8BB857B4F2C16",
+    "network_source": "C:\\Users\\28146\\Desktop\\network\\FIRST\\network.py",
+    "routing_source": "C:\\Users\\28146\\Desktop\\network\\FIRST\\single_path_routing.py"
+  },
+  "cad": {
+    "rendered_entities": 24542,
+    "entity_types": {
+      "LWPOLYLINE": 3683,
+      "LINE": 20166,
+      "ARC": 341,
+      "CIRCLE": 352
+    },
+    "wall_paths": 6070,
+    "stair_paths": 6903,
+    "gate_paths": 699
+  },
+  "network": {
+    "nodes_total": 572,
+    "edges_total": 1414,
+    "nodes_with_position": 572,
+    "node_type_counts": {
+      "platform": 5,
+      "exit": 16,
+      "stair": 32,
+      "escalator": 63,
+      "gate_tripod": 2,
+      "gate_wide": 18,
+      "virtual": 32,
+      "passageway": 3,
+      "platform_waiting_zone": 43,
+      "queue_area": 20,
+      "train_car": 62,
+      "train": 276
+    },
+    "rendered_base_edges": 792,
+    "rendered_transfer_edges": 166,
+    "rendered_shared_resource_edges": 456
+  },
+  "quantitative_panels": false
+}

@@ -1,0 +1,17 @@
+GEOMETRY SHA-256
+Improved A*: f83f7ea24a74615e026fbebfae1a27773ee936eadcc2e49e14d12338ef45d112
+AA*: f83f7ea24a74615e026fbebfae1a27773ee936eadcc2e49e14d12338ef45d112
+Pathfinder Goto Any Exit: f83f7ea24a74615e026fbebfae1a27773ee936eadcc2e49e14d12338ef45d112
+All .geom files byte-identical: True
+
+OCCUPANT COHORT AND PARAMETER AUDIT
+Reference protocol: Improved A*
+Compared columns (41): all columns except behavior
+Improved A*: n=17905; alignment=name; same alignment-key set=True; non-behavior mismatch columns=none
+AA*: n=17905; alignment=name; same alignment-key set=True; non-behavior mismatch columns={'id': 540, 'room': 1, 'x(m)': 7, 'y(m)': 7, 'z(m)': 1, 'INIT_ORIENT(°)': 5685}
+Pathfinder Goto Any Exit: n=17905; alignment=id; same alignment-key set=True; non-behavior mismatch columns={'name': 15718, 'occupantRadius(m)': 15718, 'geometryRadius(m)': 15718, 'height(m)': 15718, 'room': 14644, 'x(m)': 15716, 'y(m)': 15716, 'z(m)': 12478, 'OCCMODEL': 14599, 'INIT_ORIENT(°)': 16267}
+
+OUTCOME TABLE COHORT AUDIT
+Improved A*: n=17905; unique ids=17905; same id set as Improved A*=True
+AA*: n=17905; unique ids=17905; same id set as Improved A*=True
+Pathfinder Goto Any Exit: n=17905; unique ids=17905; same id set as Improved A*=True
